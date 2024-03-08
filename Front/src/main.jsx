@@ -8,6 +8,7 @@ import Login from './Pages/Login.jsx'
 import Register from './Pages/Register.jsx'
 import FGPassword from './Pages/FGPassword.jsx'
 import RSPassword from './Pages/RSPassword.jsx'
+import SelectAuth from './Pages/SelectAuth.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
 
       }
     ],
+  },
+  {
+    path: '/Siskoolbe/SelectAuth',
+    element: <SelectAuth />
   },
   {
     path: '/Siskoolbe/Login',
