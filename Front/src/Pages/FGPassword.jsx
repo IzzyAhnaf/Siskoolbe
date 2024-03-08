@@ -29,8 +29,8 @@ const FGPassword = () => {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <button className="bg-black hover:bg-white text-white hover:text-black  
-                    border border-black rounded-sm px-6 py-1" type="button" onClick={SEmail}
+                    <button className="bg-[#1E6CB1] hover:bg-white text-white hover:text-black  
+                    border border-[#1E6CB1] hover:shadow-md rounded-sm px-6 py-1" type="button" onClick={SEmail}
                     >Send Email</button>
                 </div>
             </div>

@@ -19,6 +19,7 @@ const Login = () => {
             console.log(err);
         }
     }
+
     return (
         <Auth type="login">
             <div className="font-inter flex flex-col space-y-4 ">
@@ -45,8 +46,8 @@ const Login = () => {
                 </div>
                 <div className="flex flex-col space-y-6">
                     <Link to={"/Siskoolbe/forgotpassword"} className="text-black text-sm underline ml-auto">Forgot Your Password?</Link>
-                    <button className="bg-black hover:bg-white text-white hover:text-black  
-                    border border-black rounded-sm px-6 py-1" type="button" onClick={HLogin}
+                    <button className="bg-[#1E6CB1] hover:bg-white text-white hover:text-black  
+                    border border-[#1E6CB1] hover:shadow-md rounded-sm px-6 py-1" type="button" onClick={HLogin}
                     >Sign In</button>
                 </div>
             </div>

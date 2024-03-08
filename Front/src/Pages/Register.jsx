@@ -5,6 +5,7 @@ import { BsFillPersonVcardFill } from "react-icons/bs";
 import { TfiEmail } from "react-icons/tfi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api";
 
 const Register = () => {
     const [show, setShow] = useState(false);
@@ -69,8 +70,8 @@ const Register = () => {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <button className="bg-black hover:bg-white text-white hover:text-black  
-                    border border-black rounded-sm px-6 py-2 mt-4" type="button" onClick={HRegister}
+                    <button className="bg-[#1E6CB1] hover:bg-white text-white hover:text-black  
+                    border border-[#1E6CB1] hover:shadow-md rounded-sm px-6 py-2 mt-4" type="button" onClick={HRegister}
                     >Register</button>
                 </div>
             </div>

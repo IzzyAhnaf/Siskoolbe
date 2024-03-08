@@ -10,7 +10,7 @@ const RSPassword = () => {
     const [password, setPassword] = useState('');
     const [Cpassword, setCPassword] = useState('');
     const Send = async () => {
-        if(password !== Cpassword){
+        if(password === Cpassword){
             const resp = await api.post("/resetpassword", { email, password });  
             resp.status === 200 ? window.location.href = '/Siskoolbe/Login' : console.log(resp.data);
         }else{
@@ -52,8 +52,8 @@ const RSPassword = () => {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <button className="bg-black hover:bg-white text-white hover:text-black  
-                    border border-black rounded-sm px-6 py-2" type="button" onClick={Send}
+                    <button className="bg-[#1E6CB1] hover:bg-white text-white hover:text-black  
+                    border border-[#1E6CB1] hover:shadow-md rounded-sm px-6 py-2" type="button" onClick={Send}
                     >Reset Password</button>
                 </div>
             </div>

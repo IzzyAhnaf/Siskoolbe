@@ -10,6 +10,7 @@ const nodemailer = require('nodemailer');
 
 fastify.register(cors, {
     origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 });
 fastify.register(multipart);
@@ -66,7 +67,7 @@ fastify.post('/register', async (request, reply) => {
 
     try{
         const Exist = await new Promise((resolve, reject) => {
-            db.query('INSERT INTO siswa (nik, name, email, password) VALUES (?, ?, ?, ?)', [nik, name, email, password], (err, result) => {
+            db.query('INSERT INTO siswa (nik, nama, email, password) VALUES (?, ?, ?, ?)', [nik, name, email, password], (err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -132,7 +133,10 @@ fastify.post('/resetpassword', async (request, reply) => {
 
 const start = async () => {
     try {
-      await fastify.listen({ port: 5000 , host: '127.0.0.1' });
+      await fastify.listen({
+        port: 5000,
+        host: '127.0.0.1'
+      });
     } catch (err) {
       console.error(err);
       process.exit(1);
