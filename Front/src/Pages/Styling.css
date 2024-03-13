@@ -35,3 +35,32 @@
     opacity: 5;
     transition: filter 0.5s ease;
 }
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.hovered {
+    filter: blur(3px);
+    /* Efek blur saat dihover */
+}
+
+.camera-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Pusatkan ikon kamera di tengah gambar */
+    font-size: 24px;
+    color: white;
+    opacity: 0;
+    /* Sembunyikan ikon kamera secara default */
+    transition: opacity 0.3s ease;
+    /* Animasikan perubahan opacity */
+}
+
+.image-container:hover .camera-icon {
+    opacity: 1;
+    /* Tampilkan ikon kamera saat dihover */
+}
