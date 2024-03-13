@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const MobileWidth = () => {
+const CustomWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
@@ -9,3 +9,5 @@ export const MobileWidth = () => {
     }, []);
     return width
 }
+
+export default CustomWidth;

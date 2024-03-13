@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Form from "../components/Form";
 
 import "./Styling.css"
-import { MobileWidth } from "../MobileWidth";
+import CustomWidth from "../CustomWidth";
 import { IoIosClose } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import ProfilePicture from "../components/Pp";
@@ -57,7 +57,7 @@ const Profile = () => {
         input.click(); // Membuka dialog penjelajah file
     };
 
-    const Wmobile = MobileWidth() <= 767;
+    const Wmobile = CustomWidth() <= 767;
 
     return (
         <>

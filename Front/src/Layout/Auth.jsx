@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
-import { MobileWidth } from "../MobileWidth";
+import CustomWidth from "../CustomWidth";
 
 const Auth = (props) => {
     const { children, type } = props
     const navTo = useNavigate();
-    const WMobile = MobileWidth() <= 767;
+    const WMobile = CustomWidth() <= 767;
+    const DekstopLow = CustomWidth() <= 1366;
 
     return (
         <>
@@ -14,8 +15,8 @@ const Auth = (props) => {
                     <div className="w-2/4 flex flex-col bg-[#1E6CB1] font-inter items-center p-12 space-y-4 min-h-screen
                     justify-center text">
                         <img src="logo-onedek.png" alt="" className="rounded-lg bg-[#D9D9D9] size-28" />
-                        <h3 className="text-white font-bold text-xl">SMKN 1 Depok</h3>
-                        <p className="text-white text-sm text-center">
+                        <h3 className={`text-white font-bold ${DekstopLow ? 'text-xl' : 'text-2xl'}`}>SMKN 1 Depok</h3>
+                        <p className={`text-white ${DekstopLow ? 'text-sm' : 'text-md'} text-center`}>
                             SMK Negeri 1 Depok adalah sebuah <br/>
                             Sekolah Menengah Kejuruan (SMK) <br/>
                             Negeri pertama di Kota Depok<br/>
@@ -47,8 +48,8 @@ const Auth = (props) => {
                                 </> 
                             )}
                         </div>
-                        <div className={`flex flex-col font-inter items-center`}>
-                            <h3 className={`text-black font-bold text-lg mb-8`}>{type === 'login' ? 'Login into SMKN 1 Depok School' : 
+                        <div className={`${DekstopLow ? 'flex flex-col font-inter items-center' : 'mx-auto'}`}>
+                            <h3 className={`text-black font-bold text-lg mb-8 ${DekstopLow ? '' : 'mt-48'}`}>{type === 'login' ? 'Login into SMKN 1 Depok School' : 
                             type === 'register' ? 'Register into SMKN 1 Depok School' : 
                             type === 'forgotpassword' ? 'Forgot Password' : 'Reset Password'}</h3>
                             {children}
@@ -69,7 +70,7 @@ const Auth = (props) => {
                                 </>
                             ) : type === 'register' ? (
                                 <>
-                                    <p className="text-black my-auto text-sm">Have an Account?</p>
+                                    <p className="text-black my-auto">Have an Account?</p>
                                     <button type="button" className="bg-white hover:bg-black text-black hover:text-white rounded-sm px-6 py-1 border border-black"
                                     onClick={() => navTo('/Siskoolbe/Login')}>Log in</button>
                                 </>

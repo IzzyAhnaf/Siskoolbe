@@ -1,11 +1,11 @@
 import React from "react";
 import { IoMdSettings } from "react-icons/io";
-import { MobileWidth } from "../MobileWidth";
+import CustomWidth  from "../CustomWidth";
 import { Link } from "react-router-dom";
 import "./Styling.css"
 
 const Homes = (props) => {
-  const WMobile = MobileWidth() <= 767;
+  const WMobile = CustomWidth() <= 767;
 
   return (
     <>
