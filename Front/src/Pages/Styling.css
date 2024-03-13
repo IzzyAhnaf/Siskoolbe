@@ -1,0 +1,66 @@
+.btn {
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.btn2 {
+    margin-top: 120px;
+    position: absolute;
+    margin-left: 20px;
+}
+
+.container2 {
+    background: white;
+    margin-top: 40px;
+    padding-left: 20px;
+    margin-left: 400px;
+    width: 750px;
+    height: 140px;
+    border-radius: 20px;
+}
+
+.container3 {
+    background: white;
+    margin-top: 190px;
+    padding-left: 20px;
+    margin-left: 140px;
+    width: 750px;
+    height: 420px;
+    border-radius: 20px;
+}
+
+.blur {
+    filter: blur(300px);
+    pointer-events: none;
+    opacity: 5;
+    transition: filter 0.5s ease;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.hovered {
+    filter: blur(3px);
+    /* Efek blur saat dihover */
+}
+
+.camera-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Pusatkan ikon kamera di tengah gambar */
+    font-size: 24px;
+    color: white;
+    opacity: 0;
+    /* Sembunyikan ikon kamera secara default */
+    transition: opacity 0.3s ease;
+    /* Animasikan perubahan opacity */
+}
+
+.image-container:hover .camera-icon {
+    opacity: 1;
+    /* Tampilkan ikon kamera saat dihover */
+}

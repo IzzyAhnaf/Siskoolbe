@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Homes from './Pages/Home.jsx'
+import Profile from './Pages/Profile.jsx'
 import Login from './Pages/Login.jsx'
 import Register from './Pages/Register.jsx'
 import FGPassword from './Pages/FGPassword.jsx'
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/Siskoolbe/ResetPassword',
     element: <RSPassword />
+  },
+  {
+    path: '/Siskoolbe/Profile',
+    element: <Profile />
   }
 ])
 
