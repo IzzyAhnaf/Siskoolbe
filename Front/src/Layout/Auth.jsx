@@ -12,7 +12,7 @@ const Auth = (props) => {
             {!WMobile ? (
                 <div className="flex justify-center items-center shadow-md bg-white">
                     <div className="w-2/4 flex flex-col bg-[#1E6CB1] font-inter items-center p-12 space-y-4 min-h-screen
-                    justify-center">
+                    justify-center text">
                         <img src="logo-onedek.png" alt="" className="rounded-lg bg-[#D9D9D9] size-28" />
                         <h3 className="text-white font-bold text-xl">SMKN 1 Depok</h3>
                         <p className="text-white text-sm text-center">
