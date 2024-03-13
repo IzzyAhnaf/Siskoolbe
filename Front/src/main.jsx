@@ -10,6 +10,7 @@ import Register from './Pages/Register.jsx'
 import FGPassword from './Pages/FGPassword.jsx'
 import RSPassword from './Pages/RSPassword.jsx'
 import SelectAuth from './Pages/SelectAuth.jsx'
+import Izin_Sakit from './Pages/Izin-Sakit.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,12 @@ const router = createBrowserRouter([
 
     children: [
       {
-
+        path: '/Siskoolbe/Profile',
+        element: <Profile />
+      },
+      {
+        path: '/Siskoolbe/Izin-Sakit',
+        element: <Izin_Sakit />
       }
     ],
   },
@@ -42,10 +48,7 @@ const router = createBrowserRouter([
     path: '/Siskoolbe/ResetPassword',
     element: <RSPassword />
   },
-  {
-    path: '/Siskoolbe/Profile',
-    element: <Profile />
-  }
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
