@@ -70,11 +70,11 @@ const Auth = (props) => {
                                     onClick={() => navTo('/Siskoolbe/Register')}>Register</button>
                             </>
                         ) : type === 'register' ? (
-                            <>
-                                <p className="text-black my-auto">Have an Account?</p>
-                                <button type="button" className="bg-white hover:bg-black text-black hover:text-white rounded-sm px-6 py-1 border border-black"
-                                    onClick={() => navTo('/Siskoolbe/Login')}>Log in</button>
-                            </>
+                              <>
+                                   <p className="text-black my-auto">Have an Account?</p>
+                                   <button type="button" className="bg-white hover:bg-black text-black hover:text-white rounded-sm px-6 py-1 border border-black"
+                                   onClick={() => navTo('/Siskoolbe/Login')}>Log in</button>
+                              </>
                         ) : (
                             <>
                                 <p className="text-black my-auto text-sm">Have an Account?</p>

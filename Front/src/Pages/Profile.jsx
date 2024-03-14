@@ -10,7 +10,6 @@ import ProfilePicture from "../components/Pp";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 
-
 const Profile = () => {
 
     const [isContainerVisible, setContainerVisible] = useState(false);
@@ -63,7 +62,6 @@ const Profile = () => {
     const Wmobile = CustomWidth() <= 767;
     const navTo = useNavigate();
 
-
     return (
         <>
             {!Wmobile ? (
@@ -85,8 +83,6 @@ const Profile = () => {
                         </div>
                         {isContainerVisible && (
                             <div className="container2 flex flex-row absolute   ">
-
-
                                 <div className="mt-[23px] absolute" onClick={handleOpenFileExplorer}>
                                     <ProfilePicture onClick={handleOpenFileExplorer} />
                                 </div>
@@ -130,9 +126,7 @@ const Profile = () => {
                                 <p className="text-gray-700 text-base"></p>
 
                             </div>)}
-
                     </div>
-
                 </div>
             ) : (
                 <>
