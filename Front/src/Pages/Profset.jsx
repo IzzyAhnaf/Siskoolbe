@@ -67,71 +67,7 @@ const ProfSet = () => {
     return (
         <>
             {!Wmobile ? (
-                <div className="flex w-screen rounded-3xl bg-[#D9D9D9] mx-4 mt-2">
-                    <div className="flex">
-                        <div className="flex flex-col">
-                            <button className="bg-white btn text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2">
-                                <div>
-                                    <h1 className="font-bold">Your Profile</h1>
-                                    <p>See your profile here</p>
-                                </div>
-                            </button>
-                            <button className="bg-white btn2 text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2 " >
-                                <div>
-                                    <h1 className="font-bold">Account Setting</h1>
-                                    <p>Setting your profile here</p>
-                                </div>
-                            </button>
-                        </div>
-                        {isContainerVisible && (
-                            <div className="container2 flex flex-row absolute   ">
-
-
-                                <div className="mt-[23px] absolute" onClick={handleOpenFileExplorer}>
-                                    <ProfilePicture onClick={handleOpenFileExplorer} />
-                                </div>
-                                <div className="ml-[140px]">
-                                    <p className="mt-11 font-bold text-3xl">Upload a New Photo</p>
-                                    <p>Profile-pic.jpg</p>
-                                </div>
-                                <div>
-                                    <button className="bg-white text-black border-solid border-2 border-black py-2 px-4 rounded   :hover:text-gray-100 mt-11 ml-28 hover:text-gray-100"> Update</button>
-                                </div>
-                            </div>)}
-                        {isContainerVisible && (
-                            <Form />
-
-                        )}
-                        {isCardVisible && (
-                            <div className={`bg-white border-[1px] border-black rounded-lg  absolute ml-[600px] mt-[100px] w-[450px] h-[165px] ${isCardVisible ? '' : 'blur'}`}>
-                                <div className=" w-[400px]">
-                                    <h2 className="text-xl font-bold"></h2>
-                                    <div className="col-span-full justify-center">
-                                        <label htmlFor="cover-photo" className="block text-sm font-medium ml-[20px] mt-[-27px] text-gray-900">
-                                            Cover photo
-                                        </label>
-                                        <div className="mt-2 flex justify-center rounded-lg border border-dashed h-[125px] ml-[3px] w-[440px] border-gray-900/25 px-6 py-8">
-                                            <div className="text-center">
-                                                <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                                    <label
-                                                        htmlFor="file-upload"
-                                                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                                                    >
-                                                        <span>Upload a file</span>
-                                                        <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                                                    </label>
-                                                    <p className="pl-1">or drag and drop</p>
-                                                </div>
-                                                <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="text-gray-700 text-base"></p>
-
-                            </div>)}
-
-                    </div>
+                <div>
 
                 </div>
             ) : (

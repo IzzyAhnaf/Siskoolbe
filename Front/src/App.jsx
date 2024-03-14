@@ -17,8 +17,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Homes />}></Route>
           <Route path='/Profile' element={<Profile />}></Route>
+          <Route path='/Profset' element={<ProfSet />}></Route >
           <Route path='/Izin-Sakit' element={<Izin_Sakit />}></Route>
-          <Route path='/ProfSet' element={<ProfSet />}></Route >
         </Routes>
 
       </div>
