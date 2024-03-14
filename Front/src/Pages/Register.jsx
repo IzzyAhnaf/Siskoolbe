@@ -1,21 +1,27 @@
 import { RiAccountCircleLine } from "react-icons/ri"
 import Auth from "../Layout/Auth"
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
+import { FaRegEye, FaRegEyeSlash, FaIdCard } from "react-icons/fa"
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { TfiEmail } from "react-icons/tfi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
+import CustomWidth from "../CustomWidth";
 
 const Register = () => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState('');
     const [nik, setNik] = useState(''); 
+    const [nis, setNis] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const DekstopLow = CustomWidth() <= 1366;
+    const WMobile = CustomWidth() <= 767;
+
     const HRegister = async () => {
         try{
-        const response = await api.post('/register', { name, nik, email, password });
+        const response = await api.post('/register', { name, nik, nis, email, password });
         response.status === 200 ? window.location.href = '/Siskoolbe/Login' : console.log(response.data);
         }catch(err){
             console.log(err);
@@ -23,7 +29,7 @@ const Register = () => {
     }
     return(
         <Auth type="register">
-            <div className="font-inter flex flex-col space-y-3 placeholder:text-sm text-sm">
+            <div className={`font-inter flex flex-col space-y-3 placeholder:text-sm text-sm ${ WMobile ? '' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
                 <div className="space-y-1">
                     <p className="font-semibold">Nik</p>
                     <div className="flex border border-black rounded-md px-5 py-2 space-x-4">
@@ -34,6 +40,18 @@ const Register = () => {
                         onChange={(e) => setNik(e.target.value)}
                         className="outline-none placeholder:text-gray-700 no-InDecrement" 
                         placeholder="Enter your Nik here"/>
+                    </div>
+                </div>
+                <div className="space-y-1">
+                    <p className="font-semibold">Nis</p>
+                    <div className="flex border border-black rounded-md px-5 py-2 space-x-4">
+                        <FaIdCard className="text-3xl" />
+                        <input type="number" 
+                        value={nis}
+                        maxLength={16}
+                        onChange={(e) => setNis(e.target.value)}
+                        className="outline-none placeholder:text-gray-700 no-InDecrement" 
+                        placeholder="Enter your Nis here"/>
                     </div>
                 </div>
                 <div className="space-y-1">

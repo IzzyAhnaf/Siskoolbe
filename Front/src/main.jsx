@@ -6,10 +6,12 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Homes from './Pages/Home.jsx'
 import Profile from './Pages/Profile.jsx'
 import Login from './Pages/Login.jsx'
+import ProfSet from './Pages/Profset.jsx'
 import Register from './Pages/Register.jsx'
 import FGPassword from './Pages/FGPassword.jsx'
 import RSPassword from './Pages/RSPassword.jsx'
 import SelectAuth from './Pages/SelectAuth.jsx'
+import Izin_Sakit from './Pages/Izin-Sakit.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,7 +20,16 @@ const router = createBrowserRouter([
 
     children: [
       {
-
+        path: '/Siskoolbe/Profile',
+        element: <Profile />
+      },
+      {
+        path: '/Siskoolbe/Profset',
+        element: <ProfSet />
+      },
+      {
+        path: '/Siskoolbe/Izin-Sakit',
+        element: <Izin_Sakit />
       }
     ],
   },
@@ -42,10 +53,7 @@ const router = createBrowserRouter([
     path: '/Siskoolbe/ResetPassword',
     element: <RSPassword />
   },
-  {
-    path: '/Siskoolbe/Profile',
-    element: <Profile />
-  }
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

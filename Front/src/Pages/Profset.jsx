@@ -11,7 +11,7 @@ import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 
 
-const Profile = () => {
+const ProfSet = () => {
 
     const [isContainerVisible, setContainerVisible] = useState(false);
 
@@ -76,7 +76,7 @@ const Profile = () => {
                                     <p>See your profile here</p>
                                 </div>
                             </button>
-                            <button onClick={toggleContainer} className="bg-white btn2 text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2 " >
+                            <button className="bg-white btn2 text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2 " >
                                 <div>
                                     <h1 className="font-bold">Account Setting</h1>
                                     <p>Setting your profile here</p>
@@ -146,19 +146,7 @@ const Profile = () => {
                             <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" />
                         </div>
                         <div className="flex flex-col w-11/12 h-[460px] rounded-3xl bg-[#D9D9D9] mx-4 pb-16 mt-4">
-                            <button className="bg-white btn text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2">
-                                <div>
-                                    <h1 className="font-bold">Your Profile</h1>
-                                    <p>See your profile here</p>
-                                </div>
-                            </button>
-                            <button className="bg-white btn2 justify-center items-center text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2 " onClick={() => navTo('/Siskoolbe/ProfSet')}>
-                                <div className=" justify-center items-center ">
-                                    <h1 className="font-bold">Account Setting</h1>
-                                    <p>Setting your profile here</p>
-                                </div>
-
-                            </button>
+                            <Form />
 
                         </div>
                     </div>
@@ -171,4 +159,4 @@ const Profile = () => {
     )
 };
 
-export default Profile
+export default ProfSet

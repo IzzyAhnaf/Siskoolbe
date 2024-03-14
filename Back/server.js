@@ -63,7 +63,7 @@ fastify.post('/login', async (request, reply) => {
 })
 
 fastify.post('/register', async (request, reply) => {
-    const { nik, name, email, password } = request.body
+    const { nik, nis, name, email, password } = request.body
 
     try{
         const Exist = await new Promise((resolve, reject) => {

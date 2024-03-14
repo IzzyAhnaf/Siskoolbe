@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { MobileWidth } from "../MobileWidth";
+import  CustomWidth  from "../CustomWidth";
 
 const SelectAuth = () => {
     const navTo = useNavigate();
-    const WMobile = MobileWidth() <= 767;
+    const WMobile = CustomWidth() <= 767;
     return (
         <div className="bg-[#1E6CB1] flex flex-col items-center justify-center h-screen text-white">
             <img src="logo-onedek.png" alt="" className="bg-[#D9D9D9] rounded-2xl size-48" />
