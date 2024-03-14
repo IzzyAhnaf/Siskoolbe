@@ -49,7 +49,7 @@ const Auth = (props) => {
                             )}
                         </div>
                         <div className={`${DekstopLow ? 'flex flex-col font-inter items-center' : 'mx-auto'}`}>
-                            <h3 className={`text-black font-bold text-lg mb-8 ${DekstopLow ? '' : 'mt-48'}`}>{type === 'login' ? 'Login into SMKN 1 Depok School' : 
+                            <h3 className={`text-black font-bold text-lg mb-8 ${DekstopLow ? '' : 'mt-36'}`}>{type === 'login' ? 'Login into SMKN 1 Depok School' : 
                             type === 'register' ? 'Register into SMKN 1 Depok School' : 
                             type === 'forgotpassword' ? 'Forgot Password' : 'Reset Password'}</h3>
                             {children}
