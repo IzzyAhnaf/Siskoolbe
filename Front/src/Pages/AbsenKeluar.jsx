@@ -110,7 +110,6 @@ const Checkin = () => {
                   <Marker position={userPosition}>
                     <Popup>Lokasi Anda</Popup>
                   </Marker>
-                  <Circle center={userPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
                 </>
               )}
               <Marker position={markerPosition}>
@@ -118,49 +117,52 @@ const Checkin = () => {
                   A pretty CSS3 popup. <br /> Easily customizable.
                 </Popup>
               </Marker>
+              <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
             </MapContainer>
-            <button onClick={handleAbsenClick} className="bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56">Absen Masuk</button>
+            <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56'>Absen Masuk</button>
           </div>
         )
       ) : (
         <>
-         <div className="flex flex-col">
-        <div className="flex flex-row">
-            <div className="flex flex-col">
-              <span className="font-semibold font-inter text-xl mt-6 mx-6">Ilham</span>
-              <span className="font-semibold font-inter text-lg mt-2 mx-6">Student</span>
+        {defaultCenter && (
+          <div className="flex flex-col w-screen">
+          <div className="flex flex-row">
+              <div className="flex flex-col">
+                <span className="font-semibold font-inter text-xl mt-6 mx-6">Ilham</span>
+                <span className="font-semibold font-inter text-lg mt-2 mx-6">Student</span>
+              </div>
+              <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
+              <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('./Profile')} />
             </div>
-            <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-            <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('./Profile')} />
+            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[470px] pb-6 mt-1 mx-2">
+            <MapContainer className="justify-center items-center w-4/5 h-96 rounded-xl"
+                center={defaultCenter}
+                zoom={17}
+                scrollWheelZoom={false}
+                style={{ height: '100%', width: '100%', justifyContent:'center', alignContent:'center', borderRadius:'12px'}} 
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {userPosition && (
+                  <>
+                    <Marker position={userPosition}>
+                      <Popup>Lokasi Anda</Popup>
+                    </Marker>
+                  </>
+                )}
+                <Marker position={markerPosition}>
+                  <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                  </Popup>
+                </Marker>
+                <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
+              </MapContainer>
+              <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white py-3 rounded-md px-12 mt-12 text-[14px] w-4/5 mx-56'>Absen Masuk</button>
+            </div>
           </div>
-          <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] mx-4 w-full justify-center h-80 mt-2 py-4">
-          <MapContainer className="justify-center items-center mx-4 w-11/12 h-80 rounded-xl"
-              center={defaultCenter}
-              zoom={17}
-              scrollWheelZoom={false}
-              style={{ height: '100%', width: '100%', justifyContent:'center', alignContent:'center', borderRadius:'24px'}} 
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {userPosition && (
-                <>
-                  <Marker position={userPosition}>
-                    <Popup>Lokasi Anda</Popup>
-                  </Marker>
-                  <Circle center={userPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
-                </>
-              )}
-              <Marker position={markerPosition}>
-                <Popup>
-                  A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-              </Marker>
-            </MapContainer>
-            <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56'>Absen Keluar</button>
-          </div>
-        </div>
+        )}
         </>
       )}
     </>
