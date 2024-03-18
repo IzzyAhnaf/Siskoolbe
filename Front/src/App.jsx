@@ -8,6 +8,7 @@ import CustomWidth from './CustomWidth'
 import Mnvbar from './components/MNavbar'
 import ProfSet from './Pages/Profset'
 
+
 function App() {
   const WMobile = CustomWidth() <= 767;
   return (
@@ -20,7 +21,6 @@ function App() {
           <Route path='/Profset' element={<ProfSet />}></Route >
           <Route path='/Izin-Sakit' element={<Izin_Sakit />}></Route>
         </Routes>
-
       </div>
     </>
   )
