@@ -47,7 +47,6 @@ const Form = () => {
                                     value={formData.fullName}
                                     onChange={handleInputChange}
                                     className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    autoComplete='none'
                                     required
                                 />
                             </div>
