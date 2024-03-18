@@ -21,7 +21,7 @@ const Mnvbar = () => {
                 </div>
             ) : (
                 <>
-                    <nav className="flex flex-row fixed justify-center items-center bottom-0 bg-[#000000] dark: bg-opacity-20 w-full ml-[-10px] space-x-1">
+                    <nav className="flex flex-row fixed justify-center items-center bottom-0 bg-[#000000] dark: bg-opacity-20 w-full ml-[-10px] space-x-5">
                         <Link className="flex flex-col items-center px-2 py-2 text-black bg-gray-100 rounded-lg dark:bg-[#1E6CB1]  dark:bg-opacity-50 dark:text-black mt-3"
                             to="/Siskoolbe/">
                             <svg className="w-5 h-5"
