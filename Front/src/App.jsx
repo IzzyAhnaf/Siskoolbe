@@ -7,7 +7,8 @@ import Sidebar from './components/Sidebar'
 import CustomWidth from './CustomWidth'
 import Mnvbar from './components/MNavbar'
 import ProfSet from './Pages/Profset'
-
+import Checkin from './Pages/AbsenMasuk'
+import Checkout from './Pages/AbsenKeluar'
 
 function App() {
   const WMobile = CustomWidth() <= 767;
@@ -20,6 +21,8 @@ function App() {
           <Route path='/Profile' element={<Profile />}></Route>
           <Route path='/Profset' element={<ProfSet />}></Route >
           <Route path='/Izin-Sakit' element={<Izin_Sakit />}></Route>
+          <Route path='/AbsenMasuk' element={<Checkin/>}></Route>
+          <Route path='/AbsenKeluar' element={<Checkout/>}></Route>
         </Routes>
       </div>
     </>

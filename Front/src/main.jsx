@@ -12,6 +12,8 @@ import FGPassword from './Pages/FGPassword.jsx'
 import RSPassword from './Pages/RSPassword.jsx'
 import SelectAuth from './Pages/SelectAuth.jsx'
 import Izin_Sakit from './Pages/Izin-Sakit.jsx'
+import Checkin from './Pages/AbsenMasuk.jsx'
+import Checkout from './Pages/AbsenKeluar.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Izin-Sakit',
         element: <Izin_Sakit />
+      },
+      {
+        path: '/Siskoolbe/AbsenMasuk',
+        element: <Checkin/>
+      },
+      {
+        path: '/Siskoolbe/AbsenKeluar',
+        element: <Checkout/>
       }
     ],
   },
