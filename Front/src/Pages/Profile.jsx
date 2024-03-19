@@ -65,7 +65,7 @@ const Profile = () => {
     return (
         <>
             {!Wmobile ? (
-                <div className="flex w-screen rounded-3xl bg-[#D9D9D9] mx-4 mt-2">
+                <div className="flex w-screen rounded-3xl bg-[#D9D9D9] mx-4">
                     <div className="flex">
                         <div className="flex flex-col">
                             <button className="bg-white btn text-black w-60 h-15  border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2">
@@ -139,20 +139,21 @@ const Profile = () => {
                             <img onClick={handleOpenFileExplorer} className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
                             <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('/Siskoolbe/Profile')} />
                         </div>
-                        <div className="flex flex-col items-center  w-[360px] h-[460px] rounded-3xl bg-[#D9D9D9] mx-4 mt-4">
-                            <button className="bg-white btn text-black w-60 h-15   border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2">
-                                <div>
-                                    <h1 className="font-bold">Your Profile</h1>
-                                    <p>See your profile here</p>
-                                </div>
-                            </button>
-                            <button className="bg-white btn2 justify-center items-center text-black w-60 h-15  border-black py-2  rounded-lg  hover:border-black hover:border-2 " onClick={() => navTo('/Siskoolbe/ProfSet')}>
-                                <div className=" justify-center items-center ">
-                                    <h1 className="font-bold">Account Setting</h1>
-                                    <p>Setting your profile here</p>
-                                </div>
-
-                            </button>
+                        <div className="flex flex-col items-center justify-center  w-[360px] h-[460px] rounded-3xl bg-[#D9D9D9] mx-[5px] mt-4">
+                            <div className="flex flex-col">
+                                <button className="bg-white text-black w-60 h-15   border-black py-2 px-1 rounded-lg  hover:border-black hover:border-2">
+                                    <div>
+                                        <h1 className="font-bold">Your Profile</h1>
+                                        <p>See your profile here</p>
+                                    </div>
+                                </button>
+                                <button className="bg-white justify-center items-center mt-[20px] text-black w-60 h-15  border-black py-2  rounded-lg  hover:border-black hover:border-2 " onClick={() => navTo('/Siskoolbe/ProfSet')}>
+                                    <div className=" justify-center items-center ">
+                                        <h1 className="font-bold">Account Setting</h1>
+                                        <p>Setting your profile here</p>
+                                    </div>
+                                </button>
+                            </div>
 
                         </div>
                     </div>

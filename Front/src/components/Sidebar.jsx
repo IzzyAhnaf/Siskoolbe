@@ -4,6 +4,9 @@ import { TbCalendarTime } from "react-icons/tb";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import CustomWidth from "../CustomWidth";
+import { PiScrollLight, PiScrollFill } from "react-icons/pi";
+
+
 
 const Sidebar = () => {
     const [SelectSidebar, setSelectSidebar] = useState(0);
@@ -20,35 +23,45 @@ const Sidebar = () => {
                 <h4 className="mx-2 mt-2 font-medium text-gray-100 dark:text-gray-200">John Doe</h4>
                 <p className="mx-2 mt-1 text-sm font-medium text-gray-100 dark:text-gray-400">Student</p>
             </div>
-            <div className="flex justify-center mt-6">
-                <nav>
-                    <Link className={`flex flex-col items-center px-4 py-2 mt-5 text-gray-100  
+            <div className="flex space-y-2 justify-center mt-[8px] ">
+                <nav className="space-y-2">
+                    <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-5 text-gray-100  
                                 ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100' : ''}
                                 rounded-lg dark:text-gray-100 hover:bg-gray-300 hover:bg-opacity-50 hover:text-gray-100`}
                         to="/Siskoolbe/"
                         onClick={() => setSelectSidebar(0)}>
                         {SelectSidebar === 0 ? <AiFillHome className="w-5 h-5" /> : <AiOutlineHome className="w-5 h-5" />}
-                        <span className="font-medium font-inter">Home</span>
+                        <span className="mx-4 font-medium font-inter">Home</span>
                     </Link>
 
-                    <Link className={`flex flex-col items-center px-4 py-2 mt-2 text-gray-100 rounded-lg
+                    <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100 rounded-lg
 
                     ${SelectSidebar === 1 ? 'bg-gray-100 bg-opacity-50' : ''} 
                     dark:text-gray-200 hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                    to="/Siskoolbe/Profile" 
-                    onClick={() => setSelectSidebar(1)}>
-                        {SelectSidebar === 1 ? <IoPerson className="w-5 h-5"/> : <IoPersonOutline className="w-5 h-5"/>}
+                        to="/Siskoolbe/Profile"
+                        onClick={() => setSelectSidebar(1)}>
+                        {SelectSidebar === 1 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
                         <span className="mx-4 font-medium font-inter">Profile</span>
                     </Link>
 
-                    <Link className={`flex flex-col items-center px-4 py-2 mt-2 text-gray-100
+                    <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                    to="/Siskoolbe/Izin-Sakit"
-                    onClick={() => setSelectSidebar(2)}>
-                        <TbCalendarTime/>
+                        to="/Siskoolbe/Izin-Sakit"
+                        onClick={() => setSelectSidebar(2)}>
+                        <TbCalendarTime className="w-5 h-5" />
                         <span className="mx-4 font-medium text-center font-inter">Izin</span>
+                    </Link>
+
+                    <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
+                    rounded-lg dark:text-gray-100 
+                    ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
+                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
+                        to="/Siskoolbe/Izin-Sakit"
+                        onClick={() => setSelectSidebar(3)}>
+                        {SelectSidebar === 3 ? <PiScrollLight className="w-5 h-5 " /> : <PiScrollFill className="w-5 h-5" />}
+                        <span className="mx-4 font-small text-center font-inter">About Us</span>
                     </Link>
                 </nav>
             </div>
