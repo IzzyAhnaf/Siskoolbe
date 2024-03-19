@@ -219,7 +219,7 @@ function IzinForm() {
                                     id="izinType"
                                     value={formData.izinType}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] w-[250px] h-[30px]  border-black rounded-md bg-transparent    text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-[1px] w-[250px] h-[35px]  border-black rounded-md bg-transparent    text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 >
                                     <option value="">Pilih jenis izin</option>

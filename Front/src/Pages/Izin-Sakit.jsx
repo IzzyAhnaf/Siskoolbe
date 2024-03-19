@@ -21,7 +21,7 @@ const Izin_Sakit = () => {
                 </div>
             ) : (
                 <>
-                    <div>
+                    <div className="flex flex-col">
                         <div className="flex flex-row">
                             <div className="flex flex-col">
                                 <span className="font-semibold font-inter text-xl mt-6 mx-6">Ilham</span>
@@ -30,7 +30,7 @@ const Izin_Sakit = () => {
                             <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
                             <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('/Siskoolbe/Profile')} />
                         </div>
-                        <div className="flex w-[360px] h-[450px] rounded-3xl  bg-[#D9D9D9] mx-4 items-center mt-[20px] ">
+                        <div className="flex w-[360px] h-[450px] rounded-3xl  bg-[#D9D9D9] mx-[5px] items-center mt-[10px] ">
                             <IzinForm />
                         </div>
                     </div>

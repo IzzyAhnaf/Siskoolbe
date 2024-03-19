@@ -81,7 +81,7 @@ const ProfSet = () => {
                             <img onClick={handleOpenFileExplorer} className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
                             <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('/Siskoolbe/Profile')} />
                         </div>
-                        <div className="flex flex-col w-[360px] h-[460px] rounded-3xl bg-[#D9D9D9] mx-4 pb-16 mt-4">
+                        <div className="flex flex-col w-[360px] h-[460px] rounded-3xl bg-[#D9D9D9] mx-[5px] pb-16 mt-4">
                             <Form />
 
                         </div>
