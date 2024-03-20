@@ -3,17 +3,20 @@ import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import { IoMdSettings } from "react-icons/io";
 import CustomWidth from "../CustomWidth";
+import { useParams } from 'react-router-dom';
+import _debounce from 'lodash/debounce';
+import api from '../api';
 
 const Checkin = () => {
   const WMobile = CustomWidth() <= 767;
-  const [userPosition, setUserPosition] = useState(null); // Initialize userPosition to null
-  const [userAddress, setUserAddress] = useState(""); // Initialize userAddress to empty string
-  const circleRadius = 100; // Radius dalam meter untuk menentukan area absen
+  const [userPosition, setUserPosition] = useState(null);
+  const [userAddress, setUserAddress] = useState(""); 
+  const circleRadius = 100; 
 
-  // Set nilai default untuk center
-  const [defaultCenter, setDefaultCenter] = useState(null); // Initialize defaultCenter to null
+  const { id, nis } = useParams();
 
-  // Define markerPosition
+  const [defaultCenter, setDefaultCenter] = useState(null); 
+
   const markerPosition = [-6.439830901148895, 106.8833946690733];
 
   useEffect(() => {
@@ -22,14 +25,14 @@ const Checkin = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setUserPosition([latitude, longitude]);
-          setDefaultCenter([latitude, longitude]); // Update defaultCenter to user's position
+          setDefaultCenter([latitude, longitude]); 
 
           // Fetch user's detailed address based on coordinates using reverse geocoding
           fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`)
             .then(response => response.json())
             .then(data => {
-              const address = data.display_name; // Extract the detailed address from the response
-              setUserAddress(address || "Lokasi Anda"); // Update userAddress state with the fetched address
+              const address = data.display_name; 
+              setUserAddress(address || "Lokasi Anda");
             })
             .catch(error => {
               console.error('Error fetching user address:', error);
@@ -50,7 +53,28 @@ const Checkin = () => {
     locateUser();
   }, []);
 
+  const absen = _debounce(async () => {
+    try{
+      const resp = await api.post('/absenmasuksiswa', {id, nis, time: new Date()}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      if(resp.status === 200){
+        alert("Absen Berhasil")
+        window.location.href = '/Siskoolbe/Siswa'
+      }
+    }
+    catch(err){
+      console.log(err)
+    }
+  }, 50)
+
   const handleAbsenClick = () => {
+
+    const currentTime = new Date();
+    const absenTimelimit = new Date();
+    const absenTimeopen = new Date();
+    absenTimelimit.setHours(7, 30, 0);
+    absenTimeopen.setHours(6, 0, 0);
+
+    
     if (!userPosition) {
       alert('Tunggu hingga lokasi Anda ditentukan.');
       return;
@@ -59,10 +83,17 @@ const Checkin = () => {
     const distance = calculateDistance(userPosition, markerPosition);
 
     if (distance > circleRadius) {
-      alert('Kamu tidak bisa absen di luar area ini.');
+      alert('Kamu tidak bisa absen di luar area onedek.');
     } else {
-      alert('Absen berhasil.');
-      // Implement logic for attendance processing here
+      if (currentTime > absenTimelimit) {
+        alert('Waktu absen sudah melewati batas.');
+        return;
+      }else if (currentTime < absenTimeopen) {
+        alert('Waktu absen belum dimulai.');
+        return;
+      }else{
+        absen()
+      }
     }
   };
 
@@ -92,7 +123,7 @@ const Checkin = () => {
       {!WMobile ? (
         defaultCenter && (
           <div className='flex flex-col w-screen item-centers justify-center h-screen bg-[#D9D9D9] mx-4'>
-            <div className="flex bg-sky-700 mt-4 mb-3 mx-[120px] h-16 rounded-3xl items-center px-2 py-2 ">
+            <div className="flex bg-sky-700 mt-4 mb-3 w-[80%] mx-auto h-16 rounded-3xl items-center px-2 py-2 ">
               <svg className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="white" d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"></path></svg>
               <span className="font-semibold font-inter text-[14px] text-white mx-2">{userAddress || "Lokasi Anda"}</span>
             </div>

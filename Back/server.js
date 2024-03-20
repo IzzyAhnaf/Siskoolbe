@@ -2,6 +2,7 @@ const fastify = require("fastify")({
     logger: true
 });
 
+const cron = require("node-cron");
 const cors = require("@fastify/cors");
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
@@ -25,11 +26,31 @@ const db = mysql.createConnection({
 db.connect((err) => {
     if (err) {
         console.log(err);
-        process.exit(1);
+        setTimeout(handleDisconnect, 1000);
     } else {    
-        
+        console.log('connected to database');
     }
 })
+
+db.on('error', (err) => {
+    console.log(err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        handleDisconnect();
+    } else {
+        console.log.error(err);
+    }
+})
+
+function handleDisconnect(){
+    db.connect((err) => {
+        if(err){
+            console.log(err);
+            setTimeout(handleDisconnect, 2000);
+        }else{
+            console.log('connected to database again');
+        }
+    })
+}
 
 
 const transporter = nodemailer.createTransport({
@@ -40,11 +61,50 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+
+cron.schedule('0 0 * * *', () => {
+    try {
+        const sql = "SELECT nis FROM siswa";
+        db.query(sql, (err, result) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            const tanggal = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+            result.forEach(({ nis }) => {
+                const insertQuery = "INSERT INTO absensisiswa (nis, tanggal) VALUES (?, ?)";
+                db.query(insertQuery, [nis, tanggal], (error, result) => {
+                    if (error) {
+                        console.error(`Error while inserting data for NIS ${nis}:`, error);
+                    } else {
+                        console.log(`Data inserted for NIS ${nis} at ${tanggal}`);
+                    }
+                });
+            });
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// Auth
 fastify.post('/login', async (request, reply) => {
     const { email, password } = request.body
 
     try{
-        const Exist = await new Promise((resolve, reject) => {
+        const ExistAdmin = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM admin WHERE email = ? AND password = ?', [email, password], (err, result) => {
+                if (err) {
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            });
+        })
+
+        const ExistSiswa = await new Promise((resolve, reject) => {
             db.query('SELECT * FROM siswa WHERE email = ? AND password = ?', [email, password], (err, result) => {
                 if (err) {
                     reject(err);
@@ -53,8 +113,27 @@ fastify.post('/login', async (request, reply) => {
                 }
             });
         })
-        if(Exist.length > 0){
-            const token = jwt.sign({ email }, 'secret', { expiresIn: '1h' });
+
+        const ExistGuru = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM guru WHERE email = ? AND password = ?', [email, password], (err, result) => {
+                if (err) {
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            });
+        })
+
+        if(ExistAdmin.length > 0){
+            const token = jwt.sign({ email, role: 'admin' }, 'secret', { expiresIn: '30d' });
+            return reply.status(200).send({ token });
+        }
+        else if(ExistSiswa.length > 0){
+            const token = jwt.sign({ email, role: 'siswa' }, 'secret', { expiresIn: '30d' });
+            return reply.status(200).send({ token });
+        }
+        else if(ExistGuru.length > 0){
+            const token = jwt.sign({ email, role: 'guru' }, 'secret', { expiresIn: '30d' });
             return reply.status(200).send({ token });
         }
     }catch(err){
@@ -65,9 +144,9 @@ fastify.post('/login', async (request, reply) => {
 fastify.post('/register', async (request, reply) => {
     const { nik, nis, name, email, password } = request.body
 
-    try{
-        const Exist = await new Promise((resolve, reject) => {
-            db.query('INSERT INTO siswa (nik, nama, email, password) VALUES (?, ?, ?, ?)', [nik, name, email, password], (err, result) => {
+    try{ 
+        const dataExist = await new Promise((resolve, reject) => {
+            db.query('SELECT nik, nis, email FROM siswa WHERE email = ? OR nik = ? OR nis = ?', [email, nik, nis], (err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -75,8 +154,27 @@ fastify.post('/register', async (request, reply) => {
                 }
             })
         })
-        if(Exist.affectedRows > 0){
-            return reply.status(200).send({ message: 'Register Success' });
+        if(dataExist.length > 0){
+            if(nik == dataExist[0].nik){
+                return reply.status(401).send({ message: 'NIK sudah terdaftar' });
+            }else if(nis == dataExist[0].nis){
+                return reply.status(401).send({ message: 'NIS sudah terdaftar' });
+            }else if(email === dataExist[0].email){
+                return reply.status(401).send({ message: 'Email sudah terdaftar' });
+            }
+        }else{
+            const Exist = await new Promise((resolve, reject) => {
+                db.query('INSERT INTO siswa (nik, nis, nama, email, password) VALUES (?, ?, ?, ?, ?)', [nik, nis, name, email, password], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+            if(Exist.affectedRows > 0){
+                return reply.status(200).send({ message: 'Success' });
+            }
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });
@@ -130,6 +228,118 @@ fastify.post('/resetpassword', async (request, reply) => {
         return reply.status(500).send({ message: err.message });
     }
 })
+
+// Siswa
+fastify.get('/siswa', async (request, reply) => {
+    const token  = request.headers.authorization;
+
+    const decoded = jwt.verify(token, 'secret');
+
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM siswa WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(Exist.length > 0){
+            return reply.status(200).send(Exist);
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.get('/absensiswa', async (request, reply) => {
+    const token  = request.headers.authorization;
+
+    const decoded = jwt.verify(token, 'secret');
+
+    try{
+        const nis = await new Promise((resolve, reject) => {
+            db.query('SELECT nis FROM siswa WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(nis.length > 0){
+            const Exist = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM absensisiswa WHERE nis = ?', [nis[0].nis], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+
+            if(Exist.length > 0){
+                return reply.status(200).send(Exist);
+            }
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/absenmasuksiswa', async (request, reply) => {
+    const { nis, id, time } = request.body
+
+    try{
+        const insert = await new Promise((resolve, reject) => {
+            db.query('UPDATE absensisiswa SET absen_masuk = ? WHERE nis = ? AND id = ?', [time, nis, id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(insert.affectedRows > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/absenkeluarsiswa', async (request, reply) => {
+    const { nis, id, time } = request.body;
+
+    try {
+        const insert = await new Promise((resolve, reject) => {
+            db.query(
+                'UPDATE absensisiswa SET absen_keluar = ? WHERE nis = ? AND id = ?',
+                [time, nis, id],
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (insert.affectedRows > 0) {
+            return reply.status(200).send({ message: 'Success' });
+        }
+    } catch (err) {
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+// Guru
+
+
+// Admin
+
 
 const start = async () => {
     try {

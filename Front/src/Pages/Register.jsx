@@ -22,13 +22,22 @@ const Register = () => {
     const HRegister = async () => {
         try{
         const response = await api.post('/register', { name, nik, nis, email, password });
-        response.status === 200 ? window.location.href = '/Siskoolbe/Login' : console.log(response.data);
+            if(response.status === 200){ 
+                if(response.data.message === 'Success'){
+                window.location.href = '/Siskoolbe/Login'
+                }else{
+                    console.log(response.data);
+                }
+            }
+            else{
+                console.log(response.data);
+            } 
         }catch(err){
             console.log(err);
         }
     }
     return(
-        <Auth type="register">
+        // <Auth type="register">
             <div className={`font-inter flex flex-col space-y-3 placeholder:text-sm text-sm ${ WMobile ? '' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
                 <div className="space-y-1">
                     <p className="font-semibold">Nik</p>
@@ -93,7 +102,7 @@ const Register = () => {
                     >Register</button>
                 </div>
             </div>
-        </Auth>
+        // </Auth>
     )
 }
 
