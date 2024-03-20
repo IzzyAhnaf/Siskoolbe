@@ -12,22 +12,27 @@ const Auth = (props) => {
         <>
             {!WMobile ? (
                 <div className="flex justify-center items-center shadow-md bg-white">
-                    <div className="w-2/4 flex flex-col bg-[#1E6CB1] font-inter items-center p-12 space-y-4 min-h-screen
-                    justify-center text">
-                        <img src="logo-onedek.png" alt="" className="rounded-lg bg-[#D9D9D9] size-28" />
+                    <div className="w-2/4 flex flex-col font-inter items-center p-12 space-y-4 min-h-screen
+                    justify-center text"
+                    style={{backgroundColor: 'rgba(30, 108, 177)',
+                    backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(d5134ed152d1ce158f3f1f390cef3cbe.jpeg)', // Gambar latar belakang dengan gradasi transparan
+                    backgroundBlendMode: 'overlay',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'left',
+                    }}>
+                        <img src="logo-onedek.png" alt="" className="rounded-lg size-38" 
+                        style={{filter: 'drop-shadow(0px 4px 20px rgba(255, 255, 255, 1))'}}/>
                         <h3 className={`text-white font-bold ${DekstopLow ? 'text-xl' : 'text-2xl'}`}>SMKN 1 Depok</h3>
                         <p className={`text-white ${DekstopLow ? 'text-sm' : 'text-md'} text-center`}>
-                            SMK Negeri 1 Depok adalah sebuah <br />
-                            Sekolah Menengah Kejuruan (SMK) <br />
-                            Negeri pertama di Kota Depok<br />
-                            dan telah mendapat status <br />
-                            sekolah PK (Pusat Keunggulan) <br />
-                            dan status sekolah BLUD <br />
+                            SMK Negeri 1 Depok adalah sebuah Sekolah <br/>
+                            Menengah Kejuruan (SMK) Negeri pertama di Kota <br/>
+                            Depok dan telah mendapat status sekolah PK <br/>
+                            (Pusat Keunggulan) dan status sekolah BLUD <br/>
                             (Badan Layanan Umum Daerah)
                         </p>
                     </div>
                     <div className={`${WMobile ? 'w-full' : 'w-3/4'} flex flex-col p-4 space-y-12 min-h-screen font-inter`}>
-                        <div className="flex font-inter justify-end space-x-2">
+                        {/* <div className="flex font-inter justify-end space-x-2">
                             {type === 'login' ? (
                                 <>
                                     <p className="text-black my-auto text-md">Don't have an Account yet?</p>
@@ -47,11 +52,21 @@ const Auth = (props) => {
                                         onClick={() => navTo('/Siskoolbe/Login')}>Log in</button>
                                 </>
                             )}
-                        </div>
-                        <div className={`${DekstopLow ? 'flex flex-col font-inter items-center' : 'mx-auto'}`}>
-                            <h3 className={`text-black font-bold text-lg mb-8 ${DekstopLow ? '' : 'mt-36'}`}>{type === 'login' ? 'Login into SMKN 1 Depok School' :
-                                type === 'register' ? 'Register into SMKN 1 Depok School' :
-                                    type === 'forgotpassword' ? 'Forgot Password' : 'Reset Password'}</h3>
+                        </div> */}
+                        <div className={`${DekstopLow ? 'flex flex-col font-inter items-center' : 'mx-auto my-auto'}`}>
+                            <h3 className={`text-black font-bold text-5xl mb-8 ${DekstopLow ? '' : ''}`}>{
+                                type === 'login' ? 'Log In' :
+                                // type === 'register' ? 'Register into SMKN 1 Depok School' :
+                                type === 'forgotpassword' ? 'Lupa Kata Sandi' : 'Reset Password'}
+                            </h3>
+                            <p className={`text-lg mb-8 text-[#636A73] ${type === "login" ? 'w-2/3' : ''}`}>
+                            {
+                                type === 'login' ? 'Masukkan email dan password yang telah tedaftar pada sistem' :
+
+                                type === 'forgotpassword' ? 'Kirim email untuk mereset password' : 
+                                'Masukkan email dan password yang telah terdaftar pada sistem'
+                            }
+                            </p>
                             {children}
                         </div>
 
@@ -62,7 +77,7 @@ const Auth = (props) => {
                 </div>
             ) : (
                 <div className="flex flex-col">
-                    <div className="flex space-x-2 justify-end font-inter p-3">
+                    {/* <div className="flex space-x-2 justify-end font-inter p-3">
                         {type === 'login' ? (
                             <>
                                 <p className="text-black my-auto text-sm">Don't have an Account yet?</p>
@@ -82,11 +97,12 @@ const Auth = (props) => {
                                     onClick={() => navTo('/Siskoolbe/Login')}>Log in</button>
                             </>
                         )}
-                    </div>
+                    </div> */}
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <h3 className={`text-black font-bold text-2xl mb-8 text-center`}>{type === 'login' ? 'Log in' :
-                            type === 'register' ? 'Register' :
-                                type === 'forgotpassword' ? 'Forgot Password' : 'Reset Password'}
+                        <h3 className={`text-black font-bold text-2xl mb-8 text-center`}>{
+                            type === 'login' ? 'Log in' :
+                            // type === 'register' ? 'Register' :
+                            type === 'forgotpassword' ? 'Forgot Password' : 'Reset Password'}
                         </h3>
                         {children}
                     </div>

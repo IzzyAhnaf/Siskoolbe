@@ -3,6 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import { IoMdSettings } from "react-icons/io";
 import CustomWidth from "../CustomWidth";
+import _debounce from 'lodash/debounce';
+import { useParams } from 'react-router-dom';
+import api from '../api';
 
 const Checkin = () => {
   const WMobile = CustomWidth() <= 767;
@@ -15,6 +18,8 @@ const Checkin = () => {
 
   // Define markerPosition
   const markerPosition = [-6.439830901148895, 106.8833946690733];
+
+  const { id, nis } = useParams();
 
   useEffect(() => {
     const locateUser = () => {
@@ -50,6 +55,19 @@ const Checkin = () => {
     locateUser();
   }, []);
 
+  const absen = _debounce(async () => {
+    const currentTime = new Date().toISOString();
+
+    try{
+      const resp = await api.post('/absenkeluarsiswa', {id, nis, time: currentTime}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      if(resp.status === 200){
+        alert("Absen Berhasil")
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }, 50)
+
   const handleAbsenClick = () => {
     if (!userPosition) {
       alert('Tunggu hingga lokasi Anda ditentukan.');
@@ -61,8 +79,7 @@ const Checkin = () => {
     if (distance > circleRadius) {
       alert('Kamu tidak bisa absen di luar area ini.');
     } else {
-      alert('Absen berhasil.');
-      // Implement logic for attendance processing here
+      absen();
     }
   };
 
@@ -119,7 +136,7 @@ const Checkin = () => {
               </Marker>
               <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
             </MapContainer>
-            <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56'>Absen Masuk</button>
+            <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56'>Absen Keluar</button>
           </div>
         )
       ) : (

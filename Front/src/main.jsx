@@ -14,6 +14,7 @@ import SelectAuth from './Pages/SelectAuth.jsx'
 import Izin_Sakit from './Pages/Izin-Sakit.jsx'
 import Checkin from './Pages/AbsenMasuk.jsx'
 import Checkout from './Pages/AbsenKeluar.jsx'
+import HomesAdmin from './Pages/HomesAdmin.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,24 +23,32 @@ const router = createBrowserRouter([
 
     children: [
       {
-        path: '/Siskoolbe/Profile',
+        path: '/Siskoolbe/Siswa',
+        element: <Homes />
+      },
+      {
+        path: '/Siskoolbe/Siswa/Profile',
         element: <Profile />
       },
       {
-        path: '/Siskoolbe/Profset',
+        path: '/Siskoolbe/Siswa/Profset',
         element: <ProfSet />
       },
       {
-        path: '/Siskoolbe/Izin-Sakit',
+        path: '/Siskoolbe/Siswa/Izin-Sakit',
         element: <Izin_Sakit />
       },
       {
-        path: '/Siskoolbe/AbsenMasuk',
+        path: '/Siskoolbe/Siswa/AbsenMasuk/:id/:nis',
         element: <Checkin/>
       },
       {
-        path: '/Siskoolbe/AbsenKeluar',
+        path: '/Siskoolbe/Siswa/AbsenKeluar/:id/:nis',
         element: <Checkout/>
+      },
+      {
+        path: '/Siskoolbe/Admin',
+        element: <HomesAdmin />
       }
     ],
   },
