@@ -148,6 +148,8 @@ fastify.post('/login', async (request, reply) => {
         else if(ExistGuru.length > 0){
             const token = jwt.sign({ email, role: 'guru' }, 'secret', { expiresIn: '30d' });
             return reply.status(200).send({ token });
+        }else{
+            return reply.status(401).send({ message: 'Invalid email or password' });
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });
@@ -353,9 +355,14 @@ fastify.post('/absenkeluarsiswa', async (request, reply) => {
 });
 
 // Guru
-
+fastify.get('/guru', async (request, reply) => {
+    return reply.status(200).send({ message: 'Success' });
+})
 
 // Admin
+fastify.get('/admin', async (request, reply) => {
+    return reply.status(200).send({ message: 'Success' });
+})
 
 
 const start = async () => {

@@ -15,6 +15,7 @@ import Izin_Sakit from './Pages/Izin-Sakit.jsx'
 import Checkin from './Pages/AbsenMasuk.jsx'
 import Checkout from './Pages/AbsenKeluar.jsx'
 import HomesAdmin from './Pages/HomesAdmin.jsx'
+import Adminguru from './Pages/Admin_Guru.jsx'
 
 const router = createBrowserRouter([
   {
@@ -40,15 +41,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/Siskoolbe/Siswa/AbsenMasuk/:id/:nis',
-        element: <Checkin/>
+        element: <Checkin />
       },
       {
         path: '/Siskoolbe/Siswa/AbsenKeluar/:id/:nis',
-        element: <Checkout/>
+        element: <Checkout />
       },
       {
         path: '/Siskoolbe/Admin',
         element: <HomesAdmin />
+      },
+      {
+        path: '/Siskoolbe/Admin_Guru',
+        element: <Adminguru />
       }
     ],
   },

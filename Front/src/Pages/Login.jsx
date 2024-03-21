@@ -6,6 +6,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import api from "../api";
 import { setCookies } from "../setCookies";
+import { jwtDecode } from "jwt-decode";
 
 
 const Login = () => {
@@ -22,8 +23,10 @@ const Login = () => {
             }            
             sessionStorage.setItem('token', response.data.token);
             window.location.href = '/Siskoolbe/'
+            console.log(jwtDecode(response.data.token));
         }
         else{ 
+            alert('Email atau Password salah');
             console.log(response.data);
         }
         }catch(err){
