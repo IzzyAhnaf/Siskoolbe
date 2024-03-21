@@ -10,11 +10,13 @@ import ProfSet from './Pages/Profset'
 import Checkin from './Pages/AbsenMasuk'
 import Checkout from './Pages/AbsenKeluar'
 import { getCookies } from './setCookies'
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import _debounce from 'lodash/debounce';
+import SidebarAdmin from './components/SidebarAdm'
 import api from './api'
-import EmptyPages  from './Pages/EmptyPages'
+import EmptyPages from './Pages/EmptyPages'
 import HomesAdmin from './Pages/HomesAdmin'
+import Adminguru from './Pages/Admin_Guru'
 
 function App() {
   const WMobile = CustomWidth() <= 767;
@@ -24,53 +26,53 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [dataProfilsiswa, setDataProfilsiswa] = useState(
     {
-    nama : '', 
-    email : '', 
-    agama : '',
-    jenis_kelamin : '',
-    tempat_lahir : '',
-    tgl_lahir : '',
-    nis: '',
-    nisn : '',
-    nik: '',
-    alamat : '',
+      nama: '',
+      email: '',
+      agama: '',
+      jenis_kelamin: '',
+      tempat_lahir: '',
+      tgl_lahir: '',
+      nis: '',
+      nisn: '',
+      nik: '',
+      alamat: '',
     });
-  
+
   const token = sessionStorage.getItem('token') || getCookies.token;
 
-    
+
   if (!token) {
     navTo('/Siskoolbe/login');
-    return null; 
+    return null;
   }
 
   const decoded = jwtDecode(token);
 
   const getProfile = _debounce(async () => {
-    try{
-      const resp = await api.get(decoded.role === 'siswa' ? '/siswa' : decoded.role === 'guru' ? '/guru' : '/admin',{
+    try {
+      const resp = await api.get(decoded.role === 'siswa' ? '/siswa' : decoded.role === 'guru' ? '/guru' : '/admin', {
         headers: {
           Authorization: `${token}`
         }
       })
-      if(resp.status === 200){
-        if(decoded.role === 'siswa'){
-          const {nama, email, agama, jenis_kelamin, tempat_lahir, tgl_lahir, nis, nisn, nik, alamat} = resp.data[0]
+      if (resp.status === 200) {
+        if (decoded.role === 'siswa') {
+          const { nama, email, agama, jenis_kelamin, tempat_lahir, tgl_lahir, nis, nisn, nik, alamat } = resp.data[0]
           setDataProfilsiswa({
-            nama : nama,
-            email : email, 
-            agama : agama,
-            jenis_kelamin :jenis_kelamin,
-            tempat_lahir : tempat_lahir,
-            tgl_lahir : tgl_lahir,
+            nama: nama,
+            email: email,
+            agama: agama,
+            jenis_kelamin: jenis_kelamin,
+            tempat_lahir: tempat_lahir,
+            tgl_lahir: tgl_lahir,
             nis: nis,
-            nisn : nisn,
+            nisn: nisn,
             nik: nik,
-            alamat : alamat
+            alamat: alamat
           })
         }
       }
-    }catch(err){
+    } catch (err) {
       navTo('/Siskoolbe/login')
     }
   }, 60);
@@ -81,11 +83,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(location.pathname === '/Siskoolbe/' && decoded.role === 'siswa'){
+    if (location.pathname === '/Siskoolbe/' && decoded.role === 'siswa') {
       navTo('/Siskoolbe/Siswa')
-    }else if(location.pathname === '/Siskoolbe/' && decoded.role === 'guru'){
+    } else if (location.pathname === '/Siskoolbe/' && decoded.role === 'guru') {
       navTo('/Siskoolbe/Guru')
-    }else if(location.pathname === '/Siskoolbe/' && decoded.role === 'admin'){
+    } else if (location.pathname === '/Siskoolbe/' && decoded.role === 'admin') {
       navTo('/Siskoolbe/Admin')
     }
   }, [decoded.role, location])
@@ -93,35 +95,39 @@ function App() {
   return (
     <>
       {loading ? (
-      <div className='flex p-2'>
-        {decoded.role === 'siswa' ? (
-        <>
-          {WMobile ? <Mnvbar /> : <Sidebar />}
-          <Routes>
-            <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow}/>}></Route>
-            <Route path='/Siswa/Profile' element={<Profile />}></Route>
-            <Route path='/Siswa/Profset' element={<ProfSet />}></Route >
-            <Route path='/Siswa/Izin-Sakit' element={<Izin_Sakit />}></Route>
-            <Route path='/Siswa/AbsenMasuk/:id/:nis' element={<Checkin/>}></Route>
-            <Route path='/Siswa/AbsenKeluar/:id/:nis' element={<Checkout/>}></Route>
-          </Routes>
-        </>
-        ) : decoded.role === 'guru' ? (
-        <Routes>
-          <Route path='/Guru' element={<Homes />}></Route>
-        </Routes>
-        ) : decoded.role === 'admin' ? (
-        <Routes>
-          <Route path='/Admin' element={<HomesAdmin />}></Route>
-        </Routes>
-        ) :  null
+        <div className='flex p-2'>
+          {decoded.role === 'siswa' ? (
+            <>
+              {WMobile ? <Mnvbar /> : <Sidebar />}
+              <Routes>
+                <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow} />}></Route>
+                <Route path='/Siswa/Profile' element={<Profile />}></Route>
+                <Route path='/Siswa/Profset' element={<ProfSet />}></Route >
+                <Route path='/Siswa/Izin-Sakit' element={<Izin_Sakit />}></Route>
+                <Route path='/Siswa/AbsenMasuk/:id/:nis' element={<Checkin />}></Route>
+                <Route path='/Siswa/AbsenKeluar/:id/:nis' element={<Checkout />}></Route>
+              </Routes>
+            </>
+          ) : decoded.role === 'guru' ? (
+            <Routes>
+              <Route path='/Guru' element={<Homes />}></Route>
+            </Routes>
+          ) : decoded.role === 'admin' ? (
+            <>
+              {WMobile ? <Mnvbar /> : <SidebarAdmin />}
+              <Routes>
+                <Route path='/Admin' element={<HomesAdmin />}></Route>
+                <Route path='/Admin_Guru' element={<Adminguru />}></Route>
+              </Routes>
+            </>
+          ) : null
           }
-      </div>
-      ):(
-        <>
-        <div className="flex text-center items-center justify-center text-5xl font-inter font-bold h-screen">
-          <p>Loading</p>
         </div>
+      ) : (
+        <>
+          <div className="flex text-center items-center justify-center text-5xl font-inter font-bold h-screen">
+            <p>Loading</p>
+          </div>
         </>
       )}
     </>
