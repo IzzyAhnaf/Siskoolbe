@@ -71,9 +71,22 @@ cron.schedule('0 0 * * *', () => {
                 return;
             }
 
-            const tanggal = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); 
+            const day = String(today.getDate()).padStart(2, '0'); 
+
+            const tanggal = `${year}-${month}-${day}`;
 
             result.forEach(({ nis }) => {
+                const checkQuery = "UPDATE absensisiswa SET status = 'closed' WHERE nis = ? AND status = 'open'";
+                db.query(checkQuery, [nis], (error, result) => {
+                    if(error){
+                        console.error(error);
+                    }else{
+                        console.log(`Data updated for NIS ${nis} at ${tanggal}`);
+                    }
+                })
                 const insertQuery = "INSERT INTO absensisiswa (nis, tanggal) VALUES (?, ?)";
                 db.query(insertQuery, [nis, tanggal], (error, result) => {
                     if (error) {
@@ -270,7 +283,7 @@ fastify.get('/absensiswa', async (request, reply) => {
         })
         if(nis.length > 0){
             const Exist = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM absensisiswa WHERE nis = ?', [nis[0].nis], (err, result) => {
+                db.query('SELECT * FROM absensisiswa WHERE nis = ? ORDER BY tanggal DESC', [nis[0].nis], (err, result) => {
                     if(err){
                         reject(err);
                     }else{
@@ -293,7 +306,7 @@ fastify.post('/absenmasuksiswa', async (request, reply) => {
 
     try{
         const insert = await new Promise((resolve, reject) => {
-            db.query('UPDATE absensisiswa SET absen_masuk = ? WHERE nis = ? AND id = ?', [time, nis, id], (err, result) => {
+            db.query('UPDATE absensisiswa SET absen_masuk = ? WHERE nis = ? AND id = ? AND status = open', [time, nis, id], (err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -303,6 +316,8 @@ fastify.post('/absenmasuksiswa', async (request, reply) => {
         })
         if(insert.affectedRows > 0){
             return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });
@@ -311,12 +326,12 @@ fastify.post('/absenmasuksiswa', async (request, reply) => {
 
 fastify.post('/absenkeluarsiswa', async (request, reply) => {
     const { nis, id, time } = request.body;
-
+    const status = 'closed';
     try {
         const insert = await new Promise((resolve, reject) => {
             db.query(
-                'UPDATE absensisiswa SET absen_keluar = ? WHERE nis = ? AND id = ?',
-                [time, nis, id],
+                'UPDATE absensisiswa SET absen_keluar = ?, status = ? WHERE nis = ? AND id = ? AND status = open',
+                [time, status, nis, id],
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -329,6 +344,8 @@ fastify.post('/absenkeluarsiswa', async (request, reply) => {
 
         if (insert.affectedRows > 0) {
             return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
         }
     } catch (err) {
         return reply.status(500).send({ message: err.message });
