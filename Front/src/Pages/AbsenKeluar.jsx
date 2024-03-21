@@ -6,6 +6,7 @@ import CustomWidth from "../CustomWidth";
 import _debounce from 'lodash/debounce';
 import { useParams } from 'react-router-dom';
 import api from '../api';
+import { CurrentTime } from '../CurrentTime';
 
 const Checkin = () => {
   const WMobile = CustomWidth() <= 767;
@@ -56,19 +57,25 @@ const Checkin = () => {
   }, []);
 
   const absen = _debounce(async () => {
-    const currentTime = new Date().toISOString();
-
     try{
-      const resp = await api.post('/absenkeluarsiswa', {id, nis, time: currentTime}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      const resp = await api.post('/absenkeluarsiswa', {id, nis, time: CurrentTime()}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
       if(resp.status === 200){
         alert("Absen Berhasil")
+        window.location.href = '/Siskoolbe/Siswa'
+      }else{
+        alert("Absen Gagal")
       }
     }catch(err){
-      console.log(err)
+      alert("Absen Gagal")
     }
   }, 50)
 
   const handleAbsenClick = () => {
+    const currentTime = new Date();
+    const absenTimeopen = new Date();
+    absenTimeopen.setHours(15, 20, 0, );
+
+
     if (!userPosition) {
       alert('Tunggu hingga lokasi Anda ditentukan.');
       return;
@@ -79,7 +86,12 @@ const Checkin = () => {
     if (distance > circleRadius) {
       alert('Kamu tidak bisa absen di luar area ini.');
     } else {
-      absen();
+      if(currentTime < absenTimeopen){
+        alert('Waktu absen belum dimulai.');
+        return;
+      }else{
+        absen();
+      }
     }
   };
 

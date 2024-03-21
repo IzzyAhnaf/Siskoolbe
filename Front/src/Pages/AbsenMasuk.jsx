@@ -6,6 +6,7 @@ import CustomWidth from "../CustomWidth";
 import { useParams } from 'react-router-dom';
 import _debounce from 'lodash/debounce';
 import api from '../api';
+import { CurrentTime } from '../CurrentTime';
 
 const Checkin = () => {
   const WMobile = CustomWidth() <= 767;
@@ -55,14 +56,16 @@ const Checkin = () => {
 
   const absen = _debounce(async () => {
     try{
-      const resp = await api.post('/absenmasuksiswa', {id, nis, time: new Date()}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      const resp = await api.post('/absenmasuksiswa', {id, nis, time: CurrentTime()}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
       if(resp.status === 200){
         alert("Absen Berhasil")
         window.location.href = '/Siskoolbe/Siswa'
+      }else{
+        alert("Absen Gagal")
       }
     }
     catch(err){
-      console.log(err)
+      alert("Absen Gagal")
     }
   }, 50)
 

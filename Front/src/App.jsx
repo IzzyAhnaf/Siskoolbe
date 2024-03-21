@@ -18,6 +18,7 @@ import HomesAdmin from './Pages/HomesAdmin'
 
 function App() {
   const WMobile = CustomWidth() <= 767;
+  const DekstopLow = CustomWidth() <= 1366;
   const navTo = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,7 @@ function App() {
         }
       }
     }catch(err){
-      console.log(err);
+      navTo('/Siskoolbe/login')
     }
   }, 60);
 
@@ -89,7 +90,7 @@ function App() {
         <>
           {WMobile ? <Mnvbar /> : <Sidebar />}
           <Routes>
-            <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token}/>}></Route>
+            <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow}/>}></Route>
             <Route path='/Siswa/Profile' element={<Profile />}></Route>
             <Route path='/Siswa/Profset' element={<ProfSet />}></Route >
             <Route path='/Siswa/Izin-Sakit' element={<Izin_Sakit />}></Route>
