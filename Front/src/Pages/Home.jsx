@@ -84,7 +84,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
                 <div className="p-2 rounded-2xl py-1 px-6 mx-2 my-3 items-center flex flex-col">
                   <span className="font-inter font-bold text-lg text-[#269400]">Masuk</span>
                   <span className="font-inter font-bold text-lg text-[#269400]">
-                    {new Date(entry.absen_keluar).toLocaleString("id-ID", {hour: '2-digit', minute: '2-digit'})}
+                    {new Date(entry.absen_masuk).toLocaleString("id-ID", {hour: '2-digit', minute: '2-digit'})}
                   </span>
                 </div>
                 )}
