@@ -36,7 +36,14 @@ function App() {
     alamat : '',
     });
   
-  const token = sessionStorage.getItem('token') || getCookies.token || '';
+  const token = sessionStorage.getItem('token') || getCookies.token;
+
+    
+  if (!token) {
+    navTo('/Siskoolbe/login');
+    return null; 
+  }
+
   const decoded = jwtDecode(token);
 
   const getProfile = _debounce(async () => {
@@ -69,6 +76,7 @@ function App() {
   }, 60);
 
   useEffect(() => {
+    console.log(token);
     token ? [sessionStorage.setItem('token', token), setLoading(true), getProfile()] : navTo('/Siskoolbe/login')
   }, []);
 
