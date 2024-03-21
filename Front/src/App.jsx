@@ -36,12 +36,8 @@ function App() {
     alamat : '',
     });
   
-    const sessionStorageToken = sessionStorage.getItem('token');
-    const cookiesToken = getCookies().token;
-    
-    const token = sessionStorageToken || cookiesToken || '';
-    
-    const decoded = jwtDecode(token);
+  const token = sessionStorage.getItem('token') || getCookies.token || '';
+  const decoded = jwtDecode(token);
 
   const getProfile = _debounce(async () => {
     try{
