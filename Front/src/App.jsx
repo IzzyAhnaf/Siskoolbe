@@ -53,9 +53,9 @@ function App() {
           Authorization: `${token}`
         }
       })
-      const {nama, email, agama, jenis_kelamin, tempat_lahir, tgl_lahir, nis, nisn, nik, alamat} = resp.data[0]
       if(resp.status === 200){
         if(decoded.role === 'siswa'){
+          const {nama, email, agama, jenis_kelamin, tempat_lahir, tgl_lahir, nis, nisn, nik, alamat} = resp.data[0]
           setDataProfilsiswa({
             nama : nama,
             email : email, 
@@ -110,12 +110,11 @@ function App() {
         <Routes>
           <Route path='/Guru' element={<Homes />}></Route>
         </Routes>
-          ) : decoded.role === "admin" ? (
+        ) : decoded.role === 'admin' ? (
         <Routes>
           <Route path='/Admin' element={<HomesAdmin />}></Route>
         </Routes>
-          ) : 
-            window.location.href = '/Siskoolbe/login'
+        ) :  null
           }
       </div>
       ):(
