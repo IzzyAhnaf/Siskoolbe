@@ -29,6 +29,16 @@
     border-radius: 20px;
 }
 
+.container4 {
+    background: white;
+    margin-top: 190px;
+    padding-left: 20px;
+    margin-left: 140px;
+    width: 750px;
+    height: 420px;
+    border-radius: 20px;
+}
+
 .blur {
     filter: blur(300px);
     pointer-events: none;

@@ -16,6 +16,7 @@ import Checkin from './Pages/AbsenMasuk.jsx'
 import Checkout from './Pages/AbsenKeluar.jsx'
 import HomesAdmin from './Pages/HomesAdmin.jsx'
 import Adminguru from './Pages/Admin_Guru.jsx'
+import TambahMurid from './Pages/TambahMurid.jsx'
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Admin',
         element: <HomesAdmin />
+      },
+      {
+        path: '/Siskoolbe/TambahMurid',
+        element: <TambahMurid />
       },
       {
         path: '/Siskoolbe/Admin_Guru',
