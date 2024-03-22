@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
-const AdminGuru = () => {
+const AdminMurid = () => {
   const navTo = useNavigate();
   const handleDelete = () => {
     Swal.fire({
@@ -67,16 +67,16 @@ const AdminGuru = () => {
             </div>
           </div>
           <button className="flex flex-row bg-[#1E6CB1] w-40 h-10 ml-[650px] mt-20 items-center rounded-[10px]"
-            onClick={() => navTo('/Siskoolbe/TambahGuru')}>
+            onClick={() => navTo('/Siskoolbe/TambahMurid')}>
             <FaPlus className="ml-3" style={{ color: '#FFFF' }} />
-            <span className="text-white mx-2 font-inter text-sm">Tambah Guru</span>
+            <span className="text-white mx-2 font-inter text-sm">Tambah Murid</span>
           </button>
         </div>
         <div className="flex flex-row mt-8 mx-8 space-x-32">
           <span className="font-semibold font-inter text-lg mt-2">No</span>
           <span className="font-semibold font-inter text-lg mt-2">Nama</span>
-          <span className="font-semibold font-inter text-lg mt-2">Jabatan</span>
-          <span className="font-semibold font-inter text-lg mt-2">Status</span>
+          <span className="font-semibold font-inter text-lg mt-2">Kelas</span>
+          <span className="font-semibold font-inter text-lg mt-2">Jurusan</span>
           <span className="font-semibold font-inter text-lg mt-2">No Hp</span>
         </div>
         <div className="flex flex-row mt-5 mx-6 bg-white rounded-xl h-16 items-center w-auto">
@@ -85,11 +85,11 @@ const AdminGuru = () => {
             <img className="w-12 h-12" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
             <span className="font-inter font-semibold text-lg mx-3 mt-2">Username</span>
           </div>
-          <span className="font-inter font-semibold text-lg ml-4 mt-2">Guru</span>
-          <span className="font-inter font-semibold text-lg mx-36 mt-2">PNS</span>
+          <span className="font-inter font-semibold text-lg ml-4 mt-2">XI</span>
+          <span className="font-inter font-semibold text-lg mx-36 mt-2">PPLG</span>
           <span className="font-inter font-semibold text-lg pr-8 mt-2">081121120897</span>
           <div className="flex flex-row mx-12 space-x-5">
-            <RiPencilFill className="w-8 h-8 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-auto" color="#1E6CB1" onClick={() => navTo('/Siskoolbe/Edit_Guru')} />
+            <RiPencilFill className="w-8 h-8 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-auto" color="#1E6CB1" onClick={() => navTo('/Siskoolbe/Edit_Murid')} />
             <BsFillTrash3Fill className="w-8 h-8 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-auto" color="#FF0000" onClick={handleDelete} />
           </div>
         </div>
@@ -98,4 +98,4 @@ const AdminGuru = () => {
     </>
   );
 };
-export default AdminGuru;
+export default AdminMurid;
