@@ -17,6 +17,8 @@ import Checkout from './Pages/AbsenKeluar.jsx'
 import HomesAdmin from './Pages/HomesAdmin.jsx'
 import Adminguru from './Pages/Admin_Guru.jsx'
 import TambahMurid from './Pages/TambahMurid.jsx'
+import TambahGuru from './Pages/TambahGuru.jsx'
+import AdminMurid from './Pages/Admin_Murid.jsx'
 
 const router = createBrowserRouter([
   {
@@ -57,8 +59,16 @@ const router = createBrowserRouter([
         element: <TambahMurid />
       },
       {
+        path: '/Siskoolbe/TambahGuru',
+        element: <TambahGuru />
+      },
+      {
         path: '/Siskoolbe/Admin_Guru',
         element: <Adminguru />
+      },
+      {
+        path: '/Siskoolbe/Admin_Murid',
+        element: <AdminMurid />
       }
     ],
   },

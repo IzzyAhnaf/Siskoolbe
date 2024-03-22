@@ -5,6 +5,8 @@ import { IoPerson, IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import CustomWidth from "../CustomWidth";
 import { PiScrollLight, PiScrollFill } from "react-icons/pi";
+import { GiTrumpetFlag } from "react-icons/gi";
+
 
 
 
@@ -40,7 +42,7 @@ const SidebarAdmin = () => {
                     dark:text-gray-200 hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
                         to="/Siskoolbe/Admin_Guru"
                         onClick={() => setSelectSidebar(1)}>
-                        <FaUserTie className="w-5 h-5"/>
+                        <FaUserTie className="w-5 h-5" />
                         <span className="mx-4 font-medium font-inter">Guru</span>
                     </Link>
 
@@ -48,9 +50,9 @@ const SidebarAdmin = () => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to=""
+                        to="/Siskoolbe/Admin_Murid"
                         onClick={() => setSelectSidebar(2)}>
-                       {SelectSidebar === 3 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
+                        {SelectSidebar === 3 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
                         <span className="mx-4 font-medium text-center font-inter">Murid</span>
                     </Link>
 
@@ -63,6 +65,17 @@ const SidebarAdmin = () => {
                         {SelectSidebar === 3 ? <PiScrollLight className="w-5 h-5 " /> : <PiScrollFill className="w-5 h-5" />}
                         <span className="mx-4 font-small text-center font-inter">About Us</span>
                     </Link>
+
+                    <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
+                    rounded-lg dark:text-gray-100 
+                    ${SelectSidebar === 4 ? 'bg-gray-100 bg-opacity-50' : ''}
+                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
+                        to=""
+                        onClick={() => setSelectSidebar(4)}>
+                        {SelectSidebar === 4 ? <PiScrollLight className="w-5 h-5 " /> : <PiScrollFill className="w-5 h-5" />}
+                        <span className="mx-4 font-small text-center font-inter">About Us</span>
+                    </Link>
+
                 </nav>
             </div>
         </aside>

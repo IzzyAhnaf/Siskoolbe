@@ -18,6 +18,8 @@ import EmptyPages from './Pages/EmptyPages'
 import HomesAdmin from './Pages/HomesAdmin'
 import Adminguru from './Pages/Admin_Guru'
 import TambahMurid from './Pages/TambahMurid'
+import TambahGuru from './Pages/TambahGuru'
+import AdminMurid from './Pages/Admin_Murid'
 
 function App() {
   const WMobile = CustomWidth() <= 767;
@@ -119,7 +121,9 @@ function App() {
               <Routes>
                 <Route path='/Admin' element={<HomesAdmin />}></Route>
                 <Route path='/Admin_Guru' element={<Adminguru />}></Route>
+                <Route path='/Admin_Murid' element={<AdminMurid />}></Route>
                 <Route path='/TambahMurid' element={<TambahMurid />}></Route>
+                <Route path='/TambahGuru' element={<TambahGuru />}></Route>
               </Routes>
             </>
           ) : null
