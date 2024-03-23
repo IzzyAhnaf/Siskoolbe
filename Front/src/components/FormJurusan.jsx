@@ -7,10 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import { GiTrumpetFlag } from "react-icons/gi";
 
-
-
-
-const FEditJurusan = () => {
+const FormJurusan = () => {
     const [formData, setFormData] = useState({
 
         Profile: null,
@@ -333,7 +330,4 @@ const FEditJurusan = () => {
         </>
     );
 };
-
-
-
-export default FEditJurusan;
+export default FormJurusan;

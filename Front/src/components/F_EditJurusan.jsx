@@ -333,7 +333,4 @@ const FEditJurusan = () => {
         </>
     );
 };
-
-
-
 export default FEditJurusan;
