@@ -21,6 +21,9 @@ import TambahJurusan from './Pages/TambahJurusan.jsx'
 import TambahGuru from './Pages/TambahGuru.jsx'
 import AdminMurid from './Pages/Admin_Murid.jsx'
 import AdminJurusan from './Pages/Admin_Jurusan.jsx'
+import EditGuru from './Pages/Edit_Guru.jsx'
+import EditJurusan from './Pages/Edit_Jurusan.jsx'
+import EditMurid from './Pages/Edit_Murid.jsx'
 
 const router = createBrowserRouter([
   {
@@ -69,6 +72,18 @@ const router = createBrowserRouter([
         element: <TambahGuru />
       },
       {
+        path: '/Siskoolbe/Edit_Guru',
+        element: <EditGuru />
+      },
+      {
+        path: '/Siskoolbe/Edit_jurusan',
+        element: <EditMurid />
+      },
+      {
+        path: '/Siskoolbe/Edit_Murid',
+        element: <EditJurusan />
+      },
+      {
         path: '/Siskoolbe/Admin_Guru',
         element: <Adminguru />
       },
@@ -79,7 +94,7 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Admin_Jurusan',
         element: <AdminJurusan />
-      }
+      },
     ],
   },
   {

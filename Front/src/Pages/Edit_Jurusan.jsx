@@ -6,6 +6,7 @@ import ImageUploader from "../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
 import FormMurid from "../components/FormMurid";
 import FormJurusan from "../components/FormJurusan";
+import FEditJurusan from "../components/F_EditJurusan";
 
 
 
@@ -18,7 +19,7 @@ const EditJurusan = () => {
                 <div>
                     <div className="flex  w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
                         <div className="flex flex-col ml-[20px] ">
-                            <FormJurusan />
+                            <FEditJurusan />
                         </div>
                     </div>
                 </div>
