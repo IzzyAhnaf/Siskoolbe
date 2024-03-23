@@ -7,9 +7,6 @@ import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import { GiTrumpetFlag } from "react-icons/gi";
 
-
-
-
 const FormJurusan = () => {
     const [formData, setFormData] = useState({
 
@@ -333,7 +330,4 @@ const FormJurusan = () => {
         </>
     );
 };
-
-
-
 export default FormJurusan;

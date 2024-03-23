@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
-import Form from "../components/Form";
+import FormProfGuru from "../components/FormProfilGuru";
 import { IoMdSettings } from "react-icons/io";
 import "./Styling.css"
 import CustomWidth from "../CustomWidth";
@@ -9,9 +9,8 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import ProfilePicture from "../components/Pp";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
-import FormProfGuru from "../components/FormProfilGuru";
 
-const Profile = () => {
+const ProfileGuru = () => {
 
     const [isContainerVisible, setContainerVisible] = useState(false);
 
@@ -26,8 +25,7 @@ const Profile = () => {
                 fullName: '',
                 email: '',
                 address: '',
-                nis: '',
-                nisn: '',
+                nik: '',
                 phoneNumber: '',
                 selectedClass: '',
             });
@@ -96,7 +94,7 @@ const Profile = () => {
                                 </div>
                             </div>)}
                         {isContainerVisible && (
-                            <Form />
+                            <FormProfGuru />
 
                         )}
                         {isCardVisible && (
@@ -166,4 +164,4 @@ const Profile = () => {
     )
 };
 
-export default Profile
+export default ProfileGuru;

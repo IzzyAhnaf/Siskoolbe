@@ -425,6 +425,4 @@ const FormMurid = () => {
     );
 };
 
-
-
 export default FormMurid;

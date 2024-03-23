@@ -425,6 +425,4 @@ const FEditMurid = () => {
     );
 };
 
-
-
 export default FEditMurid;

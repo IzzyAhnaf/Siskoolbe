@@ -6,9 +6,6 @@ import { FaBackspace } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 
-
-
-
 const FEditGuru = () => {
     const [formData, setFormData] = useState({
         nik: '',
@@ -433,7 +430,5 @@ const FEditGuru = () => {
         </>
     );
 };
-
-
 
 export default FEditGuru;

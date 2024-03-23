@@ -81,10 +81,7 @@ const AdminJurusan = () => {
         </div>
       ) : (
         <>
-
-
-
-
+        
         </>
       )}
     </>
