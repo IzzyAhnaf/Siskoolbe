@@ -17,6 +17,13 @@ import Checkout from './Pages/AbsenKeluar.jsx'
 import HomesAdmin from './Pages/HomesAdmin.jsx'
 import Adminguru from './Pages/Admin_Guru.jsx'
 import TambahMurid from './Pages/TambahMurid.jsx'
+import TambahJurusan from './Pages/TambahJurusan.jsx'
+import TambahGuru from './Pages/TambahGuru.jsx'
+import AdminMurid from './Pages/Admin_Murid.jsx'
+import AdminJurusan from './Pages/Admin_Jurusan.jsx'
+import EditGuru from './Pages/Edit_Guru.jsx'
+import EditJurusan from './Pages/Edit_Jurusan.jsx'
+import EditMurid from './Pages/Edit_Murid.jsx'
 
 const router = createBrowserRouter([
   {
@@ -57,9 +64,37 @@ const router = createBrowserRouter([
         element: <TambahMurid />
       },
       {
+        path: '/Siskoolbe/TambahJurusan',
+        element: <TambahJurusan />
+      },
+      {
+        path: '/Siskoolbe/TambahGuru',
+        element: <TambahGuru />
+      },
+      {
+        path: '/Siskoolbe/Edit_Guru',
+        element: <EditGuru />
+      },
+      {
+        path: '/Siskoolbe/Edit_jurusan',
+        element: <EditMurid />
+      },
+      {
+        path: '/Siskoolbe/Edit_Murid',
+        element: <EditJurusan />
+      },
+      {
         path: '/Siskoolbe/Admin_Guru',
         element: <Adminguru />
-      }
+      },
+      {
+        path: '/Siskoolbe/Admin_Murid',
+        element: <AdminMurid />
+      },
+      {
+        path: '/Siskoolbe/Admin_Jurusan',
+        element: <AdminJurusan />
+      },
     ],
   },
   {

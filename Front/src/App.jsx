@@ -18,6 +18,15 @@ import EmptyPages from './Pages/EmptyPages'
 import HomesAdmin from './Pages/HomesAdmin'
 import Adminguru from './Pages/Admin_Guru'
 import TambahMurid from './Pages/TambahMurid'
+import AdminMurid from './Pages/Admin_Murid'
+import AdminJurusan from './Pages/Admin_Jurusan'
+import TambahGuru from './Pages/TambahGuru'
+import TambahJurusan from './Pages/TambahJurusan'
+import EditMurid from './Pages/Edit_Murid'
+import EditGuru from './Pages/Edit_Guru'
+import EditJurusan from './Pages/Edit_Jurusan'
+import AMNavbar from './components/A_MNavbar'
+
 
 function App() {
   const WMobile = CustomWidth() <= 767;
@@ -115,11 +124,18 @@ function App() {
             </Routes>
           ) : decoded.role === 'admin' ? (
             <>
-              {WMobile ? <Mnvbar /> : <SidebarAdmin />}
+              {WMobile ? <AMNavbar /> : <SidebarAdmin />}
               <Routes>
                 <Route path='/Admin' element={<HomesAdmin />}></Route>
                 <Route path='/Admin_Guru' element={<Adminguru />}></Route>
+                <Route path='/Admin_Murid' element={<AdminMurid />}></Route>
+                <Route path='/Admin_Jurusan' element={<AdminJurusan />}></Route>
                 <Route path='/TambahMurid' element={<TambahMurid />}></Route>
+                <Route path='/TambahGuru' element={<TambahGuru />}></Route>
+                <Route path='/TambahJurusan' element={<TambahJurusan />}></Route>
+                <Route path='/Edit_Murid' element={<EditMurid />}></Route>
+                <Route path='/Edit_Guru' element={<EditGuru />}></Route>
+                <Route path='/Edit_Jurusan' element={<EditJurusan />}></Route>
               </Routes>
             </>
           ) : null
