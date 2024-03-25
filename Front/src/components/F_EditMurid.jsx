@@ -9,7 +9,7 @@ import { BiImageAlt } from "react-icons/bi";
 
 
 
-const FormMurid = () => {
+const FEditMurid = () => {
     const [formData, setFormData] = useState({
         nik: '',
         nama: '',
@@ -425,4 +425,4 @@ const FormMurid = () => {
     );
 };
 
-export default FormMurid;
+export default FEditMurid;

@@ -3,11 +3,12 @@ import CustomWidth from "../CustomWidth";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
-import FormMurid from "../components/FormMurid";
+import FormGuru from "../components/FormGuru";
+import FEditGuru from "../components/F_EditGuru";
 
 
 
-const TambahMurid = () => {
+const EditGuru = () => {
     const Wmobile = CustomWidth() <= 767;
     const navTo = useNavigate();
     return (
@@ -16,7 +17,7 @@ const TambahMurid = () => {
 
                 <div className="flex  w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
                     <div className="flex flex-col ml-[20px] ">
-                        <FormMurid />
+                        <FEditGuru />
                     </div>
                 </div>
             ) : (
@@ -41,4 +42,4 @@ const TambahMurid = () => {
     )
 }
 
-export default TambahMurid;
+export default EditGuru;

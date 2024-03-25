@@ -4,19 +4,21 @@ import { useNavigate } from "react-router-dom";
 import ImageUploader from "../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
 import FormMurid from "../components/FormMurid";
+import FormJurusan from "../components/FormJurusan";
 
 
 
-const TambahMurid = () => {
+const TambahJurusan = () => {
     const Wmobile = CustomWidth() <= 767;
     const navTo = useNavigate();
     return (
         <>
             {!Wmobile ? (
-
-                <div className="flex  w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
-                    <div className="flex flex-col ml-[20px] ">
-                        <FormMurid />
+                <div>
+                    <div className="flex w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
+                        <div className="flex flex-col ml-[20px] ">
+                            <FormJurusan />
+                        </div>
                     </div>
                 </div>
             ) : (
@@ -41,4 +43,4 @@ const TambahMurid = () => {
     )
 }
 
-export default TambahMurid;
+export default TambahJurusan;

@@ -9,7 +9,7 @@ import _debounce from 'lodash/debounce';
 import api from '../api';
 import { CurrentTime } from '../CurrentTime';
 
-const Checkin = () => {
+const CheckinGuru = () => {
   const mapRef = useRef(null);
   const WMobile = CustomWidth() <= 767;
   const [userPosition, setUserPosition] = useState(null);
@@ -171,8 +171,8 @@ const Checkin = () => {
           <div className="flex flex-col w-screen">
           <div className="flex flex-row">
               <div className="flex flex-col">
-                <span className="font-semibold font-inter text-xl mt-6 mx-6">Ilham</span>
-                <span className="font-semibold font-inter text-lg mt-2 mx-6">Student</span>
+                <span className="font-semibold font-inter text-xl mt-6 mx-6">Febrian S.Kom</span>
+                <span className="font-semibold font-inter text-lg mt-2 mx-6">Guru</span>
               </div>
               <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
               <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('./Profile')} />
@@ -210,4 +210,4 @@ const Checkin = () => {
   );
 }
 
-export default Checkin;
+export default CheckinGuru;

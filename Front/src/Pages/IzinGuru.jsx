@@ -1,22 +1,22 @@
-import IzinForm from "../components/FormSakit";
+
+import IzinFormGuru from "../components/FormIzinGuru";
 import CustomWidth from "../CustomWidth";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
-import FormMurid from "../components/FormMurid";
 
 
 
-const TambahMurid = () => {
+const Izin_Guru = () => {
     const Wmobile = CustomWidth() <= 767;
     const navTo = useNavigate();
     return (
         <>
             {!Wmobile ? (
 
-                <div className="flex  w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
-                    <div className="flex flex-col ml-[20px] ">
-                        <FormMurid />
+                <div className="flex w-screen  flex-col justify-center items-center rounded-3xl bg-[#D9D9D9] mx-4 ">
+                    <div className="flex ">
+                        <IzinFormGuru />
                     </div>
                 </div>
             ) : (
@@ -31,7 +31,7 @@ const TambahMurid = () => {
                             <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('/Siskoolbe/Profile')} />
                         </div>
                         <div className="flex w-[360px] h-[450px] rounded-3xl  bg-[#D9D9D9] mx-[5px] items-center mt-[10px] ">
-                            <FormMurid />
+                            <IzinFormGuru />
                         </div>
                     </div>
 
@@ -41,4 +41,4 @@ const TambahMurid = () => {
     )
 }
 
-export default TambahMurid;
+export default Izin_Guru;

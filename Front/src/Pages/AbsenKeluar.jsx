@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import { IoMdSettings } from "react-icons/io";
+import { RiFocus3Line } from "react-icons/ri";
 import CustomWidth from "../CustomWidth";
 import _debounce from 'lodash/debounce';
 import { useParams } from 'react-router-dom';
 import api from '../api';
 import { CurrentTime } from '../CurrentTime';
 
-const Checkin = () => {
+const Checkout = () => {
+  const mapRef = useRef(null);
   const WMobile = CustomWidth() <= 767;
   const [userPosition, setUserPosition] = useState(null); // Initialize userPosition to null
   const [userAddress, setUserAddress] = useState(""); // Initialize userAddress to empty string
@@ -116,6 +118,11 @@ const Checkin = () => {
     return distance;
   };
 
+  const handleFocusUserLocation = () => {
+    if (userPosition && mapRef.current) {
+      mapRef.current.setView(userPosition, 17);
+    }
+  };
   return (
     <>
       {!WMobile ? (
@@ -125,7 +132,7 @@ const Checkin = () => {
               <svg className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="white" d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"></path></svg>
               <span className="font-semibold font-inter text-[14px] text-white mx-2">{userAddress || "Lokasi Anda"}</span>
             </div>
-            <MapContainer className="justify-center items-center w-11/12 h-3/4 rounded-xl mx-10"
+            <MapContainer ref={mapRef} className="justify-center items-center w-11/12 h-3/4 rounded-xl mx-10 z-0"
               center={defaultCenter}
               zoom={17}
               scrollWheelZoom={false}
@@ -148,6 +155,7 @@ const Checkin = () => {
               </Marker>
               <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
             </MapContainer>
+            <button className="absolute bottom-36 right-5 mr-40"><RiFocus3Line className='w-12 h-12 absolute bg-white rounded-full px-2' style={{color:'#1E6CB1'}} onClick={handleFocusUserLocation}/></button>
             <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56'>Absen Keluar</button>
           </div>
         )
@@ -163,8 +171,8 @@ const Checkin = () => {
               <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
               <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('./Profile')} />
             </div>
-            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[470px] pb-6 mt-1 mx-2">
-            <MapContainer className="justify-center items-center w-4/5 h-96 rounded-xl"
+            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[470px] pb-6 mx-2 mt-1 z-0">
+            <MapContainer ref={mapRef} className="justify-center items-center w-full h-96 z-0"
                 center={defaultCenter}
                 zoom={17}
                 scrollWheelZoom={false}
@@ -188,6 +196,7 @@ const Checkin = () => {
                 </Marker>
                 <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
               </MapContainer>
+              <button className="absolute bottom-60 right-8"><RiFocus3Line className='w-8 h-8 bg-white red rounded-full px-2' style={{color:'#1E6CB1'}} onClick={handleFocusUserLocation}/></button>
               <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white py-3 rounded-md px-12 mt-12 text-[14px] w-4/5 mx-56'>Absen Masuk</button>
             </div>
           </div>
@@ -198,4 +207,4 @@ const Checkin = () => {
   );
 }
 
-export default Checkin;
+export default Checkout;
