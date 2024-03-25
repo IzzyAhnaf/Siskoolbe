@@ -84,11 +84,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (location.pathname === '/Siskoolbe/' && decoded.role === 'siswa') {
+    if (location.pathname === '/Siskoolbe/' || (location.pathname === '/Siskoolbe/Admin'
+    || location.pathname === '/Siskoolbe/Guru') && decoded.role === 'siswa') {
       navTo('/Siskoolbe/Siswa')
     } else if (location.pathname === '/Siskoolbe/' && decoded.role === 'guru') {
       navTo('/Siskoolbe/Guru')
-    } else if (location.pathname === '/Siskoolbe/' && decoded.role === 'admin') {
+    } else if ((location.pathname === '/Siskoolbe/' || location.pathname === '/Siskoolbe/Siswa'
+      || location.pathname === '/Siskoolbe/Siswa/Profile' || location.pathname === '/Siskoolbe/Siswa/Profset'
+      || location.pathname === '/Siskoolbe/Siswa/Izin-Sakit' || 
+      location.pathname === '/Siskoolbe/Siswa/AbsenMasuk/:id/:nis' || location.pathname === '/Siskoolbe/Siswa/AbsenKeluar/:id/:nis') && decoded.role === 'admin') {
       navTo('/Siskoolbe/Admin')
     }
   }, [decoded.role, location])
@@ -118,8 +122,8 @@ function App() {
               {WMobile ? <Mnvbar /> : <SidebarAdmin />}
               <Routes>
                 <Route path='/Admin' element={<HomesAdmin />}></Route>
-                <Route path='/Admin_Guru' element={<Adminguru />}></Route>
-                <Route path='/TambahMurid' element={<TambahMurid />}></Route>
+                <Route path='/Admin/Admin_Guru' element={<Adminguru />}></Route>
+                <Route path='/Admin/TambahMurid' element={<TambahMurid />}></Route>
               </Routes>
             </>
           ) : null

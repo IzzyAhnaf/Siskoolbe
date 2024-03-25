@@ -332,8 +332,8 @@ fastify.post('/absenkeluarsiswa', async (request, reply) => {
     try {
         const insert = await new Promise((resolve, reject) => {
             db.query(
-                'UPDATE absensisiswa SET absen_keluar = ?, status = ? WHERE nis = ? AND id = ? AND status = open',
-                [time, status, nis, id],
+                'UPDATE absensisiswa SET absen_keluar = ?, status = ? WHERE nis = ? AND id = ? AND status = ?',
+                [time, status, nis, id, 'open'],
                 (err, result) => {
                     if (err) {
                         reject(err);

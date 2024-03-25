@@ -53,11 +53,11 @@ const router = createBrowserRouter([
         element: <HomesAdmin />
       },
       {
-        path: '/Siskoolbe/TambahMurid',
+        path: '/Siskoolbe/Admin/TambahMurid',
         element: <TambahMurid />
       },
       {
-        path: '/Siskoolbe/Admin_Guru',
+        path: '/Siskoolbe/Admin/Admin_Guru',
         element: <Adminguru />
       }
     ],
