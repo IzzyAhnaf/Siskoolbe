@@ -461,8 +461,6 @@ fastify.post('/tambahjurusan', async (request, reply) => {
             });
         });
         if (insert.affectedRows > 0) {
-            return reply.status(200).send({ message: 'Success' });
-            await pipeline(image.file, fs.createWriteStream(filepath));
             const kelas = ['10', '11', '12']
             for (let i = 0; i < kelas.length; i++) {
                 db.query('INSERT INTO kelas (kelas, jurusanid) VALUES (?, ?)', [ kelas[i], insert.insertId], (err, result) => {
@@ -473,6 +471,8 @@ fastify.post('/tambahjurusan', async (request, reply) => {
                     }
                 });
             }
+            await pipeline(image.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
         } else {
             return reply.status(401).send({ message: 'Failed' });
         }
