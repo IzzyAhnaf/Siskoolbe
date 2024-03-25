@@ -8,6 +8,9 @@ const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const multipart = require('@fastify/multipart');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
+const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
     origin: 'http://localhost:5173',
@@ -358,11 +361,126 @@ fastify.post('/absenkeluarsiswa', async (request, reply) => {
 fastify.get('/guru', async (request, reply) => {
     return reply.status(200).send({ message: 'Success' });
 })
-
-// Admin
 fastify.get('/admin', async (request, reply) => {
     return reply.status(200).send({ message: 'Success' });
 })
+// Admin
+
+// -data-siswa
+fastify.get('/getSiswa_Admin', async (request, reply) => {
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM siswa', (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            return reply.status(200).send(Exist);
+        }
+        else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+// -data-guru
+fastify.get('/getGuru_Admin', async (request, reply) => {
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM guru', (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            return reply.status(200).send(Exist);
+        }
+        else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+// -data-jurusan
+fastify.get('/getJurusan_Admin', async (request, reply) => {
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM jurusan', (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            return reply.status(200).send(Exist);
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/tambahjurusan', async (request, reply) => {
+    const { namaJurusan, urutanJurusan } = request.body;
+    const image = await request.file();
+    const timestamp = Date.now();
+
+    const uploadDir = path.join(__dirname, 'Gambar/Admin/Jurusan');
+    const filepath = path.join(uploadDir, `${timestamp}-${image.filename}`);
+
+    try {
+        if(!fs.existsSync(uploadDir)){
+            fs.mkdirSync(uploadDir);
+        }
+        
+    
+        const insert = await new Promise((resolve, reject) => {
+            db.query('INSERT INTO jurusan (namajurusan, sub_jurusan, gambar) VALUES (?, ?)', [namaJurusan, urutanJurusan, `${timestamp}-${image.filename}`], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+        if (insert.affectedRows > 0) {
+            return reply.status(200).send({ message: 'Success' });
+            await pipeline(image.file, fs.createWriteStream(filepath));
+            const kelas = ['10', '11', '12']
+            for (let i = 0; i < kelas.length; i++) {
+                db.query('INSERT INTO kelas (kelas, jurusanid) VALUES (?, ?)', [ kelas[i], insert.insertId], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            }
+        } else {
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    } catch (err) {
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
 
 
 const start = async () => {

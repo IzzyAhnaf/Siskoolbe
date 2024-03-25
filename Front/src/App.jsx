@@ -146,15 +146,15 @@ function App() {
               {WMobile ? <AMNavbar /> : <SidebarAdmin />}
               <Routes>
                 <Route path='/Admin' element={<HomesAdmin />}></Route>
-                <Route path='/Admin_Guru' element={<Adminguru />}></Route>
-                <Route path='/Admin_Murid' element={<AdminMurid />}></Route>
-                <Route path='/Admin_Jurusan' element={<AdminJurusan />}></Route>
-                <Route path='/TambahMurid' element={<TambahMurid />}></Route>
-                <Route path='/TambahGuru' element={<TambahGuru />}></Route>
-                <Route path='/TambahJurusan' element={<TambahJurusan />}></Route>
-                <Route path='/Edit_Murid' element={<EditMurid />}></Route>
-                <Route path='/Edit_Guru' element={<EditGuru />}></Route>
-                <Route path='/Edit_Jurusan' element={<EditJurusan />}></Route>
+                <Route path='/Admin/Admin_Guru' element={<Adminguru />}></Route>
+                <Route path='/Admin/Admin_Murid' element={<AdminMurid />}></Route>
+                <Route path='/Admin/Admin_Jurusan' element={<AdminJurusan />}></Route>
+                <Route path='/Admin/TambahMurid' element={<TambahMurid />}></Route>
+                <Route path='/Admin/TambahGuru' element={<TambahGuru />}></Route>
+                <Route path='/Admin/TambahJurusan' element={<TambahJurusan />}></Route>
+                <Route path='/Admin/Edit_Murid' element={<EditMurid />}></Route>
+                <Route path='/Admin/Edit_Guru' element={<EditGuru />}></Route>
+                <Route path='/Admin/Edit_Jurusan' element={<EditJurusan />}></Route>
               </Routes>
             </>
           ) : null

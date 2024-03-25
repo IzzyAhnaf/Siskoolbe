@@ -11,11 +11,16 @@ import { GiTrumpetFlag } from "react-icons/gi";
 
 
 const SidebarAdmin = () => {
-    const [SelectSidebar, setSelectSidebar] = useState(0);
+    const [SelectSidebar, setSelectSidebar] = useState(sessionStorage.getItem("sidebar") || 0);
     const WMobile = CustomWidth() <= 767;
     const Homes = (props) => {
 
         const navTo = useNavigate();
+    }
+
+    const SelectSidebars = (props) => {
+        sessionStorage.setItem("sidebar", props);
+        setSelectSidebar(props);
     }
     return (
         <aside className={`flex flex-col min-h-screen px-4 py-8 overflow-y-auto rounded-xl bg-sky-700`}>
@@ -28,10 +33,10 @@ const SidebarAdmin = () => {
             <div className="flex space-y-2 justify-center mt-[8px] ">
                 <nav className="space-y-2">
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-5 text-gray-100  
-                                ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100' : ''}
+                                ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100 rounded-none' : ''}
                                 rounded-lg dark:text-gray-100 hover:bg-gray-300 hover:bg-opacity-50 hover:text-gray-100`}
                         to="/Siskoolbe/Admin"
-                        onClick={() => setSelectSidebar(0)}>
+                        onClick={() => SelectSidebars(0)}>
                         {SelectSidebar === 0 ? <AiFillHome className="w-5 h-5" /> : <AiOutlineHome className="w-5 h-5" />}
                         <span className="mx-4 font-medium font-inter">Home</span>
                     </Link>
@@ -41,7 +46,7 @@ const SidebarAdmin = () => {
                     ${SelectSidebar === 1 ? 'bg-gray-100 bg-opacity-50' : ''} 
                     dark:text-gray-200 hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
                         to="/Siskoolbe/Admin/Admin_Guru"
-                        onClick={() => setSelectSidebar(1)}>
+                        onClick={() => SelectSidebars(1)}>
                         <FaUserTie className="w-5 h-5" />
                         <span className="mx-4 font-medium font-inter">Guru</span>
                     </Link>
@@ -50,8 +55,8 @@ const SidebarAdmin = () => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to="/Siskoolbe/Admin_Murid"
-                        onClick={() => setSelectSidebar(2)}>
+                        to="/Siskoolbe/Admin/Admin_Murid"
+                        onClick={() => SelectSidebars(2)}>
                         {SelectSidebar === 3 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
                         <span className="mx-4 font-medium text-center font-inter">Murid</span>
                     </Link>
@@ -60,8 +65,8 @@ const SidebarAdmin = () => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to="/Siskoolbe/Admin_Jurusan"
-                        onClick={() => setSelectSidebar(3)}>
+                        to="/Siskoolbe/Admin/Admin_Jurusan"
+                        onClick={() => SelectSidebars(3)}>
                         {SelectSidebar === 3 ? <GiTrumpetFlag className="w-5 h-5 " /> : <GiTrumpetFlag className="w-5 h-5" />}
                         <span className="mx-4 font-small text-center font-inter">Jurusan</span>
                     </Link>
@@ -71,7 +76,7 @@ const SidebarAdmin = () => {
                     ${SelectSidebar === 4 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
                         to=""
-                        onClick={() => setSelectSidebar(4)}>
+                        onClick={() => SelectSidebars(4)}>
                         {SelectSidebar === 4 ? <PiScrollLight className="w-5 h-5 " /> : <PiScrollFill className="w-5 h-5" />}
                         <span className="mx-4 font-small text-center font-inter">About Us</span>
                     </Link>

@@ -6,6 +6,7 @@ import { FaUserTie } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import { GiTrumpetFlag } from "react-icons/gi";
+import api from '../api';
 
 const FormJurusan = () => {
     const [formData, setFormData] = useState({
@@ -100,13 +101,23 @@ const FormJurusan = () => {
         setShowIcon(true);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
+        try{
+            const resp = await api.post('/tambahjurusan', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            resp.status === 200 && console.log(resp.data);
+        }catch(err){
+            console.log(err);
+        }
     };
 
     const handleBack = () => {
-        window.history.back(); // Kembali ke halaman sebelumnya
+        window.history.back(); 
     };
 
 
@@ -114,217 +125,105 @@ const FormJurusan = () => {
     return (
         <>
             {!Wmobile ? (
-                <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                    <div className='flex flex-row space-x-4 '>
-                        <div className='mt-[20px]'>
-                            <GiTrumpetFlag className='text-blue-700 text-[30px] bg-white rounded-full ' />
+                <div className=''>
+                    <form onSubmit={handleSubmit} className="">
+                        <div className='flex space-x-4 '>
+                            <div className='mt-[20px]'>
+                                <GiTrumpetFlag className='text-blue-700 text-[30px] rounded-full ' />
+                            </div>
+                            <div>
+                                <h1 className='font-bold text-2xl mt-4'>Jurusan</h1>
+                            </div>
+                            <div className='mt-[20px]' onClick={handleBack}>
+                                <FaBackspace className='text-2xl ml-[930px]' />
+                            </div>
                         </div>
-                        <div>
-                            <h1 className='font-bold text-2xl mt-4'>Jurusan</h1>
-                        </div>
-                        <div className='mt-[20px]' onClick={handleBack}>
-                            <FaBackspace className='text-2xl ml-[930px]' />
-                        </div>
-                    </div>
-                    <div className='w-[1130px] overflow-y-auto mt-[12px] slim-scroll  h-[500px] pb-[20px]'>
-                        <div className="flex flex-col " >
+                        <div className='overflow-y-auto mt-[12px] w-full h-[850px] pb-[20px]'>
+                            <div className="flex flex-col " >
 
-                            <div className='flex flex-row'>
+                                <div className='flex'>
+                                    <div className='flex mt-4'>
+                                        <div className=''>
+                                            <label >Profile: </label>
+                                            {showImageUP && (
+                                                <div
+                                                    onClick={() => fileInputRef.current.click()} 
+                                                    onDrop={handleDrop}
+                                                    onDragOver={handleDragOver}
+                                                    className="border-[1px]  w-[530px] justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                    required
+                                                >
+                                                    <input
+                                                        type="file"
+                                                        name="gambar"
+                                                        id="gambar"
+                                                        accept="image/*"
+                                                        ref={fileInputRef}
+                                                        onChange={handleFileChange}
+                                                        className="hidden"
+                                                    />
+                                                    {showIcon && (
+                                                        <div className="image-icon flex flex-col items-center pt-[50px] pb-[50px]">
+                                                            <BiImageAlt className="w-[50px] h-[50px] text-[#00000099]" />
+                                                            <div>
+                                                                <h1 className="text-[20px] text-[#00000099] font-bold">Drag And Drop Here</h1>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
 
 
-                                <div className='flex flex-row mt-4'>
-                                    <div className=''>
-                                        <label >Profile: </label>
-                                        {showImageUP && (
-                                            <div
-                                                onClick={() => fileInputRef.current.click()} // Memicu klik pada input file saat div diklik
-                                                onDrop={handleDrop}
-                                                onDragOver={handleDragOver}
-                                                className="border-[1px]  w-[530px] justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                                required
-                                            >
-                                                <input
-                                                    type="file"
-                                                    name="Profile"
-                                                    id="Profile"
-                                                    accept="image/*"
-                                                    ref={fileInputRef} // Menghubungkan elemen input dengan useRef
-                                                    onChange={handleFileChange}
-                                                    className="hidden" // Menyembunyikan input file
-                                                />
-                                                {showIcon && (
-                                                    <div className="image-icon flex flex-col items-center pt-[50px] pb-[50px]">
-                                                        <BiImageAlt className="w-[50px] h-[50px] text-[#00000099]" />
+                                            {image && (
+                                                <div className='border-[1px] w-[530px] justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                                    <div>
+                                                        <IoMdClose onClick={handleDelete} className="text-[white] text-[30px]  mt-[20px]" />
                                                         <div>
-                                                            <h1 className="text-[20px] text-[#00000099] font-bold">Drag And Drop Here</h1>
+                                                            <img src={image} alt="Uploaded" className="w-auto z-0  " />
                                                         </div>
                                                     </div>
-                                                )}
-                                            </div>
-                                        )}
-
-
-                                        {image && (
-                                            <div className='border-[1px] w-[530px] justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
-                                                <div>
-                                                    <IoMdClose onClick={handleDelete} className="text-[white] text-[30px]  mt-[20px]" />
-                                                    <div>
-                                                        <img src={image} alt="Uploaded" className="w-auto z-0  " />
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
+                                            )}
+                                        </div>
+
                                     </div>
-
                                 </div>
-                            </div>
 
-                            <div className="flex flex-row  mt-4">
-                                <div className="mr-4">
-                                    <label htmlFor="kelas">Nama Jurusan:</label>
-                                    <input type="text" id="noHp"
-                                        name="noHp"
-                                        className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={formData.Najur}
-                                        onChange={handleInputChange} />
+                                <div className="flex mt-4">
+                                    <div className="mr-4">
+                                        <label htmlFor="kelas">Nama Jurusan:</label>
+                                        <input type="text" id="namaJurusan"
+                                            name="namaJurusan"
+                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            value={formData.namaJurusan}
+                                            onChange={handleInputChange} />
+                                    </div>
+                                    <div className='mr-4'>
+                                        <label htmlFor="noHp">Urutan Jurusan:</label>
+                                        <input type="text" id="urutanJurusan"
+                                            name="urutanJurusan"
+                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            value={formData.urutanJurusan}
+                                            onChange={handleInputChange} />
+                                    </div>
                                 </div>
-                                <div className='mr-4'>
-                                    <label htmlFor="noHp">Urutan Jurusan:</label>
-                                    <input type="text" id="noHp"
-                                        name="noHp"
-                                        className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={formData.Ujur}
-                                        onChange={handleInputChange} />
 
-
+                                <div className="flex mt-4">
+                                    <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white w-full font-bold py-2 px-4 rounded'>Tambah Jurusan</button>
                                 </div>
+
                             </div>
 
                         </div>
-
-                    </div>
-                </form>
+                    </form>
+                </div>
 
 
 
 
             ) : (
                 <>
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                        <div className=' justify-center items-center ml-2'>
-                            <h1 className='font-bold text-[20px] mt-4'>Change User Information Here</h1>
-                        </div>
-                        <div className={`container5 items-center justify-center flex flex-col ${WMobile ? 'overflow-y-auto  slim-scroll t-[200px] h-[350px] pt-[50px] pb-[20px]' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
-                            <div className=" mb-4 flex flex-col justify-center items-center">
-
-                                <div className=''>
-
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        Full Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="fullName"
-                                        name="fullName"
-                                        value={formData.fullName}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div className='mt-4'>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Nama
-                                    </label>
-
-                                    <input
-                                        type="Nama"
-                                        id="Nama"
-                                        name="Nama"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Address
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        name="address"
-                                        value={formData.address}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NIS
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nis"
-                                        name="nis"
-                                        value={formData.nis}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div >
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NISN
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nisn"
-                                        name="nisn"
-                                        value={formData.nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phoneNumber"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </form>
+               
                 </>
             )}
         </>

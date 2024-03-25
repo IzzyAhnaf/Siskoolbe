@@ -70,35 +70,35 @@ const router = createBrowserRouter([
         element: <TambahMurid />
       },
       {
-        path: '/Siskoolbe/TambahJurusan',
+        path: '/Siskoolbe/Admin/TambahJurusan',
         element: <TambahJurusan />
       },
       {
-        path: '/Siskoolbe/TambahGuru',
+        path: '/Siskoolbe/Admin/TambahGuru',
         element: <TambahGuru />
       },
       {
-        path: '/Siskoolbe/Edit_Guru',
+        path: '/Siskoolbe/Admin/Edit_Guru',
         element: <EditGuru />
       },
       {
-        path: '/Siskoolbe/Edit_jurusan',
+        path: '/Siskoolbe/Admin/Edit_jurusan',
         element: <EditMurid />
       },
       {
-        path: '/Siskoolbe/Edit_Murid',
+        path: '/Siskoolbe/Admin/Edit_Murid',
         element: <EditJurusan />
       },
       {
-        path: '/Siskoolbe/Admin_Guru',
+        path: '/Siskoolbe/Admin/Admin_Guru',
         element: <Adminguru />
       },
       {
-        path: '/Siskoolbe/Admin_Murid',
+        path: '/Siskoolbe/Admin/Admin_Murid',
         element: <AdminMurid />
       },
       {
-        path: '/Siskoolbe/Admin_Jurusan',
+        path: '/Siskoolbe/Admin/Admin_Jurusan',
         element: <AdminJurusan />
       },
       {
