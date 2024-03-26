@@ -29,6 +29,7 @@ const FormMurid = () => {
         previewImage: null,
         imageName: ''
     });
+    const DekstopLow = CustomWidth() <= 1366;
     const Wmobile = CustomWidth() <= 767;
     const [showIcon, setShowIcon] = useState(true);
     const [showImageUP, setImageUp] = useState(true);
@@ -129,20 +130,21 @@ const FormMurid = () => {
     return (
         <>
             {!Wmobile ? (
-                <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                    <div className='flex flex-row space-x-4 w-screen'>
+            <div className=''>
+                <form onSubmit={handleSubmit} className="">
+                    <div className='flex space-x-4'>
                         <div className='mt-[20px]'>
                             <FaUserTie className='text-blue-700 text-[30px] bg-white rounded-full ' />
                         </div>
                         <div>
                             <h1 className='font-bold text-2xl mt-4'>Murid</h1>
                         </div>
-                        <div className='mt-[20px] w-screen' onClick={handleBack}>
+                        <div className='mt-[20px] ' onClick={handleBack}>
                             <FaBackspace className='text-2xl ml-[930px]' />
                         </div>
                     </div>
-                    <div className='container6  w-[1120px] overflow-y-auto mt-[12px] slim-scroll  h-[500px] pb-[20px]'>
-                        <div className="flex flex-row " >
+                    <div className={`overflow-y-auto mt-[12px] slim-scroll ${DekstopLow ? 'h-[600px]' : 'h-[850px]'} pb-[20px]`}>
+                        <div className="flex" >
                             <div className="mr-4">
                                 <label htmlFor="nik">Nik:</label>
                                 <input type="text" placeholder='Masukan Nik' id="nik" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nik" value={formData.nik} onChange={handleInputChange} />
@@ -153,7 +155,7 @@ const FormMurid = () => {
                                     name="nama" value={formData.nama} onChange={handleInputChange} />
                             </div>
                         </div>
-                        <div className="flex flex-row mt-4">
+                        <div className="flex mt-4">
                             <div className="mr-4">
                                 <label htmlFor="email">Email:</label>
                                 <input type="email" placeholder='Masukan Email' id="email" name="email" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.email} onChange={handleInputChange} />
@@ -164,7 +166,7 @@ const FormMurid = () => {
 
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
+                        <div className="flex  mt-4">
                             <div className="mr-4">
                                 <label htmlFor="alamat">Alamat:</label>
                                 <textarea id="alamat" name="alamat" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -176,7 +178,7 @@ const FormMurid = () => {
                                 <textarea type="text" id="tempatLahir" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="tempatLahir" value={formData.tempatLahir} onChange={handleInputChange} />
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
+                        <div className="flex  mt-4">
                             <div className="mr-4">
                                 <label htmlFor="tanggalLahir">Tanggal Lahir:</label>
                                 <input type="date" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" id="tanggalLahir" name="tanggalLahir" value={formData.tanggalLahir} onChange={handleInputChange} />
@@ -186,7 +188,7 @@ const FormMurid = () => {
                                 <input type="text" id="nis" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nis" value={formData.nis} onChange={handleInputChange} />
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
+                        <div className="flex  mt-4">
                             <div className="mr-4">
                                 <label htmlFor="nisn">NISN:</label>
                                 <input type="text" id="nisn" name="nisn" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.nisn} onChange={handleInputChange} />
@@ -200,7 +202,7 @@ const FormMurid = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
+                        <div className="flex  mt-4">
                             <div className="mr-4">
                                 <label htmlFor="agama">Agama:</label>
                                 <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -229,7 +231,7 @@ const FormMurid = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
+                        <div className="flex  mt-4">
                             <div className="mr-4">
                                 <label htmlFor="kelas">Kelas:</label>
                                 <select id="kelas" name="kelas" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.kelas} onChange={handleInputChange}>
@@ -250,7 +252,7 @@ const FormMurid = () => {
 
                             </div>
                         </div>
-                        <div className='flex flex-row mt-4'>
+                        <div className='flex mt-4'>
                             <div className=''>
                                 <label >Profile: </label>
                                 {showImageUP && (
@@ -298,7 +300,7 @@ const FormMurid = () => {
 
                     </div>
                 </form>
-
+            </div>
 
 
 

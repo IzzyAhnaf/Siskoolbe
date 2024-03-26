@@ -14,7 +14,7 @@ const AdminJurusan = () => {
   const navTo = useNavigate();
   const [jurusan, setJurusan] = useState([]);
 
-  const handleDelete = () => {
+  const handleDelete = async (id) => {
     Swal.fire({
       title: 'Yakin ingin menghapus Jurusan?',
       icon: 'warning',
@@ -23,13 +23,28 @@ const AdminJurusan = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ok',
       cancelButtonText: 'Batal'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Jurusan telah dihapus.',
-          'success'
-        );
+        try{
+          const resp = await api.post(`/deleteJurusan/${id}`);
+          if(resp.status === 200){
+            Swal.fire(
+              'Deleted!',
+              'Jurusan telah dihapus.',
+              'success'
+            ).then(() => {
+              window.location.reload();
+            });
+          }else{
+            Swal.fire(
+              'Failed!',
+              'Jurusan gagal dihapus.',
+              'error'
+            );
+          }
+        }catch(err){
+          
+        }
       }
     });
   };
@@ -107,8 +122,8 @@ const AdminJurusan = () => {
                       <td class="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                       <td class="text-sm text-gray-900 font-light px-[-15px] py-2">
                         <div className="flex flex-row space-x-1 items-center justify-center px-0 mx-auto">
-                          <img className="w-12 h-12 right-12 mr-4" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-                          <span className="items-center mt-3 font-inter font-medium text-sm">{jurusan.namajurusan}</span>
+                          <img className="w-12 h-12 right-12 mr-4" src={`data:image/png;base64,${jurusan.image}`} alt="" />
+                          <span className="items-center font-inter font-medium text-sm">{jurusan.namajurusan}</span>
                         </div>
                       </td>
                       <td class="text-sm text-gray-900 font-medium px-0 py-2 text-center">
@@ -116,8 +131,9 @@ const AdminJurusan = () => {
                       </td>
                       <td class="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
                         <div className="flex justify-center">
-                          <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" />
-                          <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" />
+                          <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_jurusan/${jurusan.id}`)}
+                          onError={(e) => e.currentTarget.src = 'https://via.placeholder.com/150'}/>
+                          <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => handleDelete(jurusan.id)}/>
                         </div>
                       </td>
                     </tr>

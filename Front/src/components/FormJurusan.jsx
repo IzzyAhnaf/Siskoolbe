@@ -7,12 +7,13 @@ import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import { GiTrumpetFlag } from "react-icons/gi";
 import api from '../api';
+import { useNavigate } from 'react-router-dom';
 
 const FormJurusan = () => {
     const [formData, setFormData] = useState({
 
-        Profile: null,
         previewImage: null,
+        bukti: null,
         imageName: ''
     });
     const Wmobile = CustomWidth() <= 767;
@@ -20,6 +21,7 @@ const FormJurusan = () => {
     const [showImageUP, setImageUp] = useState(true);
     const fileInputRef = useRef(null);
     const [image, setImage] = useState(null);
+    const navTo = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -28,7 +30,7 @@ const FormJurusan = () => {
             [name]: value,
         }));
     };
-
+    
     const handleFileChange = (e) => {
         setShowIcon(false);
         setImageUp(false);
@@ -38,14 +40,14 @@ const FormJurusan = () => {
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     setImage(event.target.result);
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        bukti: file,
+                        previewImage: event.target.result,
+                        imageName: file.name
+                    }));
                 };
                 reader.readAsDataURL(file);
-                setFormData((prevData) => ({
-                    ...prevData,
-                    bukti: file,
-                    previewImage: event.target.result,
-                    imageName: file.name
-                }));
             } else {
                 setFormData((prevData) => ({
                     ...prevData,
@@ -59,6 +61,7 @@ const FormJurusan = () => {
             alert('No file selected.');
         }
     };
+    
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -74,14 +77,14 @@ const FormJurusan = () => {
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     setImage(event.target.result);
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        bukti: file,
+                        previewImage: event.target.result,
+                        imageName: file.name
+                    }));
                 };
                 reader.readAsDataURL(file);
-                setFormData((prevData) => ({
-                    ...prevData,
-                    bukti: file,
-                    previewImage: event.target.result,
-                    imageName: file.name
-                }));
             } else {
                 setFormData((prevData) => ({
                     ...prevData,
@@ -94,6 +97,7 @@ const FormJurusan = () => {
             alert('No file dropped.');
         }
     };
+    
 
     const handleDelete = () => {
         setImage(null);
@@ -103,18 +107,27 @@ const FormJurusan = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        const formData2 = new FormData();
+        formData2.append('bukti', formData.bukti);
+        const data =  {
+            namaJurusan: formData.namaJurusan,
+            urutanJurusan: formData.urutanJurusan
+        }
+        const encoded = JSON.stringify(data);
+
         try{
-            const resp = await api.post('/tambahjurusan', formData, {
+            const resp = await api.post('/tambahjurusan', formData2, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'data': encoded
                 }
             });
-            resp.status === 200 && console.log(resp.data);
+            resp.status === 200 && navTo('/Siskoolbe/Admin/Admin_Jurusan');
         }catch(err){
             console.log(err);
         }
     };
+    
 
     const handleBack = () => {
         window.history.back(); 

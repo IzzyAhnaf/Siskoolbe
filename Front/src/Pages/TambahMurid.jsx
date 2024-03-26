@@ -12,10 +12,9 @@ const TambahMurid = () => {
     const navTo = useNavigate();
     return (
         <>
-            {!Wmobile ? (
-
-                <div className="flex  w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
-                    <div className="flex flex-col ml-[20px] ">
+            {!Wmobile ? (   
+                <div className="flex flex-col bg-[#D9D9D9] rounded-3xl mx-4 w-full h-1/2">
+                    <div className="flex flex-col items-center w-full my-auto">
                         <FormMurid />
                     </div>
                 </div>

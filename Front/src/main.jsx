@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom'
 import Homes from './Pages/Home.jsx'
 import Profile from './Pages/Profile.jsx'
 import Login from './Pages/Login.jsx'
@@ -30,6 +30,7 @@ import ProfSetGr from './Pages/ProfSetGuru'
 import CheckinGuru from './Pages/AbsenGuru_masuk'
 import CheckoutGuru from './Pages/AbsenGuru_Keluar'
 import Izin_Guru from './Pages/IzinGuru'
+
 
 const router = createBrowserRouter([
   {
@@ -82,8 +83,8 @@ const router = createBrowserRouter([
         element: <EditGuru />
       },
       {
-        path: '/Siskoolbe/Admin/Edit_jurusan',
-        element: <EditMurid />
+        path: '/Siskoolbe/Admin/Edit_jurusan/:id',
+        element: <EditMurid />,
       },
       {
         path: '/Siskoolbe/Admin/Edit_Murid',

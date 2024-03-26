@@ -40,7 +40,7 @@ function App() {
   const DekstopLow = CustomWidth() <= 1366;
   const navTo = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [dataProfilsiswa, setDataProfilsiswa] = useState(
     {
       nama: '',
@@ -96,7 +96,8 @@ function App() {
 
   useEffect(() => {
     console.log(token);
-    token ? [sessionStorage.setItem('token', token), setLoading(true), getProfile()] : navTo('/Siskoolbe/login')
+    token ? [sessionStorage.setItem('token', token), getProfile()] : navTo('/Siskoolbe/login')
+    setTimeout(() => setLoading(false), 1000)
   }, []);
 
   useEffect(() => {
@@ -115,7 +116,7 @@ function App() {
 
   return (
     <>
-      {loading ? (
+      {!loading ? (
         <div className='flex p-2'>
           {decoded.role === 'siswa' ? (
             <>
@@ -154,18 +155,21 @@ function App() {
                 <Route path='/Admin/TambahJurusan' element={<TambahJurusan />}></Route>
                 <Route path='/Admin/Edit_Murid' element={<EditMurid />}></Route>
                 <Route path='/Admin/Edit_Guru' element={<EditGuru />}></Route>
-                <Route path='/Admin/Edit_Jurusan' element={<EditJurusan />}></Route>
+                <Route path='/Admin/Edit_Jurusan/:id' element={<EditJurusan />}></Route>
               </Routes>
             </>
           ) : null
           }
         </div>
       ) : (
-        <>
-          <div className="flex text-center items-center justify-center text-5xl font-inter font-bold h-screen">
-            <p>Loading</p>
+        <div className='flex items-center justify-center space-x-2 font-inter min-h-screen'>
+          <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span className="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 clip:rect(0,0,0,0)">...</span>
           </div>
-        </>
+          <p className='text-2xl'>Memuat</p>
+        </div>
       )}
     </>
   )

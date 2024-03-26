@@ -390,6 +390,57 @@ fastify.get('/getSiswa_Admin', async (request, reply) => {
     }
 })
 
+fastify.get('/getSiswa_Admin/:id', async (request, reply) => {
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM siswa WHERE id = ?', [request.params.id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(Exist.length > 0){
+            return reply.status(200).send(Exist);
+        }
+        else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/addSiswa_Admin', async (request, reply) => {
+    const data = request.headers.data;
+    const { nama, nis, nisn, nik, email, password, alamat, tempatLahir, TanggalLahir, JenisKelamin, Agama, Jurusan} = JSON.parse(data);
+    const file = await request.file();
+
+    try{
+        if(!file){
+            return reply.status(401).send({ message: 'Failed' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Siswa/Profil');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if(!fs.existsSync(uploadDir)){
+            fs.mkdirSync(uploadDir);
+        }
+
+        
+        const insert = await new Promise((resolve, reject) => {
+            db.query('INSERT INTO siswa (nama, nis, nisn, nik, email, password, idkelas, alamat, no_hp, tempat_lahir, tgl_lahir, jenis_kelamin, agama, gambar_profil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [nis, nisn, nik, email, password, alamat, tempatLahir, TanggalLahir, JenisKelamin, Agama, `${timestamp}-${file.filename}`],)
+        })
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+
+})
+
 // -data-guru
 fastify.get('/getGuru_Admin', async (request, reply) => {
     try{
@@ -416,43 +467,9 @@ fastify.get('/getGuru_Admin', async (request, reply) => {
 
 // -data-jurusan
 fastify.get('/getJurusan_Admin', async (request, reply) => {
-    try{
-        const Exist = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM jurusan', (err, result) => {
-                if(err){
-                    reject(err);
-                }else{
-                    resolve(result);
-                }
-            })
-        })
-
-        if(Exist.length > 0){
-            return reply.status(200).send(Exist);
-        }else{
-            return reply.status(401).send({ message: 'Failed' });
-        }
-    }catch(err){
-        return reply.status(500).send({ message: err.message });
-    }
-})
-
-fastify.post('/tambahjurusan', async (request, reply) => {
-    const { namaJurusan, urutanJurusan } = request.body;
-    const image = await request.file();
-    const timestamp = Date.now();
-
-    const uploadDir = path.join(__dirname, 'Gambar/Admin/Jurusan');
-    const filepath = path.join(uploadDir, `${timestamp}-${image.filename}`);
-
     try {
-        if(!fs.existsSync(uploadDir)){
-            fs.mkdirSync(uploadDir);
-        }
-        
-    
-        const insert = await new Promise((resolve, reject) => {
-            db.query('INSERT INTO jurusan (namajurusan, sub_jurusan, gambar) VALUES (?, ?)', [namaJurusan, urutanJurusan, `${timestamp}-${image.filename}`], (err, result) => {
+        const jurusanData = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM jurusan', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -460,18 +477,103 @@ fastify.post('/tambahjurusan', async (request, reply) => {
                 }
             });
         });
+
+        const jurusanWithImages = await Promise.all(jurusanData.map(async (jurusan) => {
+            const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
+            const image = fs.readFileSync(imagePath, 'base64');
+
+            return {
+                ...jurusan,
+                image: image
+            };
+        }));
+
+        if (jurusanWithImages.length > 0) {
+            return reply.status(200).send(jurusanWithImages);
+        } else {
+            return reply.status(401).send({ message: 'Data not found' });
+        }
+    } catch (err) {
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+fastify.get('/getJurusan_Admin/:id', async (request, reply) => {
+    try {
+        const jurusanData = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM jurusan WHERE id = ?', [request.params.id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        const jurusanWithImages = await Promise.all(jurusanData.map(async (jurusan) => {
+            const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
+            const image = fs.readFileSync(imagePath, 'base64');
+
+            return {
+                ...jurusan,
+                image: image
+            };
+        }));
+
+        if (jurusanWithImages.length > 0) {
+            return reply.status(200).send(jurusanWithImages);
+        } else {
+            return reply.status(401).send({ message: 'Data not found' });
+        }
+    } catch (err) {
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+
+fastify.post('/tambahjurusan', async (request, reply) => {
+    const data = request.headers.data;
+    const { namaJurusan, urutanJurusan } = JSON.parse(data);
+    const file = await request.file();
+
+    try {
+       
+        if (!file) {
+            return reply.status(400).send({ message: 'No image provided' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Admin/Jurusan');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir);
+        }
+
+        const insert = await new Promise((resolve, reject) => {
+            db.query('INSERT INTO jurusan (namajurusan, sub_jurusan, gambar) VALUES (?, ?, ?)', [namaJurusan, urutanJurusan, `${timestamp}-${file.filename}`], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
         if (insert.affectedRows > 0) {
-            const kelas = ['10', '11', '12']
+            const kelas = ['10', '11', '12'];
             for (let i = 0; i < kelas.length; i++) {
-                db.query('INSERT INTO kelas (kelas, jurusanid) VALUES (?, ?)', [ kelas[i], insert.insertId], (err, result) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(result);
-                    }
+                const promise = new Promise((resolve, reject) => {
+                    db.query('INSERT INTO kelas (kelas, jurusanid) VALUES (?, ?)', [kelas[i], insert.insertId], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
                 });
             }
-            await pipeline(image.file, fs.createWriteStream(filepath));
+            await pipeline(file.file, fs.createWriteStream(filepath));
             return reply.status(200).send({ message: 'Success' });
         } else {
             return reply.status(401).send({ message: 'Failed' });
@@ -481,7 +583,117 @@ fastify.post('/tambahjurusan', async (request, reply) => {
     }
 });
 
+fastify.post('/updateJurusan/:id', async (request, reply) => {
+    const data = request.headers.data;
+    const { namaJurusan, urutanJurusan } = JSON.parse(data);
+    const file = await request.file();
 
+    try{
+        if (!file) {
+            return reply.status(400).send({ message: 'No image provided' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Admin/Jurusan');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if(!fs.existsSync(uploadDir)){
+            fs.mkdirSync(uploadDir);
+        }
+
+        const get = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar FROM jurusan WHERE id = ?', [request.params.id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
+        if(get.length > 0){
+            const oldFilePath = path.join(uploadDir, get[0].gambar);
+            if(fs.existsSync(oldFilePath)){
+                fs.unlinkSync(oldFilePath);
+            }
+        }
+        const update = await new Promise((resolve, reject) => {
+            db.query('UPDATE jurusan SET namajurusan = ?, sub_jurusan = ?, gambar = ? WHERE id = ?', [namaJurusan, urutanJurusan, `${timestamp}-${file.filename}`, request.params.id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
+        if(update.affectedRows > 0){
+            await pipeline(file.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/deleteJurusan/:id', async (request, reply) => {
+    try{
+        const get = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar FROM jurusan WHERE id = ?', [request.params.id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
+        if(get.length > 0){
+ 
+
+            const selectKelas = await new Promise((resolve, reject) => {
+                db.query('SELECT id FROM kelas WHERE jurusanid = ?', [request.params.id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                })
+            })
+            if(selectKelas.length > 0){
+                const updateSiswa = await new Promise((resolve, reject) => {
+                    db.query("UPDATE siswa SET idkelas = '' WHERE idkelas IN (?)", [selectKelas], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else{
+                            resolve(result);
+                        }
+                    })
+                })
+            }
+
+            const del = await new Promise((resolve, reject) => {
+                db.query('DELETE FROM jurusan WHERE id = ?', [request.params.id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                })
+            })
+            if(del.affectedRows > 0){
+                const oldFilePath = path.join(__dirname, 'Gambar/Admin/Jurusan/', get[0].gambar);
+                if(fs.existsSync(oldFilePath)){
+                    fs.unlinkSync(oldFilePath);
+                }
+                return reply.status(200).send({ message: 'Success' });
+            }
+        }
+        
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
 
 const start = async () => {
     try {
