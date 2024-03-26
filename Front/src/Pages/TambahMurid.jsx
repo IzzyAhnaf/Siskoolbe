@@ -13,7 +13,7 @@ const TambahMurid = () => {
     return (
         <>
             {!Wmobile ? (   
-                <div className="flex flex-col bg-[#D9D9D9] rounded-3xl mx-4 w-full h-1/2">
+                <div className="flex flex-col bg-[#D9D9D9] rounded-xl mx-4 w-full">
                     <div className="flex flex-col items-center w-full my-auto">
                         <FormMurid />
                     </div>

@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 import "./Styling.css"
 import CustomWidth from '../CustomWidth';
-import { FaBackspace } from "react-icons/fa";
-`import { FaUserTie } from "react-icons/fa";`
+import { FaBackspace, FaUserTie } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 
@@ -27,6 +26,7 @@ const FEditGuru = () => {
         imageName: ''
     });
     const Wmobile = CustomWidth() <= 767;
+    const DekstopLow = CustomWidth() <= 1366;
     const [showIcon, setShowIcon] = useState(true);
     const [showImageUP, setImageUp] = useState(true);
     const fileInputRef = useRef(null);
@@ -126,19 +126,20 @@ const FEditGuru = () => {
     return (
         <>
             {!Wmobile ? (
-                <form onSubmit={handleSubmit} className="max-w mx-auto">
-                    <div className='flex flex-row space-x-4 w-[330px]'>
+                <div>
+                <form onSubmit={handleSubmit} className="">
+                    <div className='flex space-x-4'>
                         <div className='mt-[20px]'>
                             <FaUserTie className='text-blue-700 text-[30px] bg-white rounded-full ' />
                         </div>
                         <div>
                             <h1 className='font-bold text-2xl mt-4'>Guru</h1>
                         </div>
-                        <div className='mt-[20px] w-screen' onClick={handleBack}>
+                        <div className='mt-[20px]' onClick={handleBack}>
                             <FaBackspace className='text-2xl ml-[930px]' />
                         </div>
                     </div>
-                    <div className='overflow-y-auto mt-[12px] slim-scroll  h-[500px] pb-[20px]'>
+                    <div className={`overflow-y-auto mt-[12px] slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
                         <div className="flex flex-row " >
                             <div className="mr-4">
                                 <label htmlFor="nik">Nik:</label>
@@ -301,130 +302,17 @@ const FEditGuru = () => {
 
                             </div>
                         </div>
-
+                        <div className="flex mt-4">
+                            <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white w-full font-bold py-2 px-4 rounded'>Ubah Data Guru</button>
+                        </div>
                     </div>
                 </form >
-
+                </div>
 
 
 
             ) : (
                 <>
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                        <div className=' justify-center items-center ml-2'>
-                            <h1 className='font-bold text-[20px] mt-4'>Change User Information Here</h1>
-                        </div>
-                        <div className={`container5 items-center justify-center flex flex-col ${WMobile ? 'overflow-y-auto  slim-scroll t-[200px] h-[350px] pt-[50px] pb-[20px]' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
-                            <div className=" mb-4 flex flex-col justify-center items-center">
-
-                                <div className=''>
-
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        Full Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="fullName"
-                                        name="fullName"
-                                        value={formData.fullName}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div className='mt-4'>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Nama
-                                    </label>
-
-                                    <input
-                                        type="Nama"
-                                        id="Nama"
-                                        name="Nama"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Address
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        name="address"
-                                        value={formData.address}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NIS
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nis"
-                                        name="nis"
-                                        value={formData.nis}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div >
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NISN
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nisn"
-                                        name="nisn"
-                                        value={formData.nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phoneNumber"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </form>
                 </>
             )}
         </>

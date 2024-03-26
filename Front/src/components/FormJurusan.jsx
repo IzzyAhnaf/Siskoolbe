@@ -17,6 +17,7 @@ const FormJurusan = () => {
         imageName: ''
     });
     const Wmobile = CustomWidth() <= 767;
+    const DekstopLow = CustomWidth() <= 1366;
     const [showIcon, setShowIcon] = useState(true);
     const [showImageUP, setImageUp] = useState(true);
     const fileInputRef = useRef(null);
@@ -151,7 +152,7 @@ const FormJurusan = () => {
                                 <FaBackspace className='text-2xl ml-[930px]' />
                             </div>
                         </div>
-                        <div className='overflow-y-auto mt-[12px] w-full h-[850px] pb-[20px]'>
+                        <div className={`overflow-y-auto mt-[12px] w-full slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
                             <div className="flex flex-col " >
 
                                 <div className='flex'>

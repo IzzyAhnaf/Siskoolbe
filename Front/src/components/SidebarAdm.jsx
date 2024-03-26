@@ -13,6 +13,7 @@ import { GiTrumpetFlag } from "react-icons/gi";
 const SidebarAdmin = () => {
     const [SelectSidebar, setSelectSidebar] = useState(sessionStorage.getItem("sidebar") || 0);
     const WMobile = CustomWidth() <= 767;
+    const DekstopLow = CustomWidth() <= 1366;
     const Homes = (props) => {
 
         const navTo = useNavigate();
@@ -23,14 +24,14 @@ const SidebarAdmin = () => {
         setSelectSidebar(props);
     }
     return (
-        <aside className={`flex flex-col px-4 py-8 overflow-y-auto rounded-xl bg-sky-700`}>
+        <aside className={`flex flex-col px-4 py-8  rounded-xl ${DekstopLow ? 'h-[625px]' : 'h-[935px]'} bg-sky-700`}>
             <a href="#" className="mx-auto"></a>
             <div className="flex flex-col items-center mt-6 mx-2">
                 <img className="object-cover w-24 h-24 mx-2 rounded-full" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="avatar" />
                 <h4 className="mx-2 mt-2 font-medium text-gray-100 dark:text-gray-200">John Doe</h4>
                 <p className="mx-2 mt-1 text-sm font-medium text-gray-100 dark:text-gray-400">Student</p>
             </div>
-            <div className="flex space-y-2 justify-center mt-[8px] ">
+            <div className="flex space-y-2 justify-center mt-[8px] overflow-y-scroll hide-scroll">
                 <nav className="space-y-2">
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-5 text-gray-100  
                                 ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100 rounded-none' : ''}

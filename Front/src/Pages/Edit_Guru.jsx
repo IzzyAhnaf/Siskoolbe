@@ -15,8 +15,8 @@ const EditGuru = () => {
         <>
             {!Wmobile ? (
 
-                <div className="flex  w-[1130px] flex-col justify-start items-start rounded-3xl bg-[#D9D9D9] mx-4 ">
-                    <div className="flex flex-col ml-[20px] ">
+                <div className="flex flex-col bg-[#D9D9D9] rounded-xl mx-4 w-full">
+                    <div className="flex flex-col items-center w-full my-auto">
                         <FEditGuru />
                     </div>
                 </div>

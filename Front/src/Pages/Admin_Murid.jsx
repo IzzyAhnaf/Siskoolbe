@@ -13,6 +13,7 @@ import api from "../api";
 const AdminMurid = () => {
   const navTo = useNavigate();
   const Wmobile = CustomWidth() <= 767;
+  const DekstopLow = CustomWidth() <= 1366;
   const [siswa, setSiswa] = useState([]);
   const handleDelete = () => {
     Swal.fire({
@@ -60,9 +61,8 @@ const AdminMurid = () => {
   return (
     <>
 {!Wmobile ? (
-      <div className="flex flex-col h-screen w-full font-inter">
-
-        <div className="flex flex-col item-centers h-screen bg-[#D9D9D9] mx-4 rounded-3xl">
+      <div className={`flex flex-col w-full font-inter`}>
+        <div className={`flex flex-col item-centers ${DekstopLow ? 'h-[625px]' : 'h-[935px]'} bg-[#D9D9D9] mx-4 rounded-3xl `}>
           <div className="flex mt-12 space-x-2 mx-6 lg:px-6 sm:px-7">
             <FaUserTie className="w-12 h-12 bg-white rounded-full px-2" />
             <span className="font-semibold text-2xl font-inter mt-2">Murid</span>

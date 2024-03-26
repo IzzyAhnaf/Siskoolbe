@@ -143,7 +143,7 @@ const FormMurid = () => {
                             <FaBackspace className='text-2xl ml-[930px]' />
                         </div>
                     </div>
-                    <div className={`overflow-y-auto mt-[12px] slim-scroll ${DekstopLow ? 'h-[600px]' : 'h-[850px]'} pb-[20px]`}>
+                    <div className={`overflow-y-auto mt-[12px] slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
                         <div className="flex" >
                             <div className="mr-4">
                                 <label htmlFor="nik">Nik:</label>
@@ -170,12 +170,14 @@ const FormMurid = () => {
                             <div className="mr-4">
                                 <label htmlFor="alamat">Alamat:</label>
                                 <textarea id="alamat" name="alamat" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    style={{resize: "none"}}
                                     value={formData.alamat}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="mr-4">
                                 <label htmlFor="tempatLahir">Tempat Lahir:</label>
-                                <textarea type="text" id="tempatLahir" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="tempatLahir" value={formData.tempatLahir} onChange={handleInputChange} />
+                                <textarea type="text" id="tempatLahir" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
+                                style={{resize: "none"}} name="tempatLahir" value={formData.tempatLahir} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="flex  mt-4">
@@ -297,7 +299,9 @@ const FormMurid = () => {
 
                             </div>
                         </div>
-
+                        <div className="flex mt-4">
+                            <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white w-full font-bold py-2 px-4 rounded'>Tambah Murid</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -306,121 +310,7 @@ const FormMurid = () => {
 
             ) : (
                 <>
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                        <div className=' justify-center items-center ml-2'>
-                            <h1 className='font-bold text-[20px] mt-4'>Change User Information Here</h1>
-                        </div>
-                        <div className={`container5 items-center justify-center flex flex-col ${WMobile ? 'overflow-y-auto  slim-scroll t-[200px] h-[350px] pt-[50px] pb-[20px]' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
-                            <div className=" mb-4 flex flex-col justify-center items-center">
-
-                                <div className=''>
-
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        Full Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="fullName"
-                                        name="fullName"
-                                        value={formData.fullName}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div className='mt-4'>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Nama
-                                    </label>
-
-                                    <input
-                                        type="Nama"
-                                        id="Nama"
-                                        name="Nama"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Address
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        name="address"
-                                        value={formData.address}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NIS
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nis"
-                                        name="nis"
-                                        value={formData.nis}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div >
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NISN
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nisn"
-                                        name="nisn"
-                                        value={formData.nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phoneNumber"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </form>
+                    
                 </>
             )}
         </>

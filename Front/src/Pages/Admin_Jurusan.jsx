@@ -13,6 +13,7 @@ import api from "../api";
 const AdminJurusan = () => {
   const navTo = useNavigate();
   const [jurusan, setJurusan] = useState([]);
+  const DekstopLow = CustomWidth() <= 1366;
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -67,9 +68,9 @@ const AdminJurusan = () => {
   return (
     <>
       {!Wmobile ? (
-      <div className="flex flex-col h-screen w-full font-inter">
+      <div className="flex flex-col w-full font-inter">
 
-      <div className="flex flex-col item-centers h-screen bg-[#D9D9D9] mx-4 rounded-3xl">
+      <div className={`flex flex-col item-centers ${DekstopLow ? 'h-[625px]' : 'h-[935px]'} bg-[#D9D9D9] mx-4 rounded-3xl`}>
         <div className="flex mt-12 space-x-2 mx-6 lg:px-6 sm:px-7">
           <GiTrumpetFlag className="w-12 h-12 bg-white rounded-full px-2" />
           <span className="font-semibold text-2xl font-inter mt-2">Jurusan</span>
