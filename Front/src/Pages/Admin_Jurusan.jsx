@@ -57,7 +57,7 @@ const AdminJurusan = () => {
     }catch(err){
       console.log(err);
     }
-  })
+  }, 50);
 
   useEffect(() => {
     getJurusan();

@@ -10,12 +10,12 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 import _debounce from "lodash/debounce";
 import api from "../api";
 
-const AdminMurid = () => {
+const AdminMurid = async () => {
   const navTo = useNavigate();
   const Wmobile = CustomWidth() <= 767;
   const DekstopLow = CustomWidth() <= 1366;
   const [siswa, setSiswa] = useState([]);
-  const handleDelete = () => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: 'Yakin ingin menghapus murid?',
       icon: 'warning',
@@ -24,33 +24,35 @@ const AdminMurid = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ok',
       cancelButtonText: 'Batal'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Murid telah dihapus.',
-          'success'
-        );
+        try {
+          await api.post(`/deleteSiswa/${id}`);
+          Swal.fire(
+            'Deleted!',
+            'Murid telah dihapus.',
+            'success'
+          ).then(() => {
+            window.location.reload();
+          });
+        } catch (err) {
+          console.error("Failed to delete murid:", err);
+          Swal.fire(
+            'Failed!',
+            'Murid gagal dihapus.',
+            'error'
+          );
+        }
       }
     });
   };
 
-  const handleUpdates = () => {
-    Swal.fire({
-
-      icon: "success",
-      title: "Your work has been saved",
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
   const getSiswa = _debounce(async () => {
     try{
-    const resp = await api.get("/getSiswa_Admin");
-    resp.status === 200 && setSiswa(resp.data);
+      const resp = await api.get("/getSiswa_Admin");
+      resp.status === 200 && setSiswa(resp.data);
     }catch(err){
-
+      console.log(err);
     }
   }, 50)
 
@@ -116,35 +118,35 @@ const AdminMurid = () => {
                     </thead>
                     <tbody className="bg-white border-1  rounded-full">
                     {siswa && siswa.length > 0 ? (
-                        siswa.map((siswa, index) => (
-                      <tr class="" style={{ borderRadius: '24px' }}>
-                        <td class="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
-                        <td class="text-sm text-gray-900 font-light px-[-15px] py-2">
-                          <div className="flex flex-row space-x-1 w-24 px-0 mx-auto">
-                            <img className="w-12 h-12 right-12 mr-4" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-                            <span className="items-center mt-3 font-inter font-medium text-sm">{siswa.nama}</span>
-                          </div>
-                        </td>
-                        <td class="text-sm text-gray-900 font-medium py-2 text-center">
-                        {siswa.kelas}
-                        </td>
-                        <td class="text-sm text-gray-900 font-medium py-2 text-center">
-                        {siswa.jurusan} {siswa.sub_jurusan}
-                        </td>
-                        <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
-                        {siswa.no_hp}
-                        </td>
-                        <td class="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
-                          <div className="flex justify-center">
-                            <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_Murid/${siswa.id}`)}/>
-                            <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => handleDelete(siswa.id)}/>
-                          </div>
-                        </td>
-                      </tr>
+                      siswa.map((siswaItem, index) => (
+                        <tr key={siswaItem.id} className="" style={{ borderRadius: '24px' }}>
+                          <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
+                          <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
+                            <div className="flex flex-row space-x-1 w-24 px-0 mx-auto">
+                              <img className="w-12 h-12 right-12 mr-4" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
+                              <span className="items-center mt-3 font-inter font-medium text-sm">{siswaItem.nama}</span>
+                            </div>
+                          </td>
+                          <td className="text-sm text-gray-900 font-medium py-2 text-center">
+                            {siswaItem.kelas}
+                          </td>
+                          <td className="text-sm text-gray-900 font-medium py-2 text-center">
+                            {siswaItem.jurusan} {siswaItem.sub_jurusan}
+                          </td>
+                          <td className="text-sm text-gray-900 font-medium px-2 py-2 text-center">
+                            {siswaItem.no_hp}
+                          </td>
+                          <td className="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
+                            <div className="flex justify-center">
+                              <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_Murid/${siswaItem.id}`)} />
+                              <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => handleDelete(siswaItem.id)} />
+                            </div>
+                          </td>
+                        </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={'6'} className="px-4 py-2 text-center">Data Kosong</td>
+                        <td colSpan={6} className="px-4 py-2 text-center">Data Kosong</td>
                       </tr>
                     )}
                     </tbody>

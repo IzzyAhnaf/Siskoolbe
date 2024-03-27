@@ -63,14 +63,11 @@ const FEditMurid = () => {
                     jenisKelamin: response.data[0].jenis_kelamin,
                     agama: response.data[0].agama,
                     selectedJurusan: response.data[0].jurusan + '-' + response.data[0].sub_jurusan,
-                    jurusan: response.data[0].jurusan,
-                    sub_jurusan: response.data[0].sub_jurusan,
                     kelas: response.data[0].kelas,
                     bukti: file,
                     previewImage: 'data:image/png;base64,' + response.data[0].bukti,
                     imageName: response.data[0].gambar_profil
                 })
-                console.log(response.data[0]);
             }
         } catch (error) {
             window.history.back();
@@ -88,6 +85,10 @@ const FEditMurid = () => {
             setImageUp(false);
         }
     },  [formData.previewImage])
+
+    useEffect(() => {
+        console.log(formData)
+    }, [formData])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -185,7 +186,7 @@ const FEditMurid = () => {
             'DKV1': ['Desain Komunikasi Visual', 1],
             'DKV2': ['Desain Komunikasi Visual', 2],
         };
-        const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || [];
+        const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || formData.selectedJurusan.split('-');
         formData.jurusan = jurusan;
         formData.sub_jurusan = subJurusan;
 
@@ -195,6 +196,7 @@ const FEditMurid = () => {
             'nama': formData.nama,
             'email': formData.email,
             'Password': formData.Password,
+            'nik' : formData.nik,
             'nisn': formData.nisn,
             'nis': formData.nis,
             'alamat': formData.alamat,
@@ -320,7 +322,8 @@ const FEditMurid = () => {
                             </div>
                             <div className="mr-4">
                                 <label htmlFor="jurusan">Jurusan:</label>
-                                <select id="jurusan" name="jurusan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.jurusan} onChange={handleInputChange}>
+                                <select id="jurusan" name="jurusan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
+                                value={formData.jurusan} onChange={handleInputChange}>
                                     <option value="" disabled>Pilih Jurusan</option>
                                     <option value="To1" selected={formData.selectedJurusan === "Teknik Otomotif-1"}>To1</option>
                                     <option value="To2" selected={formData.selectedJurusan === "Teknik Otomotif-2"}>To2</option>

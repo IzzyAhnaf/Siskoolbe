@@ -622,7 +622,42 @@ fastify.post('/updateSiswa_Admin/:id', async (request, reply) => {
     }
 
 })
+fastify.post('/deleteSiswa_Admin/:id', async (request, reply) => {
+    try{
+        const getImage = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar_profil FROM siswa WHERE id = ?', [request.params.id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
 
+        if(getImage.length > 0){
+            const oldPath = path.join(__dirname, 'Gambar/Siswa/Profil', getImage[0].gambar_profil);
+            if(fs.existsSync(oldPath)){
+                fs.unlinkSync(oldPath);
+            }
+
+            const deleteSiswa = await new Promise((resolve, reject) => {
+                db.query('DELETE FROM siswa WHERE id = ?', [request.params.id], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+
+            if(deleteSiswa.affectedRows > 0){
+                return reply.status(200).send({ message: 'Success' });
+            }
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
 // -data-guru
 fastify.get('/getGuru_Admin', async (request, reply) => {
     try{
