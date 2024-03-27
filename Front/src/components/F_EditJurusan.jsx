@@ -9,6 +9,7 @@ import { GiTrumpetFlag } from "react-icons/gi";
 import { useNavigate, useParams } from 'react-router-dom';
 import _debounce from 'lodash/debounce';
 import api from '../api';
+import base64ToFile from '../base64toFile';
 
 const FEditJurusan = () => {
     const navTo = useNavigate();
@@ -27,24 +28,6 @@ const FEditJurusan = () => {
     const [image, setImage] = useState(null);
 
     const { id } = useParams();
-
-    function base64ToFile(base64Data, filename) {
-        const base64WithoutMetadata = base64Data.split(';base64,').pop();
-
-        const byteCharacters = atob(base64WithoutMetadata);
-        const byteNumbers = new Array(byteCharacters.length);
-
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-
-        const byteArray = new Uint8Array(byteNumbers);
-
-        const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Ganti 'image/jpeg' dengan tipe gambar yang sesuai
-
-        const file = new File([blob], filename, { type: blob.type });
-        return file;
-    }
 
     const getJurusan = _debounce(async () => {
         try {

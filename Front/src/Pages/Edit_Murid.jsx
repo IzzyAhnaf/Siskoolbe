@@ -16,7 +16,7 @@ const EditMurid = () => {
             {!Wmobile ? (
 
                 <div className="flex flex-col bg-[#D9D9D9] rounded-xl mx-4 w-full">
-                    <div className="flex flex-col ml-[20px] ">
+                    <div className="flex flex-col items-center w-full my-auto ">
                         <FEditMurid />
                     </div>
                 </div>

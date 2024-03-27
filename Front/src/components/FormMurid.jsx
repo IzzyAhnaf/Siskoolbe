@@ -5,6 +5,8 @@ import { FaBackspace } from "react-icons/fa";
 import { FaUserTie } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
+import api from '../api';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -23,7 +25,8 @@ const FormMurid = () => {
         nisn: '',
         jenisKelamin: '',
         agama: '',
-        jurusan: '',
+        jurusan: null,
+        sub_jurusan: null,
         kelas: '',
         bukti: null,
         previewImage: null,
@@ -31,6 +34,7 @@ const FormMurid = () => {
     });
     const DekstopLow = CustomWidth() <= 1366;
     const Wmobile = CustomWidth() <= 767;
+    const navTo = useNavigate();
     const [showIcon, setShowIcon] = useState(true);
     const [showImageUP, setImageUp] = useState(true);
     const fileInputRef = useRef(null);
@@ -116,9 +120,46 @@ const FormMurid = () => {
         setShowIcon(true);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        const jurusanMap = {
+            'PPLG1': ['Pengembangan Perangkat Lunak dan Gim', 1],
+            'PPLG2': ['Pengembangan Perangkat Lunak dan Gim', 2],
+            'AKL1': ['Akutansi Keuangan Lembaga', 1],
+            'AKL2': ['Akutansi Keuangan Lembaga', 2],
+            'To1': ['Teknik Otomotif', 1],
+            'To2': ['Teknik Otomotif', 2],
+            'To3': ['Teknik Otomotif', 3],
+            'To4': ['Teknik Otomotif', 4],
+            'PerHotelan1': ['Perhotelan', 1],
+            'PerHotelan2': ['Perhotelan', 2],
+            'DKV1': ['Desain Komunikasi Visual', 1],
+            'DKV2': ['Desain Komunikasi Visual', 2],
+        };
+        const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || [];
+        formData.jurusan = jurusan;
+        formData.sub_jurusan = subJurusan;
+
+        const formData2 = new FormData();
+        formData2.append('image', formData.bukti);
+        const encoded = JSON.stringify(formData);
+        
+        try {
+            const response = await api.post('/addSiswa_Admin', formData2, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'data' : encoded
+                }
+            });
+
+            if (response.status === 200) {
+                navTo('/Siskoolbe/Admin/Admin_Murid');
+            }else{
+                console.log('Error: ', response.data);
+            }
+        }catch (err) {
+            console.log(err);
+        }
     };
 
     const handleBack = () => {
@@ -217,7 +258,7 @@ const FormMurid = () => {
                             <div className="mr-4">
                                 <label htmlFor="jurusan">Jurusan:</label>
                                 <select id="jurusan" name="jurusan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.jurusan} onChange={handleInputChange}>
-                                    <option value="">Pilih Jurusan</option>
+                                    <option value="" selected disabled>Pilih Jurusan</option>
                                     <option value="To1">To1</option>
                                     <option value="To2">To2</option>
                                     <option value="To3">To3</option>
@@ -245,9 +286,9 @@ const FormMurid = () => {
                             </div>
                             <div className='mr-4'>
                                 <label htmlFor="noHp">No HP:</label>
-                                <input type="text" id="noHp"
+                                <input type="number" id="noHp"
                                     name="noHp"
-                                    className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 bg-white border-[1px] no-InDecrement border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.noHp}
                                     onChange={handleInputChange} />
 

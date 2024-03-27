@@ -125,19 +125,19 @@ const AdminMurid = () => {
                             <span className="items-center mt-3 font-inter font-medium text-sm">{siswa.nama}</span>
                           </div>
                         </td>
-                        <td class="text-sm text-gray-900 font-medium px-0 py-2 text-center">
-                          Kepala Program
+                        <td class="text-sm text-gray-900 font-medium py-2 text-center">
+                        {siswa.kelas}
+                        </td>
+                        <td class="text-sm text-gray-900 font-medium py-2 text-center">
+                        {siswa.jurusan} {siswa.sub_jurusan}
                         </td>
                         <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
-                          PNS
-                        </td>
-                        <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
-                          087723263759
+                        {siswa.no_hp}
                         </td>
                         <td class="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
                           <div className="flex justify-center">
-                            <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" />
-                            <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" />
+                            <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_Murid/${siswa.id}`)}/>
+                            <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => handleDelete(siswa.id)}/>
                           </div>
                         </td>
                       </tr>

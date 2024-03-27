@@ -87,7 +87,7 @@ const router = createBrowserRouter([
         element: <EditMurid />,
       },
       {
-        path: '/Siskoolbe/Admin/Edit_Murid',
+        path: '/Siskoolbe/Admin/Edit_Murid/:id',
         element: <EditJurusan />
       },
       {
