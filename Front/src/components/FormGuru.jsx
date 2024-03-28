@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 
@@ -119,47 +120,73 @@ const FormGuru = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        const ImageData = new FormData();
-        ImageData.append('image', formData.bukti);
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Data ini Akan ditambahkan!",
+            icon: 'warning',
+            allowOutsideClick: false,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Tambah Data!',
+            cancelButtonText: 'Batal'
+        }).then(async (result) => {
+            if(result.isConfirmed){
+                const ImageData = new FormData();
+                ImageData.append('image', formData.bukti);
 
-        const data = {
-            nik: formData.nik,
-            nama: formData.nama,
-            email: formData.email,
-            Password: formData.Password,
-            noHp: formData.noHp,
-            alamat: formData.alamat,
-            tempatLahir: formData.tempatLahir,
-            tanggalLahir: formData.tanggalLahir,
-            jabatan: formData.jabatan,
-            status: formData.status,
-            jenisKelamin: formData.jenisKelamin,
-            agama: formData.agama
-        }
-
-        const encoded = JSON.stringify(data);
-        try{
-            const resp = await api.post('/addGuru_Admin', ImageData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'data': encoded
+                const data = {
+                    nik: formData.nik,
+                    nama: formData.nama,
+                    email: formData.email,
+                    Password: formData.Password,
+                    noHp: formData.noHp,
+                    alamat: formData.alamat,
+                    tempatLahir: formData.tempatLahir,
+                    tanggalLahir: formData.tanggalLahir,
+                    jabatan: formData.jabatan,
+                    status: formData.status,
+                    jenisKelamin: formData.jenisKelamin,
+                    agama: formData.agama
                 }
-            })
 
-            if(resp.status === 200){
-                alert('Guru Berhasil');
-                navTo('/Siskoolbe/Admin/Admin_Guru');
-            }else{
-                console.log(resp.data);
+                const encoded = JSON.stringify(data);
+                try{
+                    const resp = await api.post('/addGuru_Admin', ImageData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'data': encoded
+                        }
+                    })
+
+                    if(resp.status === 200){
+                        Swal.fire(
+                            'Berhasil!',
+                            'Guru Berhasil ditambahkan.',
+                            'success'
+                        ).then(() => {
+                            navTo('/Siskoolbe/Admin/Admin_Guru', { replace: true });
+                        })
+                    }else{
+                        Swal.fire(
+                            'Gagal!',
+                            'Guru gagal ditambahkan.',
+                            'error'
+                        )
+                    }
+                }catch(err){
+                    Swal.fire(
+                        'Gagal!',
+                        'Guru gagal ditambahkan.',
+                        'error'
+                    )
+                }
             }
-        }catch(err){
-            console.log(err);
-        }
+        })
     };
 
     const handleBack = () => {
-        window.history.back(); // Kembali ke halaman sebelumnya
+        navTo('/Siskoolbe/Admin/Admin_Guru', { replace: true });
     };
 
 

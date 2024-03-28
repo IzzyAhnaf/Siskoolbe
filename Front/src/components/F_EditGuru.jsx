@@ -9,6 +9,7 @@ import _debounce from 'lodash/debounce';
 import formatDate from '../formattedDate';
 import base64ToFile from '../base64toFile';
 import api from '../api';
+import Swal from 'sweetalert2';
 
 const FEditGuru = () => {
     const [formData, setFormData] = useState({
@@ -77,7 +78,7 @@ const FEditGuru = () => {
             setShowIcon(false);
             setImageUp(false);
         }
-    },[])
+    },[formData.previewImage])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -159,13 +160,76 @@ const FEditGuru = () => {
         setShowIcon(true);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Setelah Diubah Data Akan Tidak Dapat Dikembalikan!",
+            icon: 'warning',
+            allowOutsideClick: false,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Ubah Data!',
+            cancelButtonText: 'Batal'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try{
+                    const ImageData = new FormData();
+                    ImageData.append('image', formData.bukti);
+        
+                    const data = {
+                        nik: formData.nik,
+                        nama: formData.nama,
+                        email: formData.email,
+                        Password: formData.Password,
+                        noHp: formData.noHp,
+                        alamat: formData.alamat,
+                        tempatLahir: formData.tempatLahir,
+                        tanggalLahir: formData.tanggalLahir,
+                        jabatan: formData.jabatan,
+                        status: formData.status,
+                        jenisKelamin: formData.jenisKelamin,
+                        agama: formData.agama
+                    }
+        
+                    const encoded = JSON.stringify(data);
+        
+                    const resp = await api.post(`/updateGuru_Admin/${id}`, ImageData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'data': encoded
+                        }
+                    })
+                    if(resp.status === 200){
+                        Swal.fire(
+                            'Berhasil Diubah!',
+                            'Data Guru ini Berhasil Diubah.',
+                            'success'
+                        ).then(() =>{
+                            navTo('/Siskoolbe/Admin/Admin_Guru', { replace: true });
+                        })
+                    }else{
+                        Swal.fire(
+                            'Gagal!',
+                            'Data Guru ini Gagal Diubah.',
+                            'error'
+                        )
+                    }
+                }catch(err){
+                    Swal.fire(
+                        'Gagal!',
+                        'Data Guru ini Gagal Diubah.',
+                        'error'
+                    )
+                }
+            }
+        })
+      
     };
 
     const handleBack = () => {
-        window.history.back(); // Kembali ke halaman sebelumnya
+        navTo('/Siskoolbe/Admin/Admin_Guru', { replace: true });
     };
 
 
@@ -261,8 +325,8 @@ const FEditGuru = () => {
                                     value={formData.status}
                                     onChange={handleInputChange}>
                                     <option value="">Pilih Status</option>
-                                    <option value="PNS">PNS</option>
-                                    <option value="Honorer">Honorer</option>
+                                    <option value="PNS" selected={formData.status === "PNS"}>PNS</option>
+                                    <option value="Honorer" selected={formData.status === "Honorer"}>Honorer</option>
                                 </select>
                             </div>
                         </div>
@@ -271,8 +335,8 @@ const FEditGuru = () => {
                                 <label htmlFor="jenisKelamin">Jenis Kelamin:</label>
                                 <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
                                     <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
+                                    <option value="L" selected={formData.jenisKelamin === "L"}>Laki-laki</option>
+                                    <option value="P"  selected={formData.jenisKelamin === "P"}>Perempuan</option>
                                 </select>
                             </div>
 
@@ -281,8 +345,8 @@ const FEditGuru = () => {
                                 <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.agama} onChange={handleInputChange}>
                                     <option value="">Pilih Agama</option>
-                                    <option value="Muslim">Muslim</option>
-                                    <option value="Non-Muslim">Non Muslim</option>
+                                    <option value="Muslim" selected={formData.agama === "Muslim"}>Muslim</option>
+                                    <option value="Non-Muslim" selected={formData.agama === "Non-Muslim"}>Non Muslim</option>
                                 </select>
                             </div>
                         </div>

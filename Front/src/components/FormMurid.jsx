@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 
@@ -122,48 +123,74 @@ const FormMurid = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const jurusanMap = {
-            'PPLG1': ['Pengembangan Perangkat Lunak dan Gim', 1],
-            'PPLG2': ['Pengembangan Perangkat Lunak dan Gim', 2],
-            'AKL1': ['Akutansi Keuangan Lembaga', 1],
-            'AKL2': ['Akutansi Keuangan Lembaga', 2],
-            'To1': ['Teknik Otomotif', 1],
-            'To2': ['Teknik Otomotif', 2],
-            'To3': ['Teknik Otomotif', 3],
-            'To4': ['Teknik Otomotif', 4],
-            'PerHotelan1': ['Perhotelan', 1],
-            'PerHotelan2': ['Perhotelan', 2],
-            'DKV1': ['Desain Komunikasi Visual', 1],
-            'DKV2': ['Desain Komunikasi Visual', 2],
-        };
-        const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || [];
-        formData.jurusan = jurusan;
-        formData.sub_jurusan = subJurusan;
+        Swal.fire({
+            title: 'Yakin ingin menambahkan murid?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok',
+            cancelButtonText: 'Batal'
+        }).then(async (result) => {
+            if(result.isConfirmed){
+                const jurusanMap = {
+                    'PPLG1': ['Pengembangan Perangkat Lunak dan Gim', 1],
+                    'PPLG2': ['Pengembangan Perangkat Lunak dan Gim', 2],
+                    'AKL1': ['Akutansi Keuangan Lembaga', 1],
+                    'AKL2': ['Akutansi Keuangan Lembaga', 2],
+                    'To1': ['Teknik Otomotif', 1],
+                    'To2': ['Teknik Otomotif', 2],
+                    'To3': ['Teknik Otomotif', 3],
+                    'To4': ['Teknik Otomotif', 4],
+                    'PerHotelan1': ['Perhotelan', 1],
+                    'PerHotelan2': ['Perhotelan', 2],
+                    'DKV1': ['Desain Komunikasi Visual', 1],
+                    'DKV2': ['Desain Komunikasi Visual', 2],
+                };
+                const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || [];
+                formData.jurusan = jurusan;
+                formData.sub_jurusan = subJurusan;
 
-        const formData2 = new FormData();
-        formData2.append('image', formData.bukti);
-        const encoded = JSON.stringify(formData);
-        
-        try {
-            const response = await api.post('/addSiswa_Admin', formData2, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'data' : encoded
+                const formData2 = new FormData();
+                formData2.append('image', formData.bukti);
+                const encoded = JSON.stringify(formData);
+                
+                try {
+                    const response = await api.post('/addSiswa_Admin', formData2, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'data' : encoded
+                        }
+                    });
+
+                    if (response.status === 200) {
+                        Swal.fire(
+                            'Berhasil',
+                            'Murid Berhasil ditambahkan!',
+                            'success'
+                        ).then(() => {
+                            navTo('/Siskoolbe/Admin/Admin_Murid', { replace: true });
+                        })
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Murid Gagal ditambahkan!',
+                        })
+                    }
+                }catch (err) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Murid Gagal ditambahkan!',
+                    })
                 }
-            });
-
-            if (response.status === 200) {
-                navTo('/Siskoolbe/Admin/Admin_Murid');
-            }else{
-                console.log('Error: ', response.data);
             }
-        }catch (err) {
-            console.log(err);
-        }
+        })
     };
 
     const handleBack = () => {
-        window.history.back(); // Kembali ke halaman sebelumnya
+        navTo('/Siskoolbe/Admin/Admin_Murid', { replace: true });
     };
 
 

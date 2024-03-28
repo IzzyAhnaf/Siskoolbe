@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import _debounce from 'lodash/debounce';
 import api from '../api';
 import base64ToFile from '../base64toFile';
+import Swal from 'sweetalert2';
 
 const FEditJurusan = () => {
     const navTo = useNavigate();
@@ -144,29 +145,60 @@ const FEditJurusan = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData2 = new FormData();
-        formData2.append('bukti', formData.bukti);
-        const data = {
-            namaJurusan: formData.namaJurusan,
-            urutanJurusan: formData.urutanJurusan
-        }
-        const encoded = JSON.stringify(data);
-        try {
-            const response = await api.post(`/updateJurusan/${id}`, formData2, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'data': encoded
-                },
-            });
-            response.status === 200 &&
-            navTo('/Siskoolbe/Admin/Admin_Jurusan');
-        } catch (error) {
-            console.error(error);
-        }
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Data yang diubahkan tidak dapat dikembalikan!",
+            icon: 'warning',
+            allowOutsideClick: false,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Ubah Data!',
+            cancelButtonText: 'Batal'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const formData2 = new FormData();
+                formData2.append('bukti', formData.bukti);
+                const data = {
+                    namaJurusan: formData.namaJurusan,
+                    urutanJurusan: formData.urutanJurusan
+                }
+                const encoded = JSON.stringify(data);
+                try {
+                    const response = await api.post(`/updateJurusan/${id}`, formData2, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'data': encoded
+                        },
+                    });
+                    if(response.status === 200){
+                        Swal.fire(
+                            'Berhasil!',
+                            'Data Jurusan Berhasil diubah!',
+                            'success'
+                        ).then(() => {
+                            navTo('/Siskoolbe/Admin/Admin_Jurusan', { replace: true });
+                        })
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Data Gagal diubah!',
+                        })
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Data Gagal diubah!',
+                    })
+                }
+            }
+        })
     };
 
     const handleBack = () => {
-        window.history.back();
+        navTo('/Siskoolbe/Admin/Admin_Jurusan', { replace: true });
     };
 
 

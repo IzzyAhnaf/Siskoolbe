@@ -626,6 +626,7 @@ fastify.post('/updateSiswa_Admin/:id', async (request, reply) => {
     }
 
 })
+
 fastify.post('/deleteSiswa_Admin/:id', async (request, reply) => {
     try{
         const getImage = await new Promise((resolve, reject) => {
@@ -672,6 +673,7 @@ fastify.post('/deleteSiswa_Admin/:id', async (request, reply) => {
         return reply.status(500).send({ message: err.message });
     }
 })
+
 // -data-guru
 fastify.get('/getGuru_Admin', async (request, reply) => {
     try{
@@ -789,9 +791,8 @@ fastify.post('/updateGuru_Admin/:id', async (request, reply) => {
             fs.mkdirSync(uploadDir);
         }
 
-        const insert = await new Promise((resolve, reject) => {
-            db.query('UPDATE guru (nik, nama, email, password, alamat, no_hp, tempat_lahir, tgl_lahir, agama, jabatan, status, jenis_kelamin, gambar_profil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
-            [nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin, `${timestamp}-${file.filename}`, request.params.id], (err, result) => {
+        const getImage = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar_profil FROM guru WHERE id = ?', [request.params.id],(err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -800,18 +801,73 @@ fastify.post('/updateGuru_Admin/:id', async (request, reply) => {
             })
         })
 
-        if(insert.affectedRows > 0){
+        if(getImage.length > 0){
+            const oldFilePath = path.join(uploadDir, getImage[0].gambar_profil);
+            if(fs.existsSync(oldFilePath)){
+                fs.unlinkSync(oldFilePath);
+            }
+        }
+
+        const update = await new Promise((resolve, reject) => {
+            db.query('UPDATE guru SET nik = ?, nama = ?, email = ?, password = ?, alamat = ?, no_hp = ?, tempat_lahir = ?, tgl_lahir = ?, agama = ?, jabatan = ?, status = ?, jenis_kelamin = ?, gambar_profil = ? WHERE id = ?',
+                [nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin, `${timestamp}-${file.filename}`, request.params.id], 
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+        
+        if(update.affectedRows > 0){
             await pipeline(file.file, fs.createWriteStream(filepath));
             return reply.status(200).send({ message: 'Success' });
         }else{
-            return reply.status(401).send({ message: 'Gagal Insert' });
+            return reply.status(401).send({ message: 'Gagal update' });
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });
     }
-})
+});
 
+fastify.post('/deleteGuru_Admin/:id', async (request, reply) => {
+    try{
+        const getImage = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar_profil FROM guru WHERE id = ?', [request.params.id],(err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
 
+        if(getImage.length > 0){
+            const oldFilePath = path.join(__dirname, 'Gambar/Guru/Profil', getImage[0].gambar_profil);
+            if(fs.existsSync(oldFilePath)){
+                fs.unlinkSync(oldFilePath);
+            }
+        }
+
+        const deleteGuru = await new Promise((resolve, reject) => {
+            db.query('DELETE FROM guru WHERE id = ?', [request.params.id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(deleteGuru.affectedRows > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+});
 
 // -data-jurusan
 fastify.get('/getJurusan_Admin', async (request, reply) => {

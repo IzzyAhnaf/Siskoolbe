@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../api';
 import base64ToFile from '../base64toFile';
 import formatDate from '../formattedDate';
+import Swal from 'sweetalert2';
 
 const FEditMurid = () => {
     const [formData, setFormData] = useState({
@@ -172,65 +173,94 @@ const FEditMurid = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const jurusanMap = {
-            'PPLG1': ['Pengembangan Perangkat Lunak dan Gim', 1],
-            'PPLG2': ['Pengembangan Perangkat Lunak dan Gim', 2],
-            'AKL1': ['Akutansi Keuangan Lembaga', 1],
-            'AKL2': ['Akutansi Keuangan Lembaga', 2],
-            'To1': ['Teknik Otomotif', 1],
-            'To2': ['Teknik Otomotif', 2],
-            'To3': ['Teknik Otomotif', 3],
-            'To4': ['Teknik Otomotif', 4],
-            'PerHotelan1': ['Perhotelan', 1],
-            'PerHotelan2': ['Perhotelan', 2],
-            'DKV1': ['Desain Komunikasi Visual', 1],
-            'DKV2': ['Desain Komunikasi Visual', 2],
-        };
-        const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || formData.selectedJurusan.split('-');
-        formData.jurusan = jurusan;
-        formData.sub_jurusan = subJurusan;
+        Swal.fire({
+            title: 'Ubah Data Murid?',
+            text: "Data yang di ubah tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Ubah Data!',
+            cancelButtonText: 'Batal'
+        }).then(async (result) => {
+            if(result.isConfirmed){
+                const jurusanMap = {
+                    'PPLG1': ['Pengembangan Perangkat Lunak dan Gim', 1],
+                    'PPLG2': ['Pengembangan Perangkat Lunak dan Gim', 2],
+                    'AKL1': ['Akutansi Keuangan Lembaga', 1],
+                    'AKL2': ['Akutansi Keuangan Lembaga', 2],
+                    'To1': ['Teknik Otomotif', 1],
+                    'To2': ['Teknik Otomotif', 2],
+                    'To3': ['Teknik Otomotif', 3],
+                    'To4': ['Teknik Otomotif', 4],
+                    'PerHotelan1': ['Perhotelan', 1],
+                    'PerHotelan2': ['Perhotelan', 2],
+                    'DKV1': ['Desain Komunikasi Visual', 1],
+                    'DKV2': ['Desain Komunikasi Visual', 2],
+                };
+                const [jurusan, subJurusan] = jurusanMap[formData.jurusan] || formData.selectedJurusan.split('-');
+                formData.jurusan = jurusan;
+                formData.sub_jurusan = subJurusan;
 
-        const formData2 = new FormData();
-        formData2.append('image', formData.bukti);
-        const data = {
-            'nama': formData.nama,
-            'email': formData.email,
-            'Password': formData.Password,
-            'nik' : formData.nik,
-            'nisn': formData.nisn,
-            'nis': formData.nis,
-            'alamat': formData.alamat,
-            'tempatLahir': formData.tempatLahir,
-            'tanggalLahir': formData.tanggalLahir,
-            'jenisKelamin': formData.jenisKelamin,
-            'agama': formData.agama,
-            'jurusan': formData.jurusan,
-            'sub_jurusan': formData.sub_jurusan,
-            'kelas' : formData.kelas,
-            'noHp' : formData.noHp,
-        }
-        const encoded = JSON.stringify(data);
-        console.log(formData);
-        console.log(data);
-        try {
-            await api.post(`/updateSiswa_Admin/${id}`, formData2, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'data': encoded
+                const formData2 = new FormData();
+                formData2.append('image', formData.bukti);
+                const data = {
+                    'nama': formData.nama,
+                    'email': formData.email,
+                    'Password': formData.Password,
+                    'nik' : formData.nik,   
+                    'nisn': formData.nisn,
+                    'nis': formData.nis,
+                    'alamat': formData.alamat,
+                    'tempatLahir': formData.tempatLahir,
+                    'tanggalLahir': formData.tanggalLahir,
+                    'jenisKelamin': formData.jenisKelamin,
+                    'agama': formData.agama,
+                    'jurusan': formData.jurusan,
+                    'sub_jurusan': formData.sub_jurusan,
+                    'kelas' : formData.kelas,
+                    'noHp' : formData.noHp,
                 }
-            }).then((response) => {
-                if (response.status === 200) {
-                    alert('Data Murid Berhasil');
-                    window.location.href = '/Siskoolbe/Admin/Admin_Murid';
+                const encoded = JSON.stringify(data);
+                console.log(formData);
+                console.log(data);
+                try {
+                    await api.post(`/updateSiswa_Admin/${id}`, formData2, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'data': encoded
+                        }
+                    }).then((response) => {
+                        if (response.status === 200) {
+                            Swal.fire(
+                                'Berhasil',
+                                'Murid Berhasil diubah!',
+                                'success'
+                            ).then(() => {
+                               navTo('/Siskoolbe/Admin/Admin_Murid', { replace: true });
+                            })
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Murid Gagal diubah!',
+                            })
+                        }
+                    });
+                }catch (error) {
+                    Swal.fire(
+                        'Gagal',
+                        'Data Murid Gagal diubah!',
+                        'error'
+                    )
                 }
-            });
-        }catch (error) {
-            console.error(error);
-        }
+            }
+        })
+
     };
 
     const handleBack = () => {
-        window.history.back(); // Kembali ke halaman sebelumnya
+        navTo('/Siskoolbe/Admin/Admin_Murid', { replace: true });
     };
 
 

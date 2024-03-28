@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Mar 2024 pada 03.33
+-- Waktu pembuatan: 28 Mar 2024 pada 10.46
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Database: `siskoolbe`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `absensiguru`
+--
+
+CREATE TABLE `absensiguru` (
+  `id` int(11) NOT NULL,
+  `idguru` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `absen_masuk` datetime NOT NULL,
+  `absen_keluar` datetime NOT NULL,
+  `izin` enum('sakit','keterangan','tanpa_keterangan') NOT NULL,
+  `detail-izin` text NOT NULL,
+  `foto-izin_absensi` text NOT NULL,
+  `status` enum('open','closed') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -44,10 +62,7 @@ CREATE TABLE `absensisiswa` (
 --
 
 INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail-izin`, `foto-izin_absensi`, `status`) VALUES
-(5, 2012321, '2024-03-20', NULL, NULL, NULL, NULL, NULL, 'closed'),
 (6, 2112231, '2024-03-20', NULL, NULL, NULL, NULL, NULL, 'closed'),
-(7, 2012321, '2024-03-19', '2024-03-19 06:34:32', NULL, 'tanpa_keterangan', NULL, NULL, 'closed'),
-(28, 2012321, '2024-03-21', NULL, NULL, NULL, NULL, NULL, 'open'),
 (29, 2112231, '2024-03-21', NULL, NULL, NULL, NULL, NULL, 'open');
 
 -- --------------------------------------------------------
@@ -70,6 +85,13 @@ CREATE TABLE `admin` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `admin`
+--
+
+INSERT INTO `admin` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, '313432323', 'jay', 'jay@g.com', '123', NULL, '-', '-', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -78,7 +100,7 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `guru` (
   `id` int(11) NOT NULL,
-  `nik` varchar(255) NOT NULL,
+  `nik` bigint(16) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(32) NOT NULL,
@@ -87,14 +109,20 @@ CREATE TABLE `guru` (
   `alamat` text DEFAULT NULL,
   `tempat_lahir` varchar(255) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
-  `agama` varchar(255) NOT NULL,
-  `pendidikan` varchar(255) NOT NULL,
-  `jabatan` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
+  `agama` enum('Muslim','Non-Muslim') NOT NULL,
+  `jabatan` enum('Kepala Sekolah','Wakil Kepala Sekolah','Guru Kelas','Koordinator atau Pembina Bidang','Guru Mata Pelajaran','Guru Bimbingan Konseling (BK)','Guru Agama','Guru Pendukung','Guru Pengajar Tambahan','Guru Pembimbing','Guru Pendidikan Khusus','Guru Bahasa Asing','Guru Pengampu Program Keahlian') DEFAULT NULL,
+  `status` enum('PNS','Honorer') DEFAULT NULL,
   `gambar_profil` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `guru`
+--
+
+INSERT INTO `guru` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `jenis_kelamin`, `alamat`, `tempat_lahir`, `tgl_lahir`, `agama`, `jabatan`, `status`, `gambar_profil`, `created_at`, `updated_at`) VALUES
+(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 98273172391, 'L', 'Las Vegas', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -104,9 +132,17 @@ CREATE TABLE `guru` (
 
 CREATE TABLE `jurusan` (
   `id` int(11) NOT NULL,
-  `namajurusan` enum('PPLG','MM','TO','PH','AKL') NOT NULL,
-  `sub_jurusan` int(11) NOT NULL
+  `namajurusan` varchar(255) NOT NULL,
+  `sub_jurusan` int(11) NOT NULL,
+  `gambar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `jurusan`
+--
+
+INSERT INTO `jurusan` (`id`, `namajurusan`, `sub_jurusan`, `gambar`) VALUES
+(15, 'Pengembangan Perangkat Lunak dan Gim', 1, '1711507382196-1711474149565-logo-rpl.png');
 
 -- --------------------------------------------------------
 
@@ -117,10 +153,18 @@ CREATE TABLE `jurusan` (
 CREATE TABLE `kelas` (
   `id` int(11) NOT NULL,
   `jurusanid` int(11) NOT NULL,
-  `idguru` int(11) NOT NULL,
-  `nis` int(10) NOT NULL,
+  `idguru` int(11) DEFAULT NULL,
   `kelas` enum('10','11','12') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `kelas`
+--
+
+INSERT INTO `kelas` (`id`, `jurusanid`, `idguru`, `kelas`) VALUES
+(31, 15, NULL, '10'),
+(32, 15, NULL, '11'),
+(33, 15, NULL, '12');
 
 -- --------------------------------------------------------
 
@@ -136,10 +180,13 @@ CREATE TABLE `siswa` (
   `password` varchar(32) NOT NULL,
   `nisn` bigint(20) DEFAULT NULL,
   `nis` int(10) DEFAULT NULL,
+  `idkelas` int(11) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `no_hp` bigint(20) DEFAULT NULL,
+  `jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
   `tempat_lahir` varchar(255) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
+  `agama` enum('Muslim','Non-Muslim') NOT NULL,
   `gambar_profil` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -149,13 +196,19 @@ CREATE TABLE `siswa` (
 -- Dumping data untuk tabel `siswa`
 --
 
-INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `alamat`, `no_hp`, `tempat_lahir`, `tgl_lahir`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(13, 321789312121, 'Budi', 'budi@gmail.com', '123', NULL, 2112231, NULL, NULL, NULL, NULL, '', '2024-03-19 03:21:37', '2024-03-19 03:31:30'),
-(14, 32178931324, 'Didi', 'didi@gmail.com', '1234', NULL, 2012321, NULL, NULL, NULL, NULL, '', '2024-03-20 02:33:26', '2024-03-20 02:33:26');
+INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `idkelas`, `alamat`, `no_hp`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `gambar_profil`, `created_at`, `updated_at`) VALUES
+(16, 32178931324, 'Didi', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 98273172391, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1711617659474-kp.jpg', '2024-03-28 09:20:59', '2024-03-28 09:20:59');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `absensiguru`
+--
+ALTER TABLE `absensiguru`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idguru` (`idguru`);
 
 --
 -- Indeks untuk tabel `absensisiswa`
@@ -187,20 +240,26 @@ ALTER TABLE `jurusan`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `jurusanid` (`jurusanid`),
-  ADD UNIQUE KEY `nis` (`nis`),
-  ADD UNIQUE KEY `idguru` (`idguru`);
+  ADD UNIQUE KEY `idguru` (`idguru`),
+  ADD KEY `jurusanid` (`jurusanid`) USING BTREE;
 
 --
 -- Indeks untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nis` (`nis`);
+  ADD UNIQUE KEY `nis` (`nis`),
+  ADD KEY `idkelas` (`idkelas`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `absensiguru`
+--
+ALTER TABLE `absensiguru`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `absensisiswa`
@@ -212,35 +271,41 @@ ALTER TABLE `absensisiswa`
 -- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `absensiguru`
+--
+ALTER TABLE `absensiguru`
+  ADD CONSTRAINT `absensiguru_ibfk_1` FOREIGN KEY (`idguru`) REFERENCES `guru` (`id`);
 
 --
 -- Ketidakleluasaan untuk tabel `absensisiswa`
@@ -252,8 +317,7 @@ ALTER TABLE `absensisiswa`
 -- Ketidakleluasaan untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`),
-  ADD CONSTRAINT `kelas_ibfk_2` FOREIGN KEY (`jurusanid`) REFERENCES `jurusan` (`id`),
+  ADD CONSTRAINT `kelas_ibfk_2` FOREIGN KEY (`jurusanid`) REFERENCES `jurusan` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `kelas_ibfk_3` FOREIGN KEY (`idguru`) REFERENCES `guru` (`id`);
 COMMIT;
 

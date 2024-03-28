@@ -8,6 +8,7 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 import CustomWidth from "../CustomWidth";
 import _debounce from "lodash/debounce";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const Adminguru = () => {
   const navTo = useNavigate();
@@ -24,6 +25,45 @@ const Adminguru = () => {
 
     }
   }, 50)
+
+  const deleteGuru = async (id) => {
+    Swal.fire({
+      title: 'Yakin ingin menghapus guru?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ok',
+      cancelButtonText: 'Batal'
+    }).then(async (result) => {
+      if(result.isConfirmed){
+        try{
+          const resp = await api.post(`/deleteGuru_Admin/${id}`);
+          if(resp.status === 200){
+            Swal.fire(
+              'Berhasil!',
+              'Guru telah dihapus.',
+              'success'
+            ).then(() => {
+              window.location.reload();
+            });
+          }else{
+            Swal.fire(
+              'Gagal!',
+              'Guru gagal dihapus.',
+              'error'
+            );
+          }
+        }catch(err){
+          Swal.fire(
+            'Gagal!',
+            'Guru gagal dihapus.',
+            'error'
+          )
+        }
+      }
+    })
+  }
 
   useEffect(() => {
     getGuru();
