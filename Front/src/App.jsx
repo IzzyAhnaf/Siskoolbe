@@ -18,7 +18,6 @@ import EmptyPages from './Pages/EmptyPages'
 import HomesAdmin from './Pages/HomesAdmin'
 import Adminguru from './Pages/Admin_Guru'
 import TambahMurid from './Pages/TambahMurid'
-import AdminMurid from './Pages/Admin_Murid'
 import AdminJurusan from './Pages/Admin_Jurusan'
 import TambahGuru from './Pages/TambahGuru'
 import TambahJurusan from './Pages/TambahJurusan'
@@ -34,6 +33,7 @@ import ProfSetGr from './Pages/ProfSetGuru'
 import CheckinGuru from './Pages/AbsenGuru_masuk'
 import CheckoutGuru from './Pages/AbsenGuru_Keluar'
 import Izin_Guru from './Pages/IzinGuru'
+import AdminMurid from './Pages/Admin_Murid'
 
 function App() {
   const WMobile = CustomWidth() <= 767;

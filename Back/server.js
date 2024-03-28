@@ -403,11 +403,15 @@ fastify.get('/getSiswa_Admin', async (request, reply) => {
                 })
 
                 const data = await Promise.all(Exist.map(async (item) => {
+                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                    const image = fs.readFileSync(imagePath, 'base64');
+
                     return {
                         ...item,
                         jurusan: selectJurusan[0].namajurusan,
                         sub_jurusan: selectJurusan[0].sub_jurusan,
-                        kelas: selectidjurusan[0].kelas
+                        kelas: selectidjurusan[0].kelas,
+                        gambar_profil: image,
                     }
                 }))
 
@@ -625,7 +629,7 @@ fastify.post('/updateSiswa_Admin/:id', async (request, reply) => {
 fastify.post('/deleteSiswa_Admin/:id', async (request, reply) => {
     try{
         const getImage = await new Promise((resolve, reject) => {
-            db.query('SELECT gambar_profil FROM siswa WHERE id = ?', [request.params.id], (err, result) => {
+            db.query('SELECT gambar_profil, nis FROM siswa WHERE id = ?', [request.params.id], (err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -639,6 +643,16 @@ fastify.post('/deleteSiswa_Admin/:id', async (request, reply) => {
             if(fs.existsSync(oldPath)){
                 fs.unlinkSync(oldPath);
             }
+
+            const deleteAbsen = await new Promise((resolve, reject) => {
+                db.query('DELETE FROM absensisiswa WHERE nis = ?', [getImage[0].nis], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
 
             const deleteSiswa = await new Promise((resolve, reject) => {
                 db.query('DELETE FROM siswa WHERE id = ?', [request.params.id], (err, result) => {

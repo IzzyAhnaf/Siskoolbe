@@ -19,7 +19,6 @@ import Adminguru from './Pages/Admin_Guru.jsx'
 import TambahMurid from './Pages/TambahMurid.jsx'
 import TambahJurusan from './Pages/TambahJurusan.jsx'
 import TambahGuru from './Pages/TambahGuru.jsx'
-import AdminMurid from './Pages/Admin_Murid.jsx'
 import AdminJurusan from './Pages/Admin_Jurusan.jsx'
 import EditGuru from './Pages/Edit_Guru.jsx'
 import EditJurusan from './Pages/Edit_Jurusan.jsx'
@@ -30,6 +29,7 @@ import ProfSetGr from './Pages/ProfSetGuru'
 import CheckinGuru from './Pages/AbsenGuru_masuk'
 import CheckoutGuru from './Pages/AbsenGuru_Keluar'
 import Izin_Guru from './Pages/IzinGuru'
+import AdminMurid from './Pages/Admin_Murid.jsx'
 
 
 const router = createBrowserRouter([

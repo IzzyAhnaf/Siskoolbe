@@ -44,7 +44,11 @@ const AdminJurusan = () => {
             );
           }
         }catch(err){
-          
+          Swal.fire(
+            'Failed!',
+            'Murid gagal dihapus.',
+            'error'
+          );
         }
       }
     });
@@ -55,7 +59,7 @@ const AdminJurusan = () => {
       const resp = await api.get("/getJurusan_Admin");
       resp.status === 200 && setJurusan(resp.data);
     }catch(err){
-      console.log(err);
+
     }
   }, 50);
 

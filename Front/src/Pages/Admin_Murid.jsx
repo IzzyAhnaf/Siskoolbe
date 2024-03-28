@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarAdmin from "../components/SidebarAdm";
-import { FaUserTie } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa6";
+import { FaUserTie, FaPlus } from "react-icons/fa6";
 import { RiPencilFill } from "react-icons/ri";
 import Swal from 'sweetalert2';
 import CustomWidth from "../CustomWidth";
-import { useNavigate } from "react-router-dom";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import _debounce from "lodash/debounce";
 import api from "../api";
+import { useNavigate } from "react-router-dom";
 
-const AdminMurid = async () => {
+const AdminMurid = () => {
   const navTo = useNavigate();
   const Wmobile = CustomWidth() <= 767;
   const DekstopLow = CustomWidth() <= 1366;
   const [siswa, setSiswa] = useState([]);
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     Swal.fire({
       title: 'Yakin ingin menghapus murid?',
       icon: 'warning',
@@ -27,14 +26,22 @@ const AdminMurid = async () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await api.post(`/deleteSiswa/${id}`);
-          Swal.fire(
-            'Deleted!',
-            'Murid telah dihapus.',
-            'success'
-          ).then(() => {
-            window.location.reload();
-          });
+          const resp = await api.post(`/deleteSiswa_Admin/${id}`);
+          if(resp.status === 200){
+            Swal.fire(
+              'Deleted!',
+              'Murid telah dihapus.',
+              'success'
+            ).then(() => {
+              window.location.reload();
+            });
+          }else{
+            Swal.fire(
+              'Failed!',
+              'Murid gagal dihapus.',
+              'error'
+            );
+          }
         } catch (err) {
           console.error("Failed to delete murid:", err);
           Swal.fire(
@@ -48,17 +55,19 @@ const AdminMurid = async () => {
   };
 
   const getSiswa = _debounce(async () => {
-    try{
+    try {
       const resp = await api.get("/getSiswa_Admin");
-      resp.status === 200 && setSiswa(resp.data);
-    }catch(err){
-      console.log(err);
+      if (resp.status === 200) {
+        setSiswa(resp.data);
+      }
+    } catch (err) {
+
     }
-  }, 50)
+  }, 50);
 
   useEffect(() => {
     getSiswa();
-  },[])
+  }, []);
 
   return (
     <>
@@ -123,7 +132,8 @@ const AdminMurid = async () => {
                           <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                           <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
                             <div className="flex flex-row space-x-1 w-24 px-0 mx-auto">
-                              <img className="w-12 h-12 right-12 mr-4" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
+                              <img className="w-12 h-12 right-12 mr-4" src={`data:image/png;base64`}
+                              onError={(e) => (e.target.src = "https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg")} alt="" />
                               <span className="items-center mt-3 font-inter font-medium text-sm">{siswaItem.nama}</span>
                             </div>
                           </td>
