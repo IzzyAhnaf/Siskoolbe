@@ -686,7 +686,13 @@ fastify.get('/getGuru_Admin', async (request, reply) => {
         })
 
         if(Exist.length > 0){
-            return reply.status(200).send(Exist);
+            const data = await Promise.all(Exist.map(async (item) => {
+                const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
+                const Image = fs.readFileSync(ImagePath, 'base64');
+
+                return { ...item, gambar_profil: Image }
+            }))
+            return reply.status(200).send(data);
         }
         else{
             return reply.status(401).send({ message: 'Failed' });
@@ -695,6 +701,81 @@ fastify.get('/getGuru_Admin', async (request, reply) => {
         return reply.status(500).send({ message: err.message });
     }
 })
+
+fastify.get('/getGuru_Admin/:id', async (request, reply) => {
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM guru WHERE id = ?', [request.params.id],(err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            const data = await Promise.all(Exist.map(async (item) => {
+                const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
+                const Image = fs.readFileSync(ImagePath, 'base64');
+
+                return { ...item, bukti: Image }
+            }))
+            return reply.status(200).send(data);
+        }
+        else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/addGuru_Admin', async (request, reply) => {
+    const data = request.headers.data;
+    const { nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin } = JSON.parse(data);
+    const file = await request.file();
+
+    try{
+        if(!file){
+            return reply.status(401).send({ message: 'File not found' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Guru/Profil');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if(!fs.existsSync(uploadDir)){
+            fs.mkdirSync(uploadDir);
+        }
+
+        const insert = await new Promise((resolve, reject) => {
+            db.query('INSERT INTO guru (nik, nama, email, password, alamat, no_hp, tempat_lahir, tgl_lahir, agama, jabatan, status, jenis_kelamin, gambar_profil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin, `${timestamp}-${file.filename}`], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(insert.affectedRows > 0){
+            await pipeline(file.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Gagal Insert' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+fastify.post('/updateGuru_Admin/:id', async (request, reply) => {
+    
+})
+
+
 
 // -data-jurusan
 fastify.get('/getJurusan_Admin', async (request, reply) => {
@@ -760,7 +841,6 @@ fastify.get('/getJurusan_Admin/:id', async (request, reply) => {
         return reply.status(500).send({ message: err.message });
     }
 });
-
 
 fastify.post('/tambahjurusan', async (request, reply) => {
     const data = request.headers.data;

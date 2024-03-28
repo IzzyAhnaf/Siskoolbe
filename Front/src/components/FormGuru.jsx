@@ -5,6 +5,8 @@ import { FaBackspace } from "react-icons/fa";
 import { FaUserTie } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
+import api from '../api';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -18,17 +20,16 @@ const FormGuru = () => {
         noHp: '',
         alamat: '',
         tempatLahir: '',
+        tanggalLahir: '',
         jabatan: '',
         status: '',
-        nisn: '',
         jenisKelamin: '',
         agama: '',
-        jurusan: '',
-        kelas: '',
         bukti: null,
         previewImage: null,
         imageName: ''
     });
+    const navTo = useNavigate();
     const Wmobile = CustomWidth() <= 767;
     const DekstopLow = CustomWidth() <= 1366;
     const [showIcon, setShowIcon] = useState(true);
@@ -116,9 +117,45 @@ const FormGuru = () => {
         setShowIcon(true);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
+        const ImageData = new FormData();
+        ImageData.append('image', formData.bukti);
+
+        const data = {
+            nik: formData.nik,
+            nama: formData.nama,
+            email: formData.email,
+            Password: formData.Password,
+            noHp: formData.noHp,
+            alamat: formData.alamat,
+            tempatLahir: formData.tempatLahir,
+            tanggalLahir: formData.tanggalLahir,
+            jabatan: formData.jabatan,
+            status: formData.status,
+            jenisKelamin: formData.jenisKelamin,
+            agama: formData.agama
+        }
+
+        const encoded = JSON.stringify(data);
+        try{
+            const resp = await api.post('/addGuru_Admin', ImageData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'data': encoded
+                }
+            })
+
+            if(resp.status === 200){
+                alert('Guru Berhasil');
+                navTo('/Siskoolbe/Admin/Admin_Guru');
+            }else{
+                console.log(resp.data);
+            }
+        }catch(err){
+            console.log(err);
+        }
     };
 
     const handleBack = () => {
@@ -190,9 +227,9 @@ const FormGuru = () => {
                         </div>
                         <div className="flex flex-row  mt-4">
                             <div className="mr-4">
-                                <label htmlFor="jenisKelamin">Jabatan:</label>
-                                <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    name="jenisKelamin"
+                                <label htmlFor="jabatan">Jabatan:</label>
+                                <select id="jabatan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    name="jabatan"
                                     value={formData.jabatan}
                                     onChange={handleInputChange}>
                                     <option value="">Pilih Jabatan</option>
@@ -212,9 +249,9 @@ const FormGuru = () => {
                                 </select>
                             </div>
                             <div className="mr-4">
-                                <label htmlFor="jenisKelamin">Status:</label>
-                                <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    name="jenisKelamin"
+                                <label htmlFor="status">Status:</label>
+                                <select id="status" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    name="status"
                                     value={formData.status}
                                     onChange={handleInputChange}>
                                     <option value="">Pilih Status</option>
@@ -228,8 +265,8 @@ const FormGuru = () => {
                                 <label htmlFor="jenisKelamin">Jenis Kelamin:</label>
                                 <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
                                     <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="laki-laki">Laki-laki</option>
-                                    <option value="perempuan">Perempuan</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
                                 </select>
                             </div>
 
@@ -238,8 +275,8 @@ const FormGuru = () => {
                                 <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.agama} onChange={handleInputChange}>
                                     <option value="">Pilih Agama</option>
-                                    <option value="muslim">Muslim</option>
-                                    <option value="non muslim">Non Muslim</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Non-Muslim">Non Muslim</option>
                                 </select>
                             </div>
                         </div>

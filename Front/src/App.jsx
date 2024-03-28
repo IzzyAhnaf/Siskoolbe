@@ -154,7 +154,7 @@ function App() {
                 <Route path='/Admin/TambahGuru' element={<TambahGuru />}></Route>
                 <Route path='/Admin/TambahJurusan' element={<TambahJurusan />}></Route>
                 <Route path='/Admin/Edit_Murid/:id' element={<EditMurid />}></Route>
-                <Route path='/Admin/Edit_Guru' element={<EditGuru />}></Route>
+                <Route path='/Admin/Edit_Guru/:id' element={<EditGuru />}></Route>
                 <Route path='/Admin/Edit_Jurusan/:id' element={<EditJurusan />}></Route>
               </Routes>
             </>

@@ -132,7 +132,7 @@ const AdminMurid = () => {
                           <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                           <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
                             <div className="flex flex-row space-x-1 w-24 px-0 mx-auto">
-                              <img className="w-12 h-12 right-12 mr-4" src={`data:image/png;base64`}
+                              <img className="w-12 h-12 right-12 mr-4" src={`data:image/png;base64,${siswaItem.gambar_profil}`}
                               onError={(e) => (e.target.src = "https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg")} alt="" />
                               <span className="items-center mt-3 font-inter font-medium text-sm">{siswaItem.nama}</span>
                             </div>

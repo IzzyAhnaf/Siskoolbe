@@ -19,6 +19,7 @@ const Adminguru = () => {
     try{
     const resp = await api.get("/getGuru_Admin");
     resp.status === 200 && setGuru(resp.data);
+    console.log(resp.data);
     }catch(err){
 
     }
@@ -86,28 +87,28 @@ const Adminguru = () => {
                     </thead>
                     <tbody className="bg-white border-1  rounded-full">
                       {guru && guru.length > 0 ? (
-                        guru.map((siswa, index) => (
+                        guru.map((Guru, index) => (
                       <tr class="" style={{ borderRadius: '24px' }}>
                         <td class="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                         <td class="text-sm text-gray-900 font-light px-[-15px] py-2">
                           <div className="flex flex-row space-x-1 w-24 px-0 mx-auto">
-                            <img className="w-12 h-12 right-12 mr-4" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-                            <span className="items-center mt-3 font-inter font-medium text-sm">{siswa.nama}</span>
+                            <img className="w-12 h-12 right-12 mr-4 rounded-full" src={`data:image/png;base64,${Guru.gambar_profil}`} onError={e => e.target.src = `"https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg"`} alt="" />
+                            <span className="items-center mt-3 font-inter font-medium text-sm">{Guru.nama}</span>
                           </div>
                         </td>
                         <td class="text-sm text-gray-900 font-medium px-0 py-2 text-center">
-                          {/* {siswa.} */}
+                          {Guru.jabatan}
                         </td>
                         <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
-                          PNS
+                          {Guru.status}
                         </td>
                         <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
-                          087723263759
+                          {Guru.no_hp}
                         </td>
                         <td class="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
                           <div className="flex justify-center">
-                            <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" />
-                            <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" />
+                            <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_Guru/${Guru.id}`)}/>
+                            <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => deleteGuru(Guru.id)}/>
                           </div>
                         </td>
                       </tr>

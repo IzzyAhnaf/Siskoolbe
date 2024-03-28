@@ -79,7 +79,7 @@ const router = createBrowserRouter([
         element: <TambahGuru />
       },
       {
-        path: '/Siskoolbe/Admin/Edit_Guru',
+        path: '/Siskoolbe/Admin/Edit_Guru/:id',
         element: <EditGuru />
       },
       {

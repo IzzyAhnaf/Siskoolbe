@@ -1,9 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./Styling.css"
 import CustomWidth from '../CustomWidth';
 import { FaBackspace, FaUserTie } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
+import { useNavigate, useParams } from 'react-router-dom';
+import _debounce from 'lodash/debounce';
+import formatDate from '../formattedDate';
+import base64ToFile from '../base64toFile';
+import api from '../api';
 
 const FEditGuru = () => {
     const [formData, setFormData] = useState({
@@ -14,23 +19,65 @@ const FEditGuru = () => {
         noHp: '',
         alamat: '',
         tempatLahir: '',
+        tanggalLahir: '',
         jabatan: '',
         status: '',
-        nisn: '',
         jenisKelamin: '',
         agama: '',
-        jurusan: '',
-        kelas: '',
         bukti: null,
         previewImage: null,
         imageName: ''
     });
+    const navTo = useNavigate();
     const Wmobile = CustomWidth() <= 767;
     const DekstopLow = CustomWidth() <= 1366;
     const [showIcon, setShowIcon] = useState(true);
     const [showImageUP, setImageUp] = useState(true);
     const fileInputRef = useRef(null);
     const [image, setImage] = useState(null);
+
+    const id = useParams().id;
+
+    const getGuru = _debounce(async () => {
+        try{
+            const resp = await api.get('/getGuru_Admin/' + id )
+            if (resp.status === 200) {
+                const date = formatDate(resp.data[0].tgl_lahir);
+                const file = base64ToFile(resp.data[0].bukti, resp.data[0].gambar_profil);
+                setFormData({
+                    nik: resp.data[0].nik,
+                    nama: resp.data[0].nama,
+                    email: resp.data[0].email,
+                    Password: resp.data[0].password,
+                    noHp: resp.data[0].no_hp,
+                    alamat: resp.data[0].alamat,
+                    tempatLahir: resp.data[0].tempat_lahir,
+                    tanggalLahir: date,
+                    jabatan: resp.data[0].jabatan,
+                    status: resp.data[0].status,
+                    jenisKelamin: resp.data[0].jenis_kelamin,
+                    agama: resp.data[0].agama,
+                    bukti: file,
+                    previewImage: 'data:image/png;base64,' + resp.data[0].bukti,
+                    imageName: resp.data[0].gambar_profil
+                })
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }, 50)
+
+    useEffect(() => {
+        getGuru();
+    }, [])
+
+    useEffect(() => {
+        if (formData.previewImage) {
+            setImage(formData.previewImage);
+            setShowIcon(false);
+            setImageUp(false);
+        }
+    },[])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -186,31 +233,31 @@ const FEditGuru = () => {
                         </div>
                         <div className="flex flex-row  mt-4">
                             <div className="mr-4">
-                                <label htmlFor="jenisKelamin">Jabatan:</label>
-                                <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    name="jenisKelamin"
+                                <label htmlFor="jabatan">Jabatan:</label>
+                                <select id="jabatan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    name="jabatan"
                                     value={formData.jabatan}
                                     onChange={handleInputChange}>
-                                    <option value="">Pilih Jabatan</option>
-                                    <option value="Kepala Sekolah">Kepala Sekolah</option>
-                                    <option value="Wakil Kepala Sekolah">Wakil Kepala Sekolah</option>
-                                    <option value="Guru Kelas">Guru Kelas</option>
-                                    <option value="Koordinator atau Pembina Bidang">Koordinator atau Pembina Bidang</option>
-                                    <option value="Guru Mata Pelajaran">Guru Mata Pelajaran</option>
-                                    <option value="Guru Bimbingan Konseling (BK)">Guru Bimbingan Konseling (BK)</option>
-                                    <option value="Guru Agama">Guru Agama</option>
-                                    <option value="Guru Pendukung">Guru Pendukung</option>
-                                    <option value="Guru Pengajar Tambahan">Guru Pengajar Tambahan</option>
-                                    <option value="Guru Pembimbing">Guru Pembimbing</option>
-                                    <option value="Guru Pendidikan Khusus">Guru Pendidikan Khusus</option>
-                                    <option value="Guru Bahasa Asing">Guru Bahasa Asing</option>
-                                    <option value="Guru Pengampu Program Keahlian">Guru Pengampu Program Keahlian</option>
+                                    <option value="" disabled>Pilih Jabatan</option>
+                                    <option value="Kepala Sekolah" selected={formData.jabatan === "Kepala Sekolah"}>Kepala Sekolah</option>
+                                    <option value="Wakil Kepala Sekolah" selected={formData.jabatan === "Wakil Kepala Sekolah"}>Wakil Kepala Sekolah</option>
+                                    <option value="Guru Kelas" selected={formData.jabatan === "Guru Kelas"}>Guru Kelas</option>
+                                    <option value="Koordinator atau Pembina Bidang" selected={formData.jabatan === "Koordinator atau Pembina Bidang"}>Koordinator atau Pembina Bidang</option>
+                                    <option value="Guru Mata Pelajaran" selected={formData.jabatan === "Guru Mata Pelajaran"}>Guru Mata Pelajaran</option>
+                                    <option value="Guru Bimbingan Konseling (BK)" selected={formData.jabatan === "Guru Bimbingan Konseling (BK)"}>Guru Bimbingan Konseling (BK)</option>
+                                    <option value="Guru Agama" selected={formData.jabatan === "Guru Agama"}>Guru Agama</option>
+                                    <option value="Guru Pendukung" selected={formData.jabatan === "Guru Pendukung"}>Guru Pendukung</option>
+                                    <option value="Guru Pengajar Tambahan" selected={formData.jabatan === "Guru Pengajar Tambahan"}>Guru Pengajar Tambahan</option>
+                                    <option value="Guru Pembimbing" selected={formData.jabatan === "Guru Pembimbing"}>Guru Pembimbing</option>
+                                    <option value="Guru Pendidikan Khusus" selected={formData.jabatan === "Guru Pendidikan Khusus"}>Guru Pendidikan Khusus</option>
+                                    <option value="Guru Bahasa Asing" selected={formData.jabatan === "Guru Bahasa Asing"}>Guru Bahasa Asing</option>
+                                    <option value="Guru Pengampu Program Keahlian" selected={formData.jabatan === "Guru Pengampu Program Keahlian"}>Guru Pengampu Program Keahlian</option>
                                 </select>
                             </div>
                             <div className="mr-4">
-                                <label htmlFor="jenisKelamin">Status:</label>
-                                <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    name="jenisKelamin"
+                                <label htmlFor="status">Status:</label>
+                                <select id="status" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    name="status"
                                     value={formData.status}
                                     onChange={handleInputChange}>
                                     <option value="">Pilih Status</option>
@@ -224,8 +271,8 @@ const FEditGuru = () => {
                                 <label htmlFor="jenisKelamin">Jenis Kelamin:</label>
                                 <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
                                     <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="laki-laki">Laki-laki</option>
-                                    <option value="perempuan">Perempuan</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
                                 </select>
                             </div>
 
@@ -234,8 +281,8 @@ const FEditGuru = () => {
                                 <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.agama} onChange={handleInputChange}>
                                     <option value="">Pilih Agama</option>
-                                    <option value="muslim">Muslim</option>
-                                    <option value="non muslim">Non Muslim</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Non-Muslim">Non Muslim</option>
                                 </select>
                             </div>
                         </div>
