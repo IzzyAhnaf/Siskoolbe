@@ -772,7 +772,43 @@ fastify.post('/addGuru_Admin', async (request, reply) => {
 });
 
 fastify.post('/updateGuru_Admin/:id', async (request, reply) => {
-    
+    const data = request.headers.data;
+    const { nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin } = JSON.parse(data);
+    const file = await request.file();
+
+    try{
+        if(!file){
+            return reply.status(401).send({ message: 'File not found' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Guru/Profil');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if(!fs.existsSync(uploadDir)){
+            fs.mkdirSync(uploadDir);
+        }
+
+        const insert = await new Promise((resolve, reject) => {
+            db.query('UPDATE guru (nik, nama, email, password, alamat, no_hp, tempat_lahir, tgl_lahir, agama, jabatan, status, jenis_kelamin, gambar_profil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
+            [nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin, `${timestamp}-${file.filename}`, request.params.id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(insert.affectedRows > 0){
+            await pipeline(file.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Gagal Insert' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
 })
 
 
