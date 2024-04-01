@@ -10,4 +10,6 @@ export const getCookies = document.cookie.split(';').reduce((cookies, cookie) =>
     return cookies;
 }, {});
 
-
+export const removeCookies = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;    
+}

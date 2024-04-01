@@ -53,11 +53,10 @@ const Profile = () => {
     const handleOpenFileExplorer = () => {
         const input = document.createElement('input');
         input.type = 'file';
-        input.accept = 'image/*'; // Mengatur agar hanya file gambar yang dapat dipilih
+        input.accept = 'image/*'; 
         input.onchange = (event) => {
-            // Lakukan penanganan perubahan file disini (jika diperlukan)
         };
-        input.click(); // Membuka dialog penjelajah file
+        input.click(); 
     };
 
     const Wmobile = CustomWidth() <= 767;

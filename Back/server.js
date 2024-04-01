@@ -266,7 +266,22 @@ fastify.get('/siswa', async (request, reply) => {
             })
         })
         if(Exist.length > 0){
-            return reply.status(200).send(Exist);
+            const data = await Promise.all(Exist.map(async (item) => {
+                try{
+                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                    const Image = fs.readFileSync(imagePath, 'base64');
+                    return {
+                        ...item,
+                        gambar_profil: Image
+                    }                    
+                }catch(err){
+                    return {
+                        ...item,
+                        gambar_profil: null
+                    }
+                }
+            }))
+            return reply.status(200).send(data);
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });
@@ -363,9 +378,51 @@ fastify.post('/absenkeluarsiswa', async (request, reply) => {
 fastify.get('/guru', async (request, reply) => {
     return reply.status(200).send({ message: 'Success' });
 })
+
 fastify.get('/admin', async (request, reply) => {
-    return reply.status(200).send({ message: 'Success' });
-})
+    try {
+        const token  = request.headers.authorization;
+        if (!token) {
+            return reply.status(401).send({ message: "Token not provided" });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, 'secret');
+        } catch(err) {
+            return reply.status(401).send({ message: "Invalid token" });
+        }
+
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM admin WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        if(Exist.length > 0){
+            const data = await Promise.all(Exist.map(async (item) => {
+                try {
+                    const imagePath = './Gambar/Admin/Profil/' + item.gambar_profil;
+                    const image = fs.readFileSync(imagePath, 'base64');
+                    return { ...item, gambar_profil: image };       
+                } catch(err) {
+                    return { ...item, gambar_profil: null };
+                }
+            }));
+            return reply.status(200).send(data);
+        } else {
+            return reply.status(404).send({ message: "Admin data not found" });
+        }
+    } catch(err) {
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+
 // Admin
 
 // -data-siswa

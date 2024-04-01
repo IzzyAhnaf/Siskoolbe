@@ -11,11 +11,12 @@ import FEditJurusan from "../components/F_EditJurusan";
 
 const EditJurusan = () => {
     const Wmobile = CustomWidth() <= 767;
+    const DekstopLow = CustomWidth() < 1366;
     const navTo = useNavigate();
     return (
         <>
             {!Wmobile ? (
-                     <div className="flex flex-col bg-[#D9D9D9] rounded-xl mx-4 w-full">
+                     <div className={`flex flex-col bg-[#D9D9D9] rounded-xl mx-4 ${DekstopLow? 'p-4' : 'w-full'}`}>
                         <div className="flex flex-col items-center w-full my-auto">
                             <FEditJurusan />
                         </div>

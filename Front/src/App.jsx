@@ -53,8 +53,17 @@ function App() {
       nisn: '',
       nik: '',
       alamat: '',
+      gambar_profil: null,
     });
 
+  const [dataProfilAdmin, setDataProfilAdmin] = useState({
+    nama: '',
+    email: '',
+    noHp: '',
+    nik: '',
+    gambar_profil: null,
+    
+  })
   const token = sessionStorage.getItem('token') || getCookies.token;
 
 
@@ -74,7 +83,7 @@ function App() {
       })
       if (resp.status === 200) {
         if (decoded.role === 'siswa') {
-          const { nama, email, agama, jenis_kelamin, tempat_lahir, tgl_lahir, nis, nisn, nik, alamat } = resp.data[0]
+          const { nama, email, agama, jenis_kelamin, tempat_lahir, tgl_lahir, nis, nisn, nik, alamat, gambar_profil } = resp.data[0]
           setDataProfilsiswa({
             nama: nama,
             email: email,
@@ -85,7 +94,16 @@ function App() {
             nis: nis,
             nisn: nisn,
             nik: nik,
-            alamat: alamat
+            alamat: alamat,
+            gambar_profil: 'data:image/png;base64,' + gambar_profil
+          })
+        } else if(decoded.role === 'admin'){
+          setDataProfilAdmin({
+            nama: resp.data[0].nama,
+            email: resp.data[0].email,
+            noHp: resp.data[0].no_hp,
+            nik: resp.data[0].nik,
+            gambar_profil: 'data:image/png;base64,' + resp.data[0].gambar_profil
           })
         }
       }
@@ -117,10 +135,10 @@ function App() {
   return (
     <>
       {!loading ? (
-        <div className='flex p-2'>
+        <div className='flex p-2 h-screen'>
           {decoded.role === 'siswa' ? (
             <>
-              {WMobile ? <Mnvbar /> : <Sidebar />}
+              {WMobile ? <Mnvbar /> : <Sidebar nama={dataProfilsiswa.nama} gambar_profil={dataProfilsiswa.gambar_profil}/>}
               <Routes>
                 <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow} />}></Route>
                 <Route path='/Siswa/Profile' element={<Profile />}></Route>
@@ -144,7 +162,7 @@ function App() {
             </>
           ) : decoded.role === 'admin' ? (
             <>
-              {WMobile ? <AMNavbar /> : <SidebarAdmin />}
+              {WMobile ? <AMNavbar /> : <SidebarAdmin nama={dataProfilAdmin.nama} gambar_profil={dataProfilAdmin.gambar_profil} />}
               <Routes>
                 <Route path='/Admin' element={<HomesAdmin />}></Route>
                 <Route path='/Admin/Admin_Guru' element={<Adminguru />}></Route>
