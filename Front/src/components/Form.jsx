@@ -1,150 +1,134 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Styling.css"
 import CustomWidth from '../CustomWidth';
 
 
-const Form = () => {
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        address: '',
-        nis: '',
-        nisn: '',
-        phoneNumber: '',
-        selectedClass: '',
-        gender: '',
-    });
+const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin, handleInputChange}) => {
+ 
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-    };
     const WMobile = CustomWidth() <= 767;
 
     return (
         <>
             {!WMobile ? (
-                <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                    <div className='container3 '>
-                        <h1 className='font-bold text-2xl mt-4'>Change User Information Here</h1>
-                        <div className="mb-4 flex flex-row ">
-                            <div className='mt-4'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Full Name
+                <form className="w-full mx-auto bg-white rounded-lg p-4 font-inter">
+                    <div className=''>
+                        <div className="mb-4 flex w-full space-x-2">
+                            <div className='mt-4 w-full'>
+                                <label htmlFor="nama" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                                    Nama
                                 </label>
                                 <input
                                     type="text"
-                                    id="fullName"
-                                    name="fullName"
-                                    value={formData.fullName}
+                                    id="nama"
+                                    name="nama"
+                                    value={nama}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="w-full flex border-[1px] border-black rounded-md bg-transparent px-2 py-2  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 />
                             </div>
-                            <div className='mt-4 ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                            <div className='mt-4 w-full'>
+                                <label htmlFor="email" className="block text-sm " style={{ fontStyle: 'italic' }}>
                                     Email
                                 </label>
                                 <input
                                     type="email"
                                     id="email"
                                     name="email"
-                                    value={formData.email}
+                                    value={email}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[90px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="w-full flex border-[1px] border-black rounded-md bg-transparent  py-2 px-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     autoComplete='none'
                                     required
                                 />
                             </div>
                         </div>
 
-                        <div className="mb-4 flex flex-row">
+                        <div className="mb-4 flex w-full">
                             <div className=''>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Address
+                                <label htmlFor="alamat" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                                    Alamat
                                 </label>
-                                <input
-                                    type="text"
-                                    id="address"
-                                    name="address"
-                                    value={formData.address}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[266px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    autoComplete='none'
-                                    required
-                                />
+                                <textarea
+                                id="alamat"
+                                name="alamat"
+                                value={alamat}
+                                onChange={handleInputChange}
+                                className='flex border-[1px] border-black rounded-md p-4 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
+                                w-full'
+                                rows={4}
+                                cols={201}
+                                style={{ resize: 'none' }}>
+
+                                </textarea>
                             </div>
                         </div>
 
-                        <div className="mb-4 flex flex-row">
-                            <div>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                        <div className="mb-4 flex w-full">
+                            <div className='w-full'>
+                                <label htmlFor="nis" className="block text-sm " style={{ fontStyle: 'italic' }}>
                                     NIS
                                 </label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="nis"
                                     name="nis"
-                                    value={formData.nis}
+                                    value={nis}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     autoComplete='none'
                                     required
                                 />
                             </div>
-                            <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                            <div className='ml-2 w-full'>
+                                <label htmlFor="nisn" className="block text-sm " style={{ fontStyle: 'italic' }}>
                                     NISN
                                 </label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="nisn"
                                     name="nisn"
-                                    value={formData.nisn}
+                                    value={nisn}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     autoComplete='none'
                                     required
                                 />
                             </div>
                         </div>
 
-                        <div className="mb-4 flex flex-row">
-                            <div>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Phone Number
+                        <div className="mb-4 flex w-full">
+                            <div className='w-full'>
+                                <label htmlFor="no_hp" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                                    Nomor Hp
                                 </label>
                                 <input
-                                    type="tel"
-                                    id="phoneNumber"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
+                                    type="text"
+                                    id="no_hp"
+                                    name="no_hp"
+                                    value={no_hp}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     autoComplete='none'
                                     required
                                 />
                             </div>
-                            <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                            <div className='ml-2 w-full'>
+                                <label htmlFor="nik" className="block text-sm " style={{ fontStyle: 'italic' }}>
                                     NIK
                                 </label>
                                 <input
-                                    type="tel"
-                                    id="phoneNumber"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
+                                    type="text"
+                                    id="nik"
+                                    name="nik"
+                                    value={nik}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     autoComplete='none'
                                     required
                                 />
@@ -152,44 +136,24 @@ const Form = () => {
 
                         </div>
 
-                        <div className="mb-2 flex flex-row">
-                            <div className=''>
-                                <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                    Class
+                        <div className="mb-2 flex w-full">
+                            <div className='w-full'>
+                                <label htmlFor="" className="block text-sm" style={{ fontStyle: 'italic' }}>
+                                    Kelas
                                 </label>
-                                <select
-                                    id="selectedClass"
-                                    name="selectedClass"
-                                    value={formData.selectedClass}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[124px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    required
-                                >
-                                    <option value="">Select Class</option>
-                                    <option value="classA">Class A</option>
-                                    <option value="classB">Class B</option>
-                                    <option value="classC">Class C</option>
-                                </select>
+                               <input type="text"
+                               className='flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' disabled
+                               value={kelas}
+                               />
                             </div>
-                            <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Gender
+                            <div className='ml-2 w-full'>
+                                <label htmlFor="" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                                    Jenis Kelamin
                                 </label>
-                                <div className="flex items-center space-x-4">
-                                    <select
-                                        id="selectedClass"
-                                        name="selectedClass"
-                                        value={formData.selectedClass}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[114px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        required
-                                    >
-                                        <option value="">Select Gender</option>
-                                        <option value="classA">Male</option>
-                                        <option value="classB">Female</option>
-                                    </select>
-
-                                </div>
+                                <input type="text"
+                                className='flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' disabled
+                                value={jenis_kelamin}
+                                />
                             </div>
                         </div>
 
@@ -214,7 +178,7 @@ const Form = () => {
                                         type="text"
                                         id="fullName"
                                         name="fullName"
-                                        value={formData.fullName}
+                                        value={nama}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -230,7 +194,7 @@ const Form = () => {
                                         type="email"
                                         id="email"
                                         name="email"
-                                        value={formData.email}
+                                        value={email}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -248,7 +212,7 @@ const Form = () => {
                                         type="text"
                                         id="address"
                                         name="address"
-                                        value={formData.address}
+                                        value={alamat}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -266,7 +230,7 @@ const Form = () => {
                                         type="text"
                                         id="nis"
                                         name="nis"
-                                        value={formData.nis}
+                                        value={nis}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -281,7 +245,7 @@ const Form = () => {
                                         type="text"
                                         id="nisn"
                                         name="nisn"
-                                        value={formData.nisn}
+                                        value={nisn}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -299,7 +263,7 @@ const Form = () => {
                                         type="tel"
                                         id="phoneNumber"
                                         name="phoneNumber"
-                                        value={formData.phoneNumber}
+                                        value={phoneNumber}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -313,7 +277,7 @@ const Form = () => {
                                     <select
                                         id="selectedClass"
                                         name="selectedClass"
-                                        value={formData.selectedClass}
+                                        value={selectedClass}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[98px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         required
@@ -335,7 +299,7 @@ const Form = () => {
                                         <select
                                             id="selectedClass"
                                             name="selectedClass"
-                                            value={formData.selectedClass}
+                                            value={selectedClass}
                                             onChange={handleInputChange}
                                             className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             required

@@ -41,6 +41,7 @@ function App() {
   const navTo = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [dataProfilsiswa, setDataProfilsiswa] = useState(
     {
       nama: '',
@@ -97,6 +98,7 @@ function App() {
             alamat: alamat,
             gambar_profil: 'data:image/png;base64,' + gambar_profil
           })
+          setSelectedImage('data:image/png;base64,' + gambar_profil)
         } else if(decoded.role === 'admin'){
           setDataProfilAdmin({
             nama: resp.data[0].nama,
@@ -113,7 +115,6 @@ function App() {
   }, 60);
 
   useEffect(() => {
-    console.log(token);
     token ? [sessionStorage.setItem('token', token), getProfile()] : navTo('/Siskoolbe/login')
     setTimeout(() => setLoading(false), 1000)
   }, []);
@@ -166,10 +167,10 @@ function App() {
         <div className='flex p-2 h-screen'>
           {decoded.role === 'siswa' ? (
             <>
-              {WMobile ? <Mnvbar /> : <Sidebar nama={dataProfilsiswa.nama} gambar_profil={dataProfilsiswa.gambar_profil}/>}
+              {WMobile ? <Mnvbar /> : <Sidebar nama={dataProfilsiswa.nama} gambar_profil={selectedImage}/>}
               <Routes>
                 <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow} />}></Route>
-                <Route path='/Siswa/Profile' element={<Profile />}></Route>
+                <Route path='/Siswa/Profile' element={<Profile getProfileImage={selectedImage} setSelectedImage={setSelectedImage} />}></Route>
                 <Route path='/Siswa/Profset' element={<ProfSet />}></Route >
                 <Route path='/Siswa/Izin-Sakit' element={<Izin_Sakit />}></Route>
                 <Route path='/Siswa/AbsenMasuk/:id/:nis' element={<Checkin />}></Route>
@@ -190,7 +191,7 @@ function App() {
             </>
           ) : decoded.role === 'admin' ? (
             <>
-              {WMobile ? <AMNavbar /> : <SidebarAdmin nama={dataProfilAdmin.nama} gambar_profil={dataProfilAdmin.gambar_profil} />}
+              {WMobile ? <AMNavbar /> : <SidebarAdmin nama={dataProfilAdmin.nama} gambar_profil={selectedImage} />}
               <Routes>
                 <Route path='/Admin' element={<HomesAdmin />}></Route>
                 <Route path='/Admin/Admin_Guru' element={<Adminguru />}></Route>

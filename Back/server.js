@@ -265,6 +265,15 @@ fastify.get('/siswa', async (request, reply) => {
                 }
             })
         })
+        const kelas = await new Promise((resolve, reject) => {
+            db.query('SELECT kelas FROM kelas WHERE id = ?', [Exist[0].idkelas], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
                 try{
@@ -272,12 +281,15 @@ fastify.get('/siswa', async (request, reply) => {
                     const Image = fs.readFileSync(imagePath, 'base64');
                     return {
                         ...item,
-                        gambar_profil: Image
+                        gambar_profil: Image,
+                        nama_gambar: item.gambar_profil,
+                        kelas: kelas[0].kelas
                     }                    
                 }catch(err){
                     return {
                         ...item,
-                        gambar_profil: null
+                        gambar_profil: null,
+                        kelas: kelas[0].kelas
                     }
                 }
             }))
@@ -373,6 +385,63 @@ fastify.post('/absenkeluarsiswa', async (request, reply) => {
         return reply.status(500).send({ message: err.message });
     }
 });
+
+fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
+    const file = await request.file();
+    const email = request.params.email;
+
+    try{
+        if(!file){
+            return reply.status(401).send({ message: 'No file uploaded' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Siswa/Profil/');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir);
+        }
+
+        const update = await new Promise((resolve, reject) => {
+            db.query('UPDATE siswa SET gambar_profil = ? WHERE email = ?', [`${timestamp}-${file.filename}`, email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(update.affectedRows > 0){
+            await pipeline(file.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/editsiswaProfile/:email', async (request, reply) => {
+    const {nama, email, alamat, nik, nis, nisn, no_hp, agama} = request.body;
+
+    try{
+        const update = await new Promise((resolve, reject) => {
+           db.query('UPDATE siswa SET ? WHERE email = ?', [{nama, email, alamat, nik, nis, nisn, no_hp, agama}, email], (err, result) => {
+               if(err){
+                   reject(err);
+               }else{
+                   resolve(result);
+               }
+           })
+        })
+        if(update.affectedRows > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
 
 // Guru
 fastify.get('/guru', async (request, reply) => {
