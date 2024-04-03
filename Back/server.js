@@ -403,8 +403,8 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
             fs.mkdirSync(uploadDir);
         }
 
-        const update = await new Promise((resolve, reject) => {
-            db.query('UPDATE siswa SET gambar_profil = ? WHERE email = ?', [`${timestamp}-${file.filename}`, email], (err, result) => {
+        const getImage = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar_profil FROM siswa WHERE email = ?', [email], (err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -413,9 +413,21 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
             })
         })
 
-        if(update.affectedRows > 0){
-            await pipeline(file.file, fs.createWriteStream(filepath));
-            return reply.status(200).send({ message: 'Success' });
+        if(getImage.length > 0){
+            fs.unlinkSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil));
+            const update = await new Promise((resolve, reject) => {
+                db.query('UPDATE siswa SET gambar_profil = ? WHERE email = ?', [`${timestamp}-${file.filename}`, email], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+            if(update.affectedRows > 0){
+                await pipeline(file.file, fs.createWriteStream(filepath));
+                return reply.status(200).send({ message: 'Success' });
+            }
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });
@@ -427,7 +439,7 @@ fastify.post('/editsiswaProfile/:email', async (request, reply) => {
 
     try{
         const update = await new Promise((resolve, reject) => {
-           db.query('UPDATE siswa SET ? WHERE email = ?', [{nama, email, alamat, nik, nis, nisn, no_hp, agama}, email], (err, result) => {
+           db.query('UPDATE siswa SET ? WHERE email = ?', [{nama, alamat, nik, nis, nisn, no_hp, agama}, email], (err, result) => {
                if(err){
                    reject(err);
                }else{
@@ -439,6 +451,86 @@ fastify.post('/editsiswaProfile/:email', async (request, reply) => {
             return reply.status(200).send({ message: 'Success' });
         }
     }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.get('/CheckIzinSiswa', async (request, reply) => {
+    const token  = request.headers.authorization;
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    let decoded;
+    try {
+        decoded = jwt.verify(token, 'secret');
+
+        const checkAbsensi = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM `absensisiswa` WHERE status = "open" ORDER BY `tanggal` DESC LIMIT 1', (err, result) => {
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+        
+        if(checkAbsensi.length > 0){
+            return reply.status(200).send({message: 'true'});
+        }else{
+            return reply.status(401).send({message: 'false'});
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/IzinSiswa', async (request, reply) => {
+    const token  = request.headers.authorization;
+    const data = request.headers.data;
+    const {izinType, alasan} = JSON.parse(data);
+    const file = await request.file();
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    let decoded;
+    try {
+        decoded = jwt.verify(token, 'secret');
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Siswa/Izin/');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        const SelectidAbsensi = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM `absensisiswa` ORDER BY `tanggal` DESC LIMIT 1',(err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        const idAbsen = SelectidAbsensi[0].id;
+
+        const IzinUpdate = await new Promise((resolve, reject) => {
+            db.query('UPDATE absensisiswa SET izin = ?, detail_izin = ?, foto_izin_absensi = ?, status = ? WHERE id = ?', [`${izinType}`, `${alasan}`, `${timestamp}-${file.filename}`, `closed`, idAbsen], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(IzinUpdate.affectedRows > 0){
+            await pipeline(file.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err) {
         return reply.status(500).send({ message: err.message });
     }
 })

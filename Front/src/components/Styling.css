@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 .btn {
   margin-top: 50px;
   margin-left: 20px;
@@ -76,4 +78,3 @@
   text-align: center;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');

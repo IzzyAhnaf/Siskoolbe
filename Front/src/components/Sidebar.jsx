@@ -57,23 +57,13 @@ const Sidebar = ({nama, gambar_profil}) => {
                         <span className="mx-4 font-medium font-inter">Profile</span>
                     </Link>
 
-                    <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
-                    rounded-lg dark:text-gray-100 
-                    ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
-                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to="/Siskoolbe/Siswa/Izin-Sakit"
-                        onClick={() => SelectSidebars(2)}>
-                        <TbCalendarTime className="w-5 h-5" />
-                        <span className="mx-4 font-medium text-center font-inter">Izin</span>
-                    </Link>
-
                     <Link className={`flex flex-col items-center space-y-2 px-1 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to="/Siskoolbe/Siswa/Izin-Sakit"
-                        onClick={() => SelectSidebars(3)}>
-                        {SelectSidebar === 3 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
+                        to="/Siskoolbe/Siswa/"
+                        onClick={() => SelectSidebars(2)}>
+                        {SelectSidebar === 2 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
                         <span className="mx-4 font-small text-center font-inter">About Us</span>
                     </Link>
 
@@ -81,8 +71,8 @@ const Sidebar = ({nama, gambar_profil}) => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 4 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
-                        onClick={() => {SelectSidebars(4), Logout()}}>
-                        {SelectSidebar === 4 ? <ImExit className=" w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
+                        onClick={() => {SelectSidebars(3), Logout()}}>
+                        {SelectSidebar === 3 ? <ImExit className=" w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">Log Out</span>
                     </Link>
                     

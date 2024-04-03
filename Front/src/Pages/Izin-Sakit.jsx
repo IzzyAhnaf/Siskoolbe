@@ -4,18 +4,46 @@ import CustomWidth from "../CustomWidth";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
-
+import api from '../api';
+import _debounce from 'lodash/debounce';
+import { useEffect } from "react";
 
 
 const Izin_Sakit = () => {
     const Wmobile = CustomWidth() <= 767;
     const navTo = useNavigate();
+
+    
+    const check = _debounce(async () => {
+        try{
+            const check = await api.get('/CheckIzinSiswa', {
+                headers: {
+                    Authorization: `${sessionStorage.getItem('token')}`
+                }
+            })
+
+            if(check.status === 200){
+
+            }else{
+                navTo('/Siskoolbe/Siswa', { replace: true });
+            }
+        }catch(err){
+            navTo('/Siskoolbe/Siswa', { replace: true });
+        }
+    }, 50)
+
+    useEffect(() => {
+        check()
+        return () => {
+            check.cancel()
+        }
+    }, [])
     return (
         <>
             {!Wmobile ? (
 
-                <div className="flex w-screen  flex-col justify-center items-center rounded-3xl bg-[#D9D9D9] mx-4 ">
-                    <div className="flex ">
+                <div className="flex flex-col w-full rounded-3xl bg-[#D9D9D9] mx-4 ">
+                    <div className="flex flex-col items-center w-full my-auto">
                         <IzinForm />
                     </div>
                 </div>

@@ -34,7 +34,21 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
     }
   },60)
 
-  const DateNow = new Date().toLocaleDateString();
+  const DateNow = () => {
+      const date = new Date();
+      const year = date.getFullYear();
+      const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+      ];
+      const monthIndex = date.getMonth();
+      const month = monthNames[monthIndex];
+      const day = date.getDate();
+
+      const options = { weekday: 'long' };
+      const dayName = date.toLocaleDateString('id-ID', options);
+
+      return `${dayName}, ${day} ${month} ${year}`;
+  };
 
   useEffect(() => {
     getdataAbsen()
@@ -55,7 +69,12 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
             <svg className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="white" d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"></path></svg>
             <span className="font-semibold font-inter text-lg text-white mx-2">SMKN 1 Depok, Gang Bhakti Suci No.100, Cimpaeun, Tapos, Kota Depok, Jawa Barat, 16459</span>
           </div>
-          <span className="text-xl mt-8 font-medium font-inter text-black mx-32">Absensi Senin 11 Maret 2024</span>
+
+          <div className="flex justify-between items-center">
+            <span className="text-xl mt-8 font-medium font-inter text-black mx-32">Absensi {DateNow()}</span>
+            <span className="text-lg mt-8 font-medium font-inter text-white mx-32 bg-red-600 py-2 px-12 rounded-lg hover:cursor-pointer"
+            onClick={() => navTo('/Siskoolbe/Siswa/Izin-Sakit')}>Ajukan Izin</span>
+          </div>
 
           <div className={`overflow-y-auto flex flex-col slim-scroll py-2 ${DekstopLow ? 'h-[280px]' : 'h-[90%]'}`}>
             {dataAbsen.map((entry, index) => (
@@ -126,7 +145,11 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
                 </>
                 ) : (
                 <>
-                <div className="p-2 rounded-2xl py-1 px-6 mx-2 my-3 items-center flex flex-col cursor-pointer">
+                <div className="p-2 rounded-2xl py-2 px-6 mx-2 my-4 items-center flex flex-col bg-[#ffec1c] justify-center">
+                    <span className="font-inter font-bold text-lg text-white">Izin</span>
+                </div>
+
+                <div className="p-2 rounded-2xl py-1 px-6 mx-2 my-3 items-center flex flex-col">
                   <span className="font-inter font-bold text-lg text-[#269400]">Masuk</span>
                   <span className="font-inter font-bold text-lg text-[#269400]">
                     {!entry.absen_masuk || entry.absen_masuk === '' ? '--' : new Date(entry.absen_masuk).toLocaleString("id-ID", {hour: '2-digit', minute: '2-digit'})}
@@ -135,7 +158,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
 
                 <span className="text-5xl font-thin mt-4 mx-1">|</span>
 
-                <div className="p-2 rounded-2xl py-1 px-6 mx-2 my-3 items-center flex flex-col cursor-pointer">
+                <div className="p-2 rounded-2xl py-1 px-6 mx-2 my-3 items-center flex flex-col">
                   <span className="font-inter font-bold text-lg text-[#ff1100]">Keluar</span>
                   <span className="font-inter font-bold text-lg text-[#ff1100]">
                     {!entry.absen_keluar || entry.absen_keluar === '' ? '--' : new Date(entry.absen_keluar).toLocaleString("id-ID", {hour: '2-digit', minute: '2-digit'})}

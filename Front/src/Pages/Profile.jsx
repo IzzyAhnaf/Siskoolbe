@@ -13,6 +13,7 @@ import FormProfGuru from "../components/FormProfilGuru";
 import _debounce from 'lodash/debounce';
 import api from "../api";
 import base64ToFile from "../base64toFile";
+import Swal from "sweetalert2";
 
 const Profile = ({getProfileImage, setSelectedImage}) => {
 
@@ -54,37 +55,68 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
+                    }).then((res) => {
+                        Swal.fire(
+                            'Berhasil',
+                            'Data Berhasil diubah',
+                            'success'
+                        )
+                        setFormData(prevState => ({ ...prevState, gambar_profil: reader.result }));
+                    }).catch((err) => {
+                        Swal.fire(
+                            'Gagal',
+                            'Data gagal diubah',
+                            'error'
+                        )
                     });
-                    setFormData(prevState => ({ ...prevState, gambar_profil: reader.result }));
                 } catch (error) {
-
+                    Swal.fire(
+                        'Gagal',
+                        'Data gagal diubah',
+                        'error'
+                    )
                 }
             };
         };
         input.click(); 
     };
 
-    const update = async ({nama, email, alamat, nik, nis, nisn, no_hp, agama}) => {
+    const update = async ({ nama, email, alamat, nik, nis, nisn, no_hp, agama }) => {
         try {
             const data = {
-                nama : nama,
-                email : email,
-                alamat : alamat,
-                nik : nik,
-                nis : nis,
-                nisn : nisn,
-                no_hp : no_hp,
-                agama : agama,
+                nama: nama,
+                email: email,
+                alamat: alamat,
+                nik: nik,
+                nis: nis,
+                nisn: nisn,
+                no_hp: no_hp,
+                agama: agama,
             }
-
+    
             const encoded = JSON.stringify(data);
-            await api.post(`/editsiswaProfile/${formData.email}`, encoded).then((res) => {
+            const res = await api.post(`/editsiswaProfile/${formData.email}`, encoded);
+    
+            if (res.status === 200) {
+                Swal.fire(
+                    'Berhasil',
+                    'Data Berhasil diubah',
+                    'success'
+                );
                 getProfileImage();
-            })
+            } else {
+                Swal.fire(
+                    'Gagal',
+                    'Data gagal diubah',
+                    'error'
+                );
+            }
         } catch (error) {
-            console.log(error);
+            
         }
     }
+    
+    
     
     const getData = _debounce(async () => {
         try{
