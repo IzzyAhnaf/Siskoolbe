@@ -5,8 +5,9 @@ import { IoMdSettings } from "react-icons/io";
 import "../Styling.css"
 import CustomWidth from "../../CustomWidth";
 import { useNavigate } from "react-router-dom";
-import api from "../../api";
 import _debounce from 'lodash/debounce';
+import api from "../../api";
+import base64ToFile from "../../base64toFile";
 
 const ProfSet = () => {
 
@@ -26,32 +27,6 @@ const ProfSet = () => {
         tempat_lahir: '',
         tgl_lahir: '',
     });
-
-    // const toggleContainer = () => {
-    //     setContainerVisible(!isContainerVisible);
-
-    //     const Form = () => {
-    //         const [formData, setFormData] = useState({
-    //             fullName: '',
-    //             email: '',
-    //             address: '',
-    //             nis: '',
-    //             nisn: '',
-    //             phoneNumber: '',
-    //             selectedClass: '',
-    //         });
-
-    //         const handleInputChange = (e) => {
-    //             const { name, value } = e.target;
-    //             setFormData((prevData) => ({
-    //                 ...prevData,
-    //                 [name]: value,
-    //             }));
-    //         };
-
-
-    //     };
-    // };
 
     const getData = _debounce(async () => {
         try{
@@ -75,7 +50,7 @@ const ProfSet = () => {
                 })
             })
         }catch(error){
-
+            console.log(error);
         }
     }, 50)
 
@@ -115,22 +90,32 @@ const ProfSet = () => {
         }
     }, []) 
 
+    useEffect(() => {
+        console.log(formData);
+    }, [formData])
+
     return (
         <>    
-            <div className="flex flex-col">
-                <div className="flex flex-row">
+            <div className="flex flex-col w-full">
+                <div className="flex justify-between px-2">
                     <div className="flex flex-col">
-                        <span className="font-semibold font-inter text-xl mt-6 mx-6">Ilham</span>
-                        <span className="font-semibold font-inter text-lg mt-2 mx-6">Student</span>
+                        <span className="font-semibold font-inter text-xl mt-6">{formData.nama}</span>
+                        <span className="font-inter text-md mt-1">Pelajar</span>
                     </div>
-                        <img onClick={handleOpenFileExplorer} className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-                        <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('/Siskoolbe/Profile')} />
-                    </div>
-                    <div className="flex flex-col w-[360px] h-[460px] rounded-3xl bg-[#D9D9D9] mx-[5px] pb-16 mt-4">
-                        <Form nama={formData.nama} email={formData.email} alamat={formData.alamat} nik={formData.nik} no_hp={formData.no_hp}
-                        nis={formData.nis} nisn={formData.nisn} kelas={formData.kelas} jenis_kelamin={formData.jenis_kelamin} handleInputChange={handleInputChange}  
-                        /> 
-                    </div>
+                    <img onClick={handleOpenFileExplorer} className="w-20 h-20 mt-2 object-cover rounded-full" 
+                    src={formData.gambar_profil}
+                    onError={(e) => e.target.src = 'https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg'}
+                    alt="" />
+                </div>
+                <div className="flex flex-col w-full h-[70%] rounded-2xl bg-[#1E6CB1] pb-8 mt-4 text-white">
+                    <Form nama={formData.nama} email={formData.email} alamat={formData.alamat} nik={formData.nik} no_hp={formData.no_hp}
+                    nis={formData.nis} nisn={formData.nisn} kelas={formData.kelas} jenis_kelamin={formData.jenis_kelamin} handleInputChange={handleInputChange}  
+                    /> 
+                    <button className="w-[80%] rounded-lg border border-1 border-green-500 text-green-500 bg-white hover:text-white hover:bg-green-500 mx-auto mt-auto py-1">
+                        Ubah
+                    </button>
+                </div>
+             
             </div>
             <div>
 

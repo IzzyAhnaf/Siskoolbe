@@ -162,14 +162,13 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                 </form>
             ) : (
                 <>
-                    <form className="max-w-md mx-auto">
-                        <div className=' justify-center items-center ml-2'>
-                            <h1 className='font-bold text-[20px] mt-4'>Change User Information Here</h1>
+                    <form className="w-full">
+                        <div className='justify-center items-center'>
+                            <h1 className='font-bold text-[20px] mt-4 text-center'>Ubah Profil</h1>
                         </div>
-                        <div className={`container5 items-center justify-center flex flex-col ${WMobile ? 'overflow-y-auto mt-[12px] slim-scroll t-[200px] h-[380px] pt-[100px] pb-[20px]' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
-                            <div className="comtaimer5 mb-4 flex flex-col justify-center items-center">
+                            <div className="mb-4 flex flex-col justify-center items-center space-y-2 px-8">
 
-                                <div className='mt-4'>
+                                <div className='mt-4 w-full'>
 
                                     <label htmlFor="nama" className="block text-sm " style={{ fontStyle: 'italic' }}>
                                         nama
@@ -180,31 +179,13 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                         name="nama"
                                         value={nama}
                                         onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent w-full py-1  text-gray-900 placeholder:text-gray-400
+                                        focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4"
                                         autoComplete='none'
                                         required
                                     />
                                 </div>
-                                <div className='mt-4'>
-                                    <label htmlFor="email" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Email
-                                    </label>
-
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={email}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div className=''>
+                                <div className='w-full'>
                                     <label htmlFor="alamat" className="block text-sm" style={{ fontStyle: 'italic' }}>
                                         Alamat
                                     </label>
@@ -214,48 +195,13 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                         name="alamat"
                                         value={alamat}
                                         onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 w-full text-gray-900 placeholder:text-gray-400 
+                                        focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4"
                                         autoComplete='none'
                                         required
                                     />
                                 </div>
-
-
-
-                                <div>
-                                    <label htmlFor="nis" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NIS
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nis"
-                                        name="nis"
-                                        value={nis}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div >
-                                    <label htmlFor="nisn" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NISN
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nisn"
-                                        name="nisn"
-                                        value={nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
+                                <div className='w-full'>
                                     <label htmlFor="no_hp" className="block text-sm" style={{ fontStyle: 'italic' }}>
                                         Nomor Hp
                                     </label>
@@ -265,23 +211,13 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                         name="no_hp"
                                         value={no_hp}
                                         onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent w-full py-1  text-gray-900 placeholder:text-gray-400 
+                                        focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4"
                                         autoComplete='none'
                                         required
                                     />
                                 </div>
-                                <div className=''>
-                                    
-                                </div>
-
-
-
-                                <div>
-                           
-
-                                </div>
                             </div>
-                        </div>
                     </form>
                 </>
             )}
