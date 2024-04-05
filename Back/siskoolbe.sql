@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Mar 2024 pada 10.46
+-- Waktu pembuatan: 05 Apr 2024 pada 11.12
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -52,8 +52,8 @@ CREATE TABLE `absensisiswa` (
   `absen_masuk` datetime DEFAULT NULL,
   `absen_keluar` datetime DEFAULT NULL,
   `izin` enum('sakit','keterangan','tanpa_keterangan') DEFAULT NULL,
-  `detail-izin` text DEFAULT NULL,
-  `foto-izin_absensi` text DEFAULT NULL,
+  `detail_izin` text DEFAULT NULL,
+  `foto_izin_absensi` text DEFAULT NULL,
   `status` enum('open','closed') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -61,9 +61,10 @@ CREATE TABLE `absensisiswa` (
 -- Dumping data untuk tabel `absensisiswa`
 --
 
-INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail-izin`, `foto-izin_absensi`, `status`) VALUES
-(6, 2112231, '2024-03-20', NULL, NULL, NULL, NULL, NULL, 'closed'),
-(29, 2112231, '2024-03-21', NULL, NULL, NULL, NULL, NULL, 'open');
+INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail_izin`, `foto_izin_absensi`, `status`) VALUES
+(31, 2012321, '2024-04-04', NULL, NULL, 'tanpa_keterangan', '', '', 'closed'),
+(32, 2012321, '2024-04-05', NULL, NULL, 'keterangan', 'mokel', '1712200071658-ikan-mujair-goreng.jpg', 'closed'),
+(33, 2012321, '2024-04-06', '2024-04-05 06:19:10', NULL, NULL, NULL, NULL, 'open');
 
 -- --------------------------------------------------------
 
@@ -78,9 +79,8 @@ CREATE TABLE `admin` (
   `email` varchar(255) NOT NULL,
   `password` varchar(32) NOT NULL,
   `no_hp` bigint(20) DEFAULT NULL,
-  `role` varchar(255) NOT NULL,
+  `gambar_profil` text NOT NULL,
   `status` varchar(255) NOT NULL,
-  `remember_token` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -89,8 +89,8 @@ CREATE TABLE `admin` (
 -- Dumping data untuk tabel `admin`
 --
 
-INSERT INTO `admin` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '313432323', 'jay', 'jay@g.com', '123', NULL, '-', '-', NULL, NULL, NULL);
+INSERT INTO `admin` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `gambar_profil`, `status`, `created_at`, `updated_at`) VALUES
+(1, '313432323', 'jay', 'jay@g.com', '123', NULL, '', '-', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -197,7 +197,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `idkelas`, `alamat`, `no_hp`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(16, 32178931324, 'Didi', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 98273172391, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1711617659474-kp.jpg', '2024-03-28 09:20:59', '2024-03-28 09:20:59');
+(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1712296857715-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-05 06:00:57');
 
 --
 -- Indexes for dumped tables
@@ -265,7 +265,7 @@ ALTER TABLE `absensiguru`
 -- AUTO_INCREMENT untuk tabel `absensisiswa`
 --
 ALTER TABLE `absensisiswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `admin`
