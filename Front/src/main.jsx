@@ -30,6 +30,8 @@ import Login from './Pages/Login.jsx'
 import Register from './Pages/Register.jsx'
 import FGPassword from './Pages/FGPassword.jsx'
 import RSPassword from './Pages/RSPassword.jsx'
+import DetailIzin from './Pages/siswa/Detail-Izin.jsx'
+import AboutUS from './Pages/AboutUs.jsx'
 
 
 const router = createBrowserRouter([
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
     element: <App />,
 
     children: [
+      {
+        path: '/Siskoolbe/AboutUS',
+        element: <AboutUS />
+      },
       {
         path: '/Siskoolbe/Siswa',
         element: <Homes />
@@ -61,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Siswa/AbsenKeluar/:id/:nis',
         element: <Checkout />
+      },
+      {
+        path: '/Siskoolbe/Siswa/Absen/:id',
+        element: <DetailIzin />
       },
       {
         path: '/Siskoolbe/Admin',

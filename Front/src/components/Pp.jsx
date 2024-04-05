@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineCamera } from 'react-icons/ai';
 import './Styling.css'; 
 import { GoPencil } from "react-icons/go";
+import CustomWidth from '../CustomWidth';
 
 const ProfilePicture = ({gambar_profil}) => {
     const handleHover = (e) => {
@@ -12,10 +13,12 @@ const ProfilePicture = ({gambar_profil}) => {
         e.target.classList.remove('hovered');
     };
 
+    const WMobile = CustomWidth() <= 767;
+
     return (
         <div>
             <div className="image-container">
-                <GoPencil className="text-2xl absolute border-[1px] ml-[82px] rounded-full border-black  mt-[8px]" />
+                {!WMobile && <GoPencil className="text-2xl absolute border-[1px] ml-[82px] rounded-full border-black mt-[8px]" />}
                 <img
                     className="object-cover w-24 h-24 mx-2 rounded-full"
                     src={gambar_profil}

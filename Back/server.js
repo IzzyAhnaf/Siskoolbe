@@ -335,6 +335,33 @@ fastify.get('/absensiswa', async (request, reply) => {
     }
 })
 
+fastify.get('/absenChecker/:id', async (request, reply) => {
+    const token  = request.headers.authorization;
+    const id = request.params.id
+
+    if(!token){
+        return reply.status(401).send({ message: 'Unauthorized' });
+    }
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM absensisiswa WHERE id = ? AND status = ?', [id, 'open'], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(Exist.length > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
 fastify.post('/absenmasuksiswa', async (request, reply) => {
     const { nis, id, time } = request.body
 
@@ -531,6 +558,39 @@ fastify.post('/IzinSiswa', async (request, reply) => {
             return reply.status(401).send({ message: 'Failed' });
         }
     }catch(err) {
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.get('/DetailIzinSiswa/:id', async (request, reply) => {
+    const id  = request.params.id;
+    const token  = request.headers.authorization;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    try{
+        const exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM absensisiswa WHERE id = ?', [id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(exist[0].izin === 'keterangan' || exist[0].izin === 'sakit'){
+            const data  = await Promise.all(exist.map(async (item) => {
+                const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin', item.foto_izin_absensi);
+                const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
+                return { ...item, bukti: base64 };
+            }))
+            return reply.status(200).send(data);
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
         return reply.status(500).send({ message: err.message });
     }
 })

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Sidebar from './components/siswa/Sidebar'
 import CustomWidth from './CustomWidth'
-import Mnvbar from './components/siswa/MNavbar'
 import { getCookies } from './setCookies'
 import { jwtDecode } from 'jwt-decode';
 import _debounce from 'lodash/debounce';
@@ -30,6 +29,11 @@ import TambahJurusan from './Pages/admin/TambahJurusan'
 import EditMurid from './Pages/admin/Edit_Murid'
 import EditGuru from './Pages/admin/Edit_Guru'
 import EditJurusan from './Pages/admin/Edit_Jurusan'
+import GrMnvbar from './components/guru/GuruMNavbar'
+import Mnvbar from './components/siswa/MNavbar'
+import AMNavbar from './components/admin/A_MNavbar'
+import DetailIzin from './Pages/siswa/Detail-Izin'
+import AboutUS from './Pages/AboutUs'
 
 
 function App() {
@@ -170,8 +174,10 @@ function App() {
                 <Route path='/Siswa/Profile' element={<Profile getProfileImage={selectedImage} setSelectedImage={setSelectedImage} />}></Route>
                 <Route path='/Siswa/Profset' element={<ProfSet />}></Route >
                 <Route path='/Siswa/Izin-Sakit' element={<Izin_Sakit />}></Route>
+                <Route path='/Siswa/Absen/:id' element={<DetailIzin WMobile={WMobile} />}></Route>
                 <Route path='/Siswa/AbsenMasuk/:id/:nis' element={<Checkin />}></Route>
                 <Route path='/Siswa/AbsenKeluar/:id/:nis' element={<Checkout />}></Route>
+                <Route path='/AboutUs' element={<AboutUS /> }></Route>
               </Routes>
             </>
           ) : decoded.role === 'guru' ? (
@@ -184,6 +190,7 @@ function App() {
               <Route path='/Guru/IzinGuru' element={<Izin_Guru />}></Route>
               <Route path='/Guru/AbsenGuru_Masuk' element={<CheckinGuru />}></Route>
               <Route path='/Guru/AbsenGuru_keluar' element={<CheckoutGuru />}></Route>
+              <Route path='/AboutUs' element={<AboutUS /> }></Route>
             </Routes>
             </>
           ) : decoded.role === 'admin' ? (
@@ -200,6 +207,7 @@ function App() {
                 <Route path='/Admin/Edit_Murid/:id' element={<EditMurid />}></Route>
                 <Route path='/Admin/Edit_Guru/:id' element={<EditGuru />}></Route>
                 <Route path='/Admin/Edit_Jurusan/:id' element={<EditJurusan />}></Route>
+                <Route path='/AboutUs' element={<AboutUS /> }></Route>
               </Routes>
             </>
           ) : null

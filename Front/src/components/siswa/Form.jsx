@@ -11,7 +11,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
     return (
         <>
             {!WMobile ? (
-                <form className="w-full mx-auto bg-white rounded-lg p-4 font-inter">
+                <form className="w-full overflow-y-auto slim-scroll mx-auto bg-white rounded-lg p-4 font-inter">
                     <div className=''>
                         <div className="mb-4 flex w-full space-x-2">
                             <div className='mt-4 w-full'>

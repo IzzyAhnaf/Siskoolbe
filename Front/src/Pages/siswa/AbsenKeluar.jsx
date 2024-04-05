@@ -5,12 +5,14 @@ import { IoMdSettings } from "react-icons/io";
 import { RiFocus3Line } from "react-icons/ri";
 import CustomWidth from "../../CustomWidth";
 import _debounce from 'lodash/debounce';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../api';
 import { CurrentTime } from '../../CurrentTime';
+import Swal from 'sweetalert2';
 
 const Checkout = () => {
   const mapRef = useRef(null);
+  const navTo = useNavigate();
   const WMobile = CustomWidth() <= 767;
   const [userPosition, setUserPosition] = useState(null); // Initialize userPosition to null
   const [userAddress, setUserAddress] = useState(""); // Initialize userAddress to empty string
@@ -62,13 +64,26 @@ const Checkout = () => {
     try{
       const resp = await api.post('/absenkeluarsiswa', {id, nis, time: CurrentTime()}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
       if(resp.status === 200){
-        alert("Absen Berhasil")
-        window.location.href = '/Siskoolbe/Siswa'
+        Swal.fire(
+          'Berhasil',
+          'Absen Berhasil',
+          'success'
+        ).then(() => {
+          navTo('/Siskoolbe/Siswa', { replace: true });
+        })
       }else{
-        alert("Absen Gagal")
+        Swal.fire(
+          'Gagal',
+          'Absen Gagal',
+          'error'
+        )
       }
     }catch(err){
-      alert("Absen Gagal")
+      Swal.fire(
+        'Gagal',
+        'Absen Gagal',
+        'error'
+      )
     }
   }, 50)
 
@@ -79,23 +94,54 @@ const Checkout = () => {
 
 
     if (!userPosition) {
-      alert('Tunggu hingga lokasi Anda ditentukan.');
+      Swal.fire(
+        'Gagal',
+        'Tunggu hingga lokasi Anda ditentukan.',
+        'error'
+      )
       return;
     }
 
     const distance = calculateDistance(userPosition, markerPosition);
 
     if (distance > circleRadius) {
-      alert('Kamu tidak bisa absen di luar area ini.');
+      Swal.fire(
+        'Gagal',
+        'Kamu tidak bisa absen di luar area ini.',
+        'error'
+      )
+      return;
     } else {
       if(currentTime < absenTimeopen){
-        alert('Waktu absen belum dimulai.');
+        Swal.fire(
+          'Gagal',
+          'Waktu absen belum dimulai.',
+          'error'
+        )
         return;
       }else{
         absen();
       }
     }
   };
+
+  const absenChecker = _debounce(async () => {
+    try{
+      const resp = await api.get(`/absenChecker/${id}`, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      if(resp.status === 200){
+
+      }
+    }catch(err){
+      navTo('/Siskoolbe/Siswa', { replace: true });
+    }
+  })
+
+  useEffect(() => {
+    absenChecker();
+    return () => {
+      absenChecker.cancel();
+    }
+  }, [])
 
   const calculateDistance = (point1, point2) => {
     const lat1 = point1[0];

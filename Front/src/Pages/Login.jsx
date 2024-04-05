@@ -7,6 +7,7 @@ import { useState } from "react";
 import api from "../api";
 import { setCookies } from "../setCookies";
 import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
@@ -17,20 +18,32 @@ const Login = () => {
     const HLogin = async () => {
         try{
         const response = await api.post('/login', { email, password });
-        if(response.status === 200){
-            if(check === true){
-                setCookies('token', response.data.token, 30)
-            }            
-            sessionStorage.setItem('token', response.data.token);
-            window.location.href = '/Siskoolbe/'
-            console.log(jwtDecode(response.data.token));
-        }
-        else{ 
-            alert('Email atau Password salah');
-            console.log(response.data);
-        }
+            if(response.status === 200){
+                Swal.fire(
+                    'Berhasil',
+                    'Login Berhasil',
+                    'success'
+                ).then(() => {                    
+                    if(check === true){
+                        setCookies('token', response.data.token, 30)
+                    }            
+                    sessionStorage.setItem('token', response.data.token);
+                    window.location.href = '/Siskoolbe/'
+                })
+            }
+            else{ 
+                Swal.fire(
+                    'Gagal',
+                    'Email atau Password salah',
+                    'error'
+                )
+            }
         }catch(err){
-            console.log(err);
+            Swal.fire(
+                'Gagal',
+                'Email atau Password salah',
+                'error'
+            )
         }
     }
 

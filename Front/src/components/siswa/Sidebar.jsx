@@ -61,7 +61,7 @@ const Sidebar = ({nama, gambar_profil}) => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to="/Siskoolbe/Siswa/"
+                        to="/Siskoolbe/AboutUs/"
                         onClick={() => SelectSidebars(2)}>
                         {SelectSidebar === 2 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
                         <span className="mx-4 font-small text-center font-inter">About Us</span>
