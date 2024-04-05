@@ -208,16 +208,8 @@ const Checkout = () => {
       ) : (
         <>
         {defaultCenter && (
-          <div className="flex flex-col w-screen">
-          <div className="flex flex-row">
-              <div className="flex flex-col">
-                <span className="font-semibold font-inter text-xl mt-6 mx-6">Ilham</span>
-                <span className="font-semibold font-inter text-lg mt-2 mx-6">Student</span>
-              </div>
-              <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-              <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('./Profile')} />
-            </div>
-            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[470px] pb-6 mx-2 mt-1 z-0">
+          <div className="flex flex-col w-screen h-full">
+            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[90%] pb-6 mx-2 mt-1 z-0">
             <MapContainer ref={mapRef} className="justify-center items-center w-full h-96 z-0"
                 center={defaultCenter}
                 zoom={17}
@@ -239,11 +231,18 @@ const Checkout = () => {
                   <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                   </Popup>
+                  
                 </Marker>
+                
                 <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
               </MapContainer>
-              <button className="absolute bottom-60 right-8"><RiFocus3Line className='w-8 h-8 bg-white red rounded-full px-2' style={{color:'#1E6CB1'}} onClick={handleFocusUserLocation}/></button>
-              <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white py-3 rounded-md px-12 mt-12 text-[14px] w-4/5 mx-56'>Absen Masuk</button>
+              <button className='relative w-full pt-4' onClick={handleFocusUserLocation}>
+              <RiFocus3Line className='w-8 h-8 bg-white red rounded-full px-2 absolute right-2'
+                style={{color:'#1E6CB1'}}/>
+              </button>
+              <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white py-3 rounded-md px-12 mt-12 text-[14px] w-4/5 mx-56'>
+                Absen Masuk
+              </button>
             </div>
           </div>
         )}

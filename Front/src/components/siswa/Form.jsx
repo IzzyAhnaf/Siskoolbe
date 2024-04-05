@@ -162,7 +162,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                 </form>
             ) : (
                 <>
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+                    <form className="max-w-md mx-auto">
                         <div className=' justify-center items-center ml-2'>
                             <h1 className='font-bold text-[20px] mt-4'>Change User Information Here</h1>
                         </div>
@@ -171,13 +171,13 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
 
                                 <div className='mt-4'>
 
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        Full Name
+                                    <label htmlFor="nama" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                                        nama
                                     </label>
                                     <input
                                         type="text"
-                                        id="fullName"
-                                        name="fullName"
+                                        id="nama"
+                                        name="nama"
                                         value={nama}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -186,7 +186,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     />
                                 </div>
                                 <div className='mt-4'>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
+                                    <label htmlFor="email" className="block text-sm" style={{ fontStyle: 'italic' }}>
                                         Email
                                     </label>
 
@@ -205,13 +205,13 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
 
 
                                 <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Address
+                                    <label htmlFor="alamat" className="block text-sm" style={{ fontStyle: 'italic' }}>
+                                        Alamat
                                     </label>
                                     <input
                                         type="text"
-                                        id="address"
-                                        name="address"
+                                        id="alamat"
+                                        name="alamat"
                                         value={alamat}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -223,7 +223,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
 
 
                                 <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
+                                    <label htmlFor="nis" className="block text-sm" style={{ fontStyle: 'italic' }}>
                                         NIS
                                     </label>
                                     <input
@@ -238,7 +238,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     />
                                 </div>
                                 <div >
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
+                                    <label htmlFor="nisn" className="block text-sm" style={{ fontStyle: 'italic' }}>
                                         NISN
                                     </label>
                                     <input
@@ -256,14 +256,14 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
 
 
                                 <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Phone Number
+                                    <label htmlFor="no_hp" className="block text-sm" style={{ fontStyle: 'italic' }}>
+                                        Nomor Hp
                                     </label>
                                     <input
                                         type="tel"
-                                        id="phoneNumber"
-                                        name="phoneNumber"
-                                        value={phoneNumber}
+                                        id="no_hp"
+                                        name="no_hp"
+                                        value={no_hp}
                                         onChange={handleInputChange}
                                         className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         autoComplete='none'
@@ -271,50 +271,17 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     />
                                 </div>
                                 <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Class
-                                    </label>
-                                    <select
-                                        id="selectedClass"
-                                        name="selectedClass"
-                                        value={selectedClass}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[98px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        required
-                                    >
-                                        <option value="">Select Class</option>
-                                        <option value="classA">Class A</option>
-                                        <option value="classB">Class B</option>
-                                        <option value="classC">Class C</option>
-                                    </select>
+                                    
                                 </div>
 
 
 
                                 <div>
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        Gender
-                                    </label>
-                                    <div className="flex items-center space-x-4">
-                                        <select
-                                            id="selectedClass"
-                                            name="selectedClass"
-                                            value={selectedClass}
-                                            onChange={handleInputChange}
-                                            className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                            required
-                                        >
-                                            <option value="">Select Gender</option>
-                                            <option value="classA">Male</option>
-                                            <option value="classB">Female</option>
-                                        </select>
-                                    </div>
+                           
+
                                 </div>
                             </div>
                         </div>
-
-
-
                     </form>
                 </>
             )}
