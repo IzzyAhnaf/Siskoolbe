@@ -18,7 +18,6 @@ const ProfilePicture = ({gambar_profil}) => {
     return (
         <div>
             <div className="image-container">
-                {!WMobile && <GoPencil className="text-2xl absolute border-[1px] ml-[82px] rounded-full border-black mt-[8px]" />}
                 <img
                     className="object-cover w-24 h-24 mx-2 rounded-full"
                     src={gambar_profil}

@@ -55,12 +55,12 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                 name="alamat"
                                 value={alamat}
                                 onChange={handleInputChange}
-                                className='flex border-[1px] border-black rounded-md p-4 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
+                                className='flex border-[1px] border-black rounded-md p-4 bg-transparent text-gray-900 
+                                placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
                                 w-full'
                                 rows={4}
                                 cols={201}
                                 style={{ resize: 'none' }}>
-
                                 </textarea>
                             </div>
                         </div>
@@ -75,11 +75,11 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     id="nis"
                                     name="nis"
                                     value={nis}
-                                    onChange={handleInputChange}
-                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    className="flex border-[1px] border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
                                     no-InDecrement"
                                     autoComplete='none'
                                     required
+                                    disabled
                                 />
                             </div>
                             <div className='ml-2 w-full'>
@@ -91,11 +91,11 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     id="nisn"
                                     name="nisn"
                                     value={nisn}
-                                    onChange={handleInputChange}
-                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    className="flex border-[1px] border-black rounded-md bg-gray-200  px-2 py-2  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
                                     no-InDecrement"
                                     autoComplete='none'
                                     required
+                                    disabled
                                 />
                             </div>
                         </div>
@@ -111,10 +111,11 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     name="no_hp"
                                     value={no_hp}
                                     onChange={handleInputChange}
-                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    className="flex border-[1px] border-black rounded-md bg-gray-200  px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
                                     no-InDecrement"
                                     autoComplete='none'
                                     required
+                                    disabled
                                 />
                             </div>
                             <div className='ml-2 w-full'>
@@ -126,11 +127,11 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     id="nik"
                                     name="nik"
                                     value={nik}
-                                    onChange={handleInputChange}
-                                    className="flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    className="flex border-[1px] border-black rounded-md bg-gray-200  px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
                                     no-InDecrement"
                                     autoComplete='none'
                                     required
+                                    disabled
                                 />
                             </div>
 
@@ -142,7 +143,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     Kelas
                                 </label>
                                <input type="text"
-                               className='flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' disabled
+                               className='flex border-[1px] border-black rounded-md bg-gray-200  px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' disabled
                                value={kelas}
                                />
                             </div>
@@ -151,7 +152,7 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     Jenis Kelamin
                                 </label>
                                 <input type="text"
-                                className='flex border-[1px] border-black rounded-md bg-transparent px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' disabled
+                                className='flex border-[1px] border-black rounded-md bg-gray-200  px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' disabled
                                 value={jenis_kelamin}
                                 />
                             </div>
@@ -189,17 +190,14 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                     <label htmlFor="alamat" className="block text-sm" style={{ fontStyle: 'italic' }}>
                                         Alamat
                                     </label>
-                                    <input
-                                        type="text"
-                                        id="alamat"
-                                        name="alamat"
-                                        value={alamat}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 w-full text-gray-900 placeholder:text-gray-400 
-                                        focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4"
-                                        autoComplete='none'
-                                        required
-                                    />
+                                    <textarea value={alamat} onChange={handleInputChange} id="alamat" name="alamat" required
+                                    className='flex border-[1px] border-black rounded-md px-4 py-1 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
+                                    w-full'
+                                    rows={4}
+                                    cols={201}
+                                    style={{ resize: 'none' }}>
+
+                                    </textarea>
                                 </div>
                                 <div className='w-full'>
                                     <label htmlFor="no_hp" className="block text-sm" style={{ fontStyle: 'italic' }}>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SidebarAdmin from "../../components/admin/SidebarAdm";
 import { FaPlus } from "react-icons/fa6";
 import { RiPencilFill } from "react-icons/ri";
 import { GiTrumpetFlag } from "react-icons/gi";
@@ -123,7 +122,7 @@ const AdminJurusan = () => {
                   <tbody className="bg-white border-1  rounded-full">
                   {jurusan && jurusan.length > 0 ? (
                       jurusan.map((jurusan, index) => (
-                    <tr class="" style={{ borderRadius: '24px' }}>
+                    <tr class="cursor-pointer" style={{ borderRadius: '24px' }} onClick={() => navTo(`/Siskoolbe/Admin/Admin_DetailJurusan/${jurusan.id}`)}>
                       <td class="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                       <td class="text-sm text-gray-900 font-light px-[-15px] py-2">
                         <div className="flex flex-row space-x-1 items-center justify-center px-0 mx-auto">

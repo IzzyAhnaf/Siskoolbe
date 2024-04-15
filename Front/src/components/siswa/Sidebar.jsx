@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { TbCalendarTime } from "react-icons/tb";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomWidth from "../../CustomWidth";
 import { PiScrollLight, PiScrollFill } from "react-icons/pi";
 import { ImExit } from "react-icons/im";
@@ -12,12 +12,12 @@ import { removeCookies } from "../../setCookies";
 
 const Sidebar = ({nama, gambar_profil}) => {
     const navTo = useNavigate();
-    const [SelectSidebar, setSelectSidebar] = useState(sessionStorage.getItem("sidebar") || 0);
+    const [SelectSidebar, setSelectSidebar] = useState(0);
     const WMobile = CustomWidth() <= 767;
     const DekstopLow = CustomWidth() <= 1366;
+    const location = useLocation();
 
     const SelectSidebars = (props) => {
-        sessionStorage.setItem("sidebar", props);
         setSelectSidebar(props);
     }
 
@@ -26,8 +26,16 @@ const Sidebar = ({nama, gambar_profil}) => {
         sessionStorage.removeItem("token");
         localStorage.removeItem("token");
         removeCookies("token");
-        navTo("/Siskoolbe/login", { replace: true, state: { from: window.location.pathname } });
+        navTo("/Siskoolbe/login", { replace: true });
     }
+
+    useEffect(() => {
+        const { pathname } = location;
+        if (pathname.startsWith("/Siskoolbe/Siswa")) SelectSidebars(0);
+        else if (pathname.startsWith("/Siskoolbe/Siswa/Profile")) SelectSidebars(1);
+        else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(2);
+    }, [])
+
     return (
         <aside className={`flex flex-col px-4 py-8 rounded-xl bg-sky-700`}>
             <a href="#" className="mx-auto"></a>
@@ -59,7 +67,7 @@ const Sidebar = ({nama, gambar_profil}) => {
 
                     <Link className={`flex flex-col items-center space-y-2 px-1 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
-                    ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
+                    ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
                         to="/Siskoolbe/AboutUs/"
                         onClick={() => SelectSidebars(2)}>
@@ -69,9 +77,8 @@ const Sidebar = ({nama, gambar_profil}) => {
 
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
-                    ${SelectSidebar === 4 ? 'bg-gray-100 bg-opacity-50' : ''}
-                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
-                        onClick={() => {SelectSidebars(3), Logout()}}>
+\                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
+                        onClick={() => {Logout()}}>
                         {SelectSidebar === 3 ? <ImExit className=" w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">Log Out</span>
                     </Link>

@@ -34,6 +34,8 @@ import Mnvbar from './components/siswa/MNavbar'
 import AMNavbar from './components/admin/A_MNavbar'
 import DetailIzin from './Pages/siswa/Detail-Izin'
 import AboutUS from './Pages/AboutUs'
+import AdminKelas from './Pages/admin/Admin_Kelas'
+import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan'
 
 
 function App() {
@@ -172,7 +174,7 @@ function App() {
               <Routes>
                 <Route path='/Siswa' element={<Homes nama={dataProfilsiswa.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow} />}></Route>
                 <Route path='/Siswa/Profile' element={<Profile getProfileImage={selectedImage} setSelectedImage={setSelectedImage} />}></Route>
-                <Route path='/Siswa/Profset' element={<ProfSet />}></Route >
+                <Route path='/Siswa/Profset' element={<ProfSet getProfileImage={selectedImage} setSelectedImage={setSelectedImage} />}></Route >
                 <Route path='/Siswa/Izin-Sakit' element={<Izin_Sakit />}></Route>
                 <Route path='/Siswa/Absen/:id' element={<DetailIzin WMobile={WMobile} />}></Route>
                 <Route path='/Siswa/AbsenMasuk/:id/:nis' element={<Checkin />}></Route>
@@ -201,6 +203,8 @@ function App() {
                 <Route path='/Admin/Admin_Guru' element={<Adminguru />}></Route>
                 <Route path='/Admin/Admin_Murid' element={<AdminMurid />}></Route>
                 <Route path='/Admin/Admin_Jurusan' element={<AdminJurusan />}></Route>
+                <Route path='/Admin/Admin_DetailJurusan/:id' element={<AdminDetailJurusan />}></Route>
+                <Route path='/Admin/Admin_Kelas/:id' element={<AdminKelas />}></Route>
                 <Route path='/Admin/TambahMurid' element={<TambahMurid />}></Route>
                 <Route path='/Admin/TambahGuru' element={<TambahGuru />}></Route>
                 <Route path='/Admin/TambahJurusan' element={<TambahJurusan />}></Route>

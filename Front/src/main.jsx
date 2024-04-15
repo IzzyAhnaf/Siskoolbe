@@ -32,6 +32,8 @@ import FGPassword from './Pages/FGPassword.jsx'
 import RSPassword from './Pages/RSPassword.jsx'
 import DetailIzin from './Pages/siswa/Detail-Izin.jsx'
 import AboutUS from './Pages/AboutUs.jsx'
+import AdminKelas from './Pages/admin/Admin_Kelas.jsx'
+import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan.jsx'
 
 
 const router = createBrowserRouter([
@@ -72,6 +74,7 @@ const router = createBrowserRouter([
         path: '/Siskoolbe/Siswa/Absen/:id',
         element: <DetailIzin />
       },
+      // Guru
       {
         path: '/Siskoolbe/Admin',
         element: <HomesAdmin />
@@ -112,6 +115,15 @@ const router = createBrowserRouter([
         path: '/Siskoolbe/Admin/Admin_Jurusan',
         element: <AdminJurusan />
       },
+      {
+        path: '/Siskoolbe/Admin/Admin_DetailJurusan/:id',
+        element: <AdminDetailJurusan />
+      },
+      {
+        path: '/Siskoolbe/Admin/Admin_Kelas/:id',
+        element: <AdminKelas />
+      },
+      // Guru
       {
         path: '/Siskoolbe/Guru',
         element: <HomesGuru />

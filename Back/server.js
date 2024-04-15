@@ -462,11 +462,11 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
 })
 
 fastify.post('/editsiswaProfile/:email', async (request, reply) => {
-    const {nama, email, alamat, nik, nis, nisn, no_hp, agama} = request.body;
+    const {nama, email, alamat, no_hp} = request.body;
 
     try{
         const update = await new Promise((resolve, reject) => {
-           db.query('UPDATE siswa SET ? WHERE email = ?', [{nama, alamat, nik, nis, nisn, no_hp, agama}, email], (err, result) => {
+           db.query('UPDATE siswa SET ? WHERE email = ?', [{nama, alamat, no_hp}, email], (err, result) => {
                if(err){
                    reject(err);
                }else{
@@ -1370,6 +1370,46 @@ fastify.post('/deleteJurusan/:id', async (request, reply) => {
                 return reply.status(200).send({ message: 'Success' });
             }
         }
+        
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+// -data-kelas
+
+fastify.get('/getKelas_Admin/:id', async (request, reply) => {
+    const id = request.params.id;
+    try{
+        const resp = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id WHERE jurusanid = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else{
+                    resolve(result);
+                }
+            })
+        })
+
+        return reply.status(200).send(resp);
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+fastify.get('/getDetailKelas', async (request, reply) => {
+    try{
+        const resp = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id', (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else{
+                    resolve(result);
+                }
+            })
+        })
         
     }catch(err){
         return reply.status(500).send({ message: err.message });

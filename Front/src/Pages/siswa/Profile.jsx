@@ -55,21 +55,21 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
                     }).then((res) => {
                         Swal.fire(
                             'Berhasil',
-                            'Data Berhasil diubah',
+                            'Gambar Berhasil diubah',
                             'success'
                         )
                         setFormData(prevState => ({ ...prevState, gambar_profil: reader.result }));
                     }).catch((err) => {
                         Swal.fire(
                             'Gagal',
-                            'Data gagal diubah',
+                            'Gambar gagal diubah',
                             'error'
                         )
                     });
                 } catch (error) {
                     Swal.fire(
                         'Gagal',
-                        'Data gagal diubah',
+                        'Gambar gagal diubah',
                         'error'
                     )
                 }
@@ -78,17 +78,12 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
         input.click(); 
     };
 
-    const update = async ({ nama, email, alamat, nik, nis, nisn, no_hp, agama }) => {
+    const update = async ({ nama, alamat, no_hp}) => {
         try {
             const data = {
                 nama: nama,
-                email: email,
                 alamat: alamat,
-                nik: nik,
-                nis: nis,
-                nisn: nisn,
                 no_hp: no_hp,
-                agama: agama,
             }
     
             const encoded = JSON.stringify(data);
@@ -169,7 +164,7 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
                                         <button className="bg-white text-black border-solid border-2
                                         hover:bg-black
                                         border-black py-2 px-4 rounded hover:text-gray-100"
-                                        onClick={() => update(formData)}>Update</button>
+                                        onClick={() => update(formData)}>Ubah</button>
                                     </div>
                                 </div>
                             </div>

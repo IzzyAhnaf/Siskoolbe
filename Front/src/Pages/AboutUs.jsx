@@ -15,8 +15,15 @@ const AboutUS = ({WMobile}) => {
                     Salam, Tim Pengembang Website Absensi SMKN 1 Depok</p>
                 </div>
                 <div className="flex space-x-48 justify-center">
-                    <div className="rounded-lg bg-blue-700 w-1/4">empty</div>
-                    <div className="rounded-lg bg-blue-700 w-1/4"></div>
+                    <div className="rounded-md bg-white w-1/4">
+                        
+                    </div>
+                    <div className="rounded-md bg-white w-1/4">
+
+                    </div>
+                    <div className="rounded-md bg-white w-1/4">
+
+                    </div>
                 </div>
             </div>
         ):(
