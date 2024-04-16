@@ -34,6 +34,7 @@ import DetailIzin from './Pages/siswa/Detail-Izin.jsx'
 import AboutUS from './Pages/AboutUs.jsx'
 import AdminKelas from './Pages/admin/Admin_Kelas.jsx'
 import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan.jsx'
+import AdminDetailKelas from './Pages/admin/Admin_DetailKelas.jsx'
 
 
 const router = createBrowserRouter([
@@ -118,6 +119,10 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Admin/Admin_DetailJurusan/:id',
         element: <AdminDetailJurusan />
+      },
+      {
+        path: '/Siskoolbe/Admin/Admin_DetailKelas/:id',
+        element: <AdminDetailKelas />
       },
       {
         path: '/Siskoolbe/Admin/Admin_Kelas/:id',

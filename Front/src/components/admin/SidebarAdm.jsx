@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, matchPath, useLocation, useNavigate } from "react-router-dom"
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { FaUserTie } from "react-icons/fa6";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
@@ -11,12 +11,12 @@ import { removeCookies } from "../../setCookies";
 
 const SidebarAdmin = ({nama, gambar_profil}) => {
     const navTo = useNavigate();
-    const [SelectSidebar, setSelectSidebar] = useState(sessionStorage.getItem("sidebar") || 0);
+    const [SelectSidebar, setSelectSidebar] = useState(0);
     const WMobile = CustomWidth() <= 767;
     const DekstopLow = CustomWidth() <= 1366;
+    const location = useLocation();
 
     const SelectSidebars = (props) => {
-        sessionStorage.setItem("sidebar", props);
         setSelectSidebar(props);
     }
 
@@ -28,6 +28,24 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
         navTo("/Siskoolbe/login", { replace: true });
 
     }
+
+    useEffect(() => {
+        const { pathname } = location;
+        if (pathname.startsWith("/Siskoolbe/Admin")) SelectSidebars(0);
+        else if (pathname.startsWith("/Siskoolbe/Admin/Admin_Guru")) SelectSidebars(1);
+        else if (pathname.startsWith("/Siskoolbe/Admin/Admin_Murid")) SelectSidebars(2);
+        else if (pathname.startsWith("/Siskoolbe/Admin/Admin_Jurusan")) SelectSidebars(3);
+        else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(4);
+
+        const matchDetailKelas = matchPath("/Siskoolbe/Admin/Admin_DetailKelas/:id", pathname);
+
+        const matchDetailJurusan = matchPath("/Siskoolbe/Admin/Admin_DetailJurusan/:id", pathname);
+
+        if (matchDetailKelas || matchDetailJurusan) {
+            SelectSidebars(3);
+        }
+
+    }, [location.pathname])
 
     return (
         <aside className={`flex flex-col px-4 py-8 rounded-xl bg-sky-700`}>
@@ -82,7 +100,7 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 4 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to=""
+                        to="/Siskoolbe/AboutUs"
                         onClick={() => SelectSidebars(4)}>
                         {SelectSidebar === 4 ? <PiScrollLight className="w-5 h-5 " /> : <PiScrollFill className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">About Us</span>
@@ -92,7 +110,7 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 5 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
-                        onClick={() => {SelectSidebars(5), Logout()}}>
+                        onClick={() => {Logout()}}>
                         {SelectSidebar === 5 ? <ImExit className="w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">Log Out</span>
                     </Link>

@@ -1380,9 +1380,34 @@ fastify.post('/deleteJurusan/:id', async (request, reply) => {
 
 fastify.get('/getKelas_Admin/:id', async (request, reply) => {
     const id = request.params.id;
+    try {
+        const resp = await new Promise((resolve, reject) => {
+            db.query('SELECT kelas.id AS id, kelas.jurusanid, jurusan.namajurusan, jurusan.sub_jurusan, kelas.kelas, guru.nama FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id LEFT JOIN guru ON kelas.idguru = guru.id WHERE kelas.jurusanid = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
+
+        if (resp.length === 0) {
+            return reply.status(404).send({ message: 'Data not found' });
+        }
+
+        return reply.status(200).send(resp);
+    } catch (err) {
+        return reply.status(500).send({ message: err.message });
+    }
+});
+
+
+fastify.get('/getDetailKelas/:id', async (request, reply) => {
+    const id = request.params.id;
+
     try{
         const resp = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id WHERE jurusanid = ?', [id], (err, result) => {
+            db.query('SELECT * FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id LEFT JOIN guru ON kelas.idguru = guru.id WHERE kelas.id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 }
@@ -1392,16 +1417,8 @@ fastify.get('/getKelas_Admin/:id', async (request, reply) => {
             })
         })
 
-        return reply.status(200).send(resp);
-    }catch(err){
-        return reply.status(500).send({ message: err.message });
-    }
-});
-
-fastify.get('/getDetailKelas', async (request, reply) => {
-    try{
-        const resp = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id', (err, result) => {
+        const resp2 = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM siswa WHERE idkelas = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 }
@@ -1411,6 +1428,7 @@ fastify.get('/getDetailKelas', async (request, reply) => {
             })
         })
         
+        return reply.status(200).send(resp);
     }catch(err){
         return reply.status(500).send({ message: err.message });
     }

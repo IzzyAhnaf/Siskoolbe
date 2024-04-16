@@ -1,24 +1,22 @@
-import { useEffect, useState } from "react";
-import CustomWidth from "../../CustomWidth";
-import _debounce from "lodash/debounce";
-import api from "../../api";
-import Swal from 'sweetalert2';
 import { useNavigate, useParams } from "react-router-dom";
+import CustomWidth from "../../CustomWidth";
+import { useState, useEffect } from "react";
+import _debounce from "lodash/debounce";
 import { MdClass } from "react-icons/md";
+import api from "../../api";
 
-
-const AdminDetailJurusan = () => {
+const AdminDetailKelas = () => {
     const WMobile = CustomWidth() <= 767;
     const DekstopLow = CustomWidth() <= 1366;
     const navTo = useNavigate();
 
     const [dataKelas, setDataKelas] = useState([])
 
-    const {id} = useParams()
+    const { id } = useParams()
 
     const getData = _debounce(async () => {
         try{
-            const resp = await api.get('/getKelas_Admin/' + id)
+            const resp = await api.get('/getDetailKelas/' + id)
             setDataKelas(resp.data)
         }catch(err){
             console.log(err)
@@ -31,7 +29,7 @@ const AdminDetailJurusan = () => {
 
     return(
         <>
-        {!WMobile ? (
+         {!WMobile ? (
         <div className="flex flex-col w-full font-inter">
 
         <div className={`flex flex-col item-centers h-screen bg-[#D9D9D9] mx-4 rounded-3xl`}>
@@ -94,4 +92,4 @@ const AdminDetailJurusan = () => {
     )
 }
 
-export default AdminDetailJurusan
+export default AdminDetailKelas

@@ -36,6 +36,7 @@ import DetailIzin from './Pages/siswa/Detail-Izin'
 import AboutUS from './Pages/AboutUs'
 import AdminKelas from './Pages/admin/Admin_Kelas'
 import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan'
+import AdminDetailKelas from './Pages/admin/Admin_DetailKelas'
 
 
 function App() {
@@ -204,6 +205,7 @@ function App() {
                 <Route path='/Admin/Admin_Murid' element={<AdminMurid />}></Route>
                 <Route path='/Admin/Admin_Jurusan' element={<AdminJurusan />}></Route>
                 <Route path='/Admin/Admin_DetailJurusan/:id' element={<AdminDetailJurusan />}></Route>
+                <Route path='/Admin/Admin_DetailKelas/:id' element={<AdminDetailKelas />}></Route>
                 <Route path='/Admin/Admin_Kelas/:id' element={<AdminKelas />}></Route>
                 <Route path='/Admin/TambahMurid' element={<TambahMurid />}></Route>
                 <Route path='/Admin/TambahGuru' element={<TambahGuru />}></Route>
