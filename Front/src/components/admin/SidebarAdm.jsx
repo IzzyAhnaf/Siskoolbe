@@ -45,7 +45,7 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
             SelectSidebars(3);
         }
 
-    }, [location.pathname])
+    }, [])
 
     return (
         <aside className={`flex flex-col px-4 py-8 rounded-xl bg-sky-700`}>

@@ -50,7 +50,7 @@ const Sidebar = ({nama, gambar_profil}) => {
                                 ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100' : ''}
                                 rounded-lg dark:text-gray-100 hover:bg-gray-300 hover:bg-opacity-50 hover:text-gray-100`}
                         to="/Siskoolbe/Siswa"
-                        onClick={() => setSelectSidebar(0)}>
+                        onClick={() => SelectSidebars(0)}>
                         {SelectSidebar === 0 ? <AiFillHome className="w-5 h-5" /> : <AiOutlineHome className="w-5 h-5" />}
                         <span className="mx-4 font-medium font-inter">Home</span>
                     </Link>

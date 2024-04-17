@@ -1407,7 +1407,7 @@ fastify.get('/getDetailKelas/:id', async (request, reply) => {
 
     try{
         const resp = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id LEFT JOIN guru ON kelas.idguru = guru.id WHERE kelas.id = ?', [id], (err, result) => {
+            db.query('SELECT kelas.kelas, guru.nama AS namaguru, guru.id AS idguru, jurusan.namajurusan, jurusan.sub_jurusan FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id LEFT JOIN guru ON kelas.idguru = guru.id WHERE kelas.id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 }
@@ -1428,7 +1428,53 @@ fastify.get('/getDetailKelas/:id', async (request, reply) => {
             })
         })
         
-        return reply.status(200).send(resp);
+        const resp2data = await Promise.all(resp2.map(async (item) => {
+            const imagePath = `./Gambar/Siswa/Profil/${item.gambar_profil}`;
+            const Image = fs.readFileSync(imagePath, 'base64');
+
+            return { ...item, bukti: Image };
+        }))
+
+        const resp3 = await new Promise((resolve, reject) => {
+            db.query('SELECT id, nama FROM guru', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else{
+                    resolve(result);
+                }
+            })
+        })
+
+        const data = {
+            resp : resp[0],
+            resp2data : resp2data,
+            resp3 : resp3
+        }
+        
+        return reply.status(200).send(data);
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post ('/ubahWaliKelas', async (request, reply) => {
+    const { id, idguru } = request.body;
+    try{
+        const resp = await new Promise((resolve, reject) => {
+            db.query('UPDATE kelas SET idguru = ? WHERE id = ?', [idguru, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(resp.affectedRows > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }
     }catch(err){
         return reply.status(500).send({ message: err.message });
     }
