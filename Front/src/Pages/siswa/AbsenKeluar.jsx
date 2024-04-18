@@ -241,7 +241,7 @@ const Checkout = () => {
                 style={{color:'#1E6CB1'}}/>
               </button>
               <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white py-3 rounded-md px-12 mt-12 text-[14px] w-4/5 mx-56'>
-                Absen Masuk
+                Absen Keluar
               </button>
             </div>
           </div>
