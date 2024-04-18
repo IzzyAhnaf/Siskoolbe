@@ -37,6 +37,7 @@ import AboutUS from './Pages/AboutUs'
 import AdminKelas from './Pages/admin/Admin_Kelas'
 import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan'
 import AdminDetailKelas from './Pages/admin/Admin_DetailKelas'
+import SidebarGuru from './components/guru/GuruSidebar'
 
 
 function App() {
@@ -68,6 +69,14 @@ function App() {
     nik: '',
     gambar_profil: null,
     
+  })
+
+  const [dataProfilGuru, setDataProfilGuru] = useState({
+    nama: '',
+    email: '',
+    noHp: '',
+    nik: '',
+    gambar_profil: null,
   })
   const token = sessionStorage.getItem('token') || getCookies.token;
 
@@ -103,6 +112,16 @@ function App() {
             gambar_profil: 'data:image/png;base64,' + gambar_profil
           })
           setSelectedImage('data:image/png;base64,' + gambar_profil)
+        } else if(decoded.role === 'guru'){
+          setDataProfilGuru({
+            nama: resp.data[0].nama,
+            email: resp.data[0].email,
+            noHp: resp.data[0].no_hp,
+            nik: resp.data[0].nik,
+            gambar_profil: 'data:image/png;base64,' + resp.data[0].gambar_profil
+          })
+          setSelectedImage('data:image/png;base64,' + resp.data[0].gambar_profil)
+
         } else if(decoded.role === 'admin'){
           setDataProfilAdmin({
             nama: resp.data[0].nama,
@@ -185,14 +204,14 @@ function App() {
             </>
           ) : decoded.role === 'guru' ? (
             <>
-             {WMobile ? <GrMnvbar /> : <SidebarGuru />}
+             {WMobile ? <GrMnvbar /> : <SidebarGuru nama={dataProfilGuru.nama} gambar_profil={selectedImage}/>}
             <Routes>
-              <Route path='/Guru' element={<HomesGuru />}></Route>
+              <Route path='/Guru' element={<HomesGuru nama={dataProfilGuru.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow}/>}></Route>
               <Route path='/Guru/ProfileGuru' element={<ProfileGuru />}></Route>
               <Route path='/Guru/ProfSetGuru' element={<ProfSetGr />}></Route>
               <Route path='/Guru/IzinGuru' element={<Izin_Guru />}></Route>
-              <Route path='/Guru/AbsenGuru_Masuk' element={<CheckinGuru />}></Route>
-              <Route path='/Guru/AbsenGuru_keluar' element={<CheckoutGuru />}></Route>
+              <Route path='/Guru/AbsenMasuk/:id' element={<CheckinGuru />}></Route>
+              <Route path='/Guru/AbsenKeluar/:id' element={<CheckoutGuru />}></Route>
               <Route path='/AboutUs' element={<AboutUS /> }></Route>
             </Routes>
             </>

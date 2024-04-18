@@ -142,11 +142,11 @@ const router = createBrowserRouter([
         elemen: <ProfSetGr />
       },
       {
-        path: '/Siskoolbe/Guru/AbsenGuru_Masuk',
+        path: '/Siskoolbe/Guru/AbsenMasuk/:id',
         element: <CheckinGuru />
       },
       {
-        path: '/Siskoolbe/Guru/AbsenGuru_Keluar',
+        path: '/Siskoolbe/Guru/AbsenKeluar/:id',
         element: <CheckoutGuru />
       },
       {

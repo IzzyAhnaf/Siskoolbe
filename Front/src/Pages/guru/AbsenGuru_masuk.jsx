@@ -4,19 +4,21 @@ import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import { IoMdSettings } from "react-icons/io";
 import { RiFocus3Line } from "react-icons/ri";
 import CustomWidth from "../../CustomWidth";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import _debounce from 'lodash/debounce';
 import api from '../../api';
 import { CurrentTime } from '../../CurrentTime';
+import Swal from 'sweetalert2';
 
 const CheckinGuru = () => {
+  const navTo = useNavigate();
   const mapRef = useRef(null);
   const WMobile = CustomWidth() <= 767;
   const [userPosition, setUserPosition] = useState(null);
   const [userAddress, setUserAddress] = useState(""); 
   const circleRadius = 100; 
 
-  const { id, nis } = useParams();
+  const { id } = useParams();
 
   const [defaultCenter, setDefaultCenter] = useState(null); 
 
@@ -58,16 +60,29 @@ const CheckinGuru = () => {
 
   const absen = _debounce(async () => {
     try{
-      const resp = await api.post('/absenmasuksiswa', {id, nis, time: CurrentTime()}, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      const resp = await api.post('/absensimasukguru', { id }, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
       if(resp.status === 200){
-        alert("Absen Berhasil")
-        window.location.href = '/Siskoolbe/Siswa'
+        Swal.fire(
+          'Berhasil',
+          'Absen Berhasil',
+          'success'
+        ).then(() => {
+          navTo('/Siskoolbe/Siswa', { replace: true });
+        })
       }else{
-        alert("Absen Gagal")
+        Swal.fire(
+          'Gagal',
+          'Absen Gagal',
+          'error'
+        )
       }
     }
     catch(err){
-      alert("Absen Gagal")
+      Swal.fire(
+        'Gagal',
+        'Absen Gagal',
+        'error'
+      )
     }
   }, 50)
 
@@ -81,26 +96,61 @@ const CheckinGuru = () => {
 
     
     if (!userPosition) {
-      alert('Tunggu hingga lokasi Anda ditentukan.');
+      Swal.fire(
+        'Gagal',
+        'Tunggu hingga lokasi Anda ditentukan.',
+        'error'
+      )
       return;
     }
 
     const distance = calculateDistance(userPosition, markerPosition);
 
     if (distance > circleRadius) {
-      alert('Kamu tidak bisa absen di luar area onedek.');
+      Swal.fire(
+        'Gagal',
+        'Kamu tidak bisa absen di luar area ini.',
+        'error'
+      ) 
+      return;
     } else {
       if (currentTime > absenTimelimit) {
-        alert('Waktu absen sudah melewati batas.');
+        Swal.fire(
+          'Gagal',
+          'Waktu absen melebihi batas.',
+          'error'
+        )
         return;
       }else if (currentTime < absenTimeopen) {
-        alert('Waktu absen belum dimulai.');
+        Swal.fire(
+          'Gagal',
+          'Waktu absen belum dimulai.',
+          'error'
+        )
         return;
       }else{
         absen()
       }
     }
   };
+
+  const absenChecker = _debounce(async () => {
+    try{
+      const resp = await api.get(`/absensimasukCheckerGuru/${id}`, {headers: {Authorization: `${sessionStorage.getItem("token")}`}})
+      if(resp.status === 200){
+        navTo('/Siskoolbe/Siswa', { replace: true });
+      }
+    }catch(err){
+
+    }
+  })
+
+  useEffect(() => {
+    absenChecker();
+    return () => {
+      absenChecker.cancel();
+    }
+  }, [])
 
   const calculateDistance = (point1, point2) => {
     const lat1 = point1[0];
@@ -133,8 +183,8 @@ const CheckinGuru = () => {
     <>
       {!WMobile ? (
         defaultCenter && (
-          <div className='flex flex-col w-screen item-centers justify-center h-screen bg-[#D9D9D9] mx-4'>
-            <div className="flex bg-sky-700 mt-4 mb-3 w-[80%] mx-auto h-16 rounded-3xl items-center px-2 py-2 ">
+          <div className='flex flex-col w-screen item-centers justify-center rounded-lg bg-[#D9D9D9] mx-4'>
+            <div className="flex bg-sky-700 mt-4 mb-3 w-[80%] mx-auto h-16 rounded-3xl items-center px-12 py-2 ">
               <svg className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="white" d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"></path></svg>
               <span className="font-semibold font-inter text-[14px] text-white mx-2">{userAddress || "Lokasi Anda"}</span>
             </div>
@@ -168,16 +218,8 @@ const CheckinGuru = () => {
       ) : (
         <>
         {defaultCenter && (
-          <div className="flex flex-col w-screen">
-          <div className="flex flex-row">
-              <div className="flex flex-col">
-                <span className="font-semibold font-inter text-xl mt-6 mx-6">Febrian S.Kom</span>
-                <span className="font-semibold font-inter text-lg mt-2 mx-6">Guru</span>
-              </div>
-              <img className="w-20 h-20 mt-2 ml-36" src="https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg" alt="" />
-              <IoMdSettings className="absolute ml-80 mt-2 w-6 h-6" onClick={() => navTo('./Profile')} />
-            </div>
-            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[470px] pb-6 mx-2 mt-1 z-0">
+          <div className="flex flex-col w-screen h-full">
+            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[90%] pb-6 mx-2 mt-1 z-0">
             <MapContainer ref={mapRef} className="justify-center items-center w-full h-96 z-0"
                 center={defaultCenter}
                 zoom={17}
@@ -199,7 +241,10 @@ const CheckinGuru = () => {
                 </Marker>
                 <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
               </MapContainer>
-              <button className="absolute bottom-60 right-8"><RiFocus3Line className='w-8 h-8 bg-white red rounded-full px-2' style={{color:'#1E6CB1'}} onClick={handleFocusUserLocation}/></button>
+              <button className='relative w-full pt-4' onClick={handleFocusUserLocation}>
+              <RiFocus3Line className='w-8 h-8 bg-white red rounded-full px-2 absolute right-2'
+                style={{color:'#1E6CB1'}}/>
+              </button>
               <button onClick={handleAbsenClick} className='bg-[#269400] text-white py-3 rounded-md px-12 mt-12 text-[14px] w-4/5 mx-56'>Absen Masuk</button>
             </div>
           </div>

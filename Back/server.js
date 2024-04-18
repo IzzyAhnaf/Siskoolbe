@@ -70,6 +70,8 @@ const transporter = nodemailer.createTransport({
 cron.schedule('0 0 * * *', () => {
     try {
         const sql = "SELECT nis FROM siswa";
+        const sql2 = "SELECT id FROM guru";
+
         db.query(sql, (err, result) => {
             if (err) {
                 console.error(err);
@@ -92,8 +94,8 @@ cron.schedule('0 0 * * *', () => {
                         console.log(`Data updated for NIS ${nis} at ${tanggal}`);
                     }
                 })
-                const insertQuery = "INSERT INTO absensisiswa (nis, tanggal) VALUES (?, ?)";
-                db.query(insertQuery, [nis, tanggal], (error, result) => {
+                const insertQuery = "INSERT INTO absensisiswa (nis, tanggal, status) VALUES (?, ?, ?)";
+                db.query(insertQuery, [nis, tanggal, 'open'], (error, result) => {
                     if (error) {
                         console.error(`Error while inserting data for NIS ${nis}:`, error);
                     } else {
@@ -101,6 +103,39 @@ cron.schedule('0 0 * * *', () => {
                     }
                 });
             });
+        });
+
+        db.query(sql2, (err, result) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); 
+            const day = String(today.getDate()).padStart(2, '0'); 
+
+            const tanggal = `${year}-${month}-${day}`;
+
+            result.forEach(({ id }) => {
+                const checkQuery = "UPDATE absensiguru SET status = 'closed' WHERE idguru = ? AND status = 'open'";
+                db.query(checkQuery, [id], (error, result) => {
+                    if(error){
+                        console.error(error);
+                    }else{
+                        console.log(`Data updated for ID ${id} at ${tanggal}`);
+                    }
+                })
+                const insertQuery = "INSERT INTO absensiguru (idguru, tanggal, status) VALUES (?, ?, ?)";
+                db.query(insertQuery, [id, tanggal, 'open'], (error, result) => {
+                    if (error) {
+                        console.error(`Error while inserting data for ID ${id}:`, error);
+                    } else {
+                        console.log(`Data inserted for ID ${id} at ${tanggal}`);
+                    }
+                });
+            })
         });
     } catch (err) {
         console.log(err);
@@ -597,12 +632,280 @@ fastify.get('/DetailIzinSiswa/:id', async (request, reply) => {
 
 // Guru
 fastify.get('/guru', async (request, reply) => {
-    return reply.status(200).send({ message: 'Success' });
+    try{
+        const token  = request.headers.authorization;
+        if(!token){
+            return reply.status(401).send({ message: "Token not provided" });
+        }
+
+        let decoded;
+
+        try{
+            decoded = jwt.verify(token, 'secret');
+        }catch(err){
+            return reply.status(401).send({ message: "Invalid token" });
+        }
+
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM guru WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        if(Exist.length > 0){
+            const data = await Promise.all(Exist.map(async (item) => {
+                const imagePath = './Gambar/Guru/Profil/' + item.gambar_profil;
+                const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
+                return { ...item, gambar_profil: base64 };
+            }))
+            return reply.status(200).send(data);
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
 })
 
+fastify.get('/absenguru', async (request, reply) => {
+    const token  = request.headers.authorization;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    try{
+        const decoded = jwt.verify(token, 'secret');
+
+        const id = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM guru WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(id.length > 0){
+            const Exist = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM absensiguru WHERE idguru = ? ORDER BY tanggal DESC', [id[0].id], (err, result) => {
+                    if(err){
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+
+            if(Exist.length > 0){
+                return reply.status(200).send(Exist);
+            }
+        }
+       
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/absensimasukguru', async (request, reply) => {
+    const token  = request.headers.authorization;
+    const id  = request.body.id;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    try{
+        const decoded = jwt.verify(token, 'secret');
+
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        
+        
+        const idguru = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM guru WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })    
+        })
+
+        
+        if(idguru.length > 0){
+            const Exist = await new Promise((resolve, reject) => {
+                db.query('UPDATE absensiguru SET absen_masuk = ? WHERE id = ? AND idguru = ?', [time, id, idguru[0].id], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+
+            if(Exist.affectedRows > 0){
+                return reply.status(200).send({ message: 'Success' });
+            }
+        }
+
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/absensikeluarguru', async (request, reply) => {
+    const token  = request.headers.authorization;
+    const id  = request.body.id;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    try{
+        const decoded = jwt.verify(token, 'secret');
+
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+        const idguru = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM guru WHERE email = ?', [decoded.email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })    
+        })
+
+        if(idguru.length > 0){
+            const Exist = await new Promise((resolve, reject) => {
+                db.query('UPDATE absensiguru SET absen_keluar = ?, status = ? WHERE id = ? AND idguru = ?', [time, 'closed', id, idguru[0].id], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+
+            if(Exist.affectedRows > 0){
+                return reply.status(200).send({ message: 'Success' });
+            }
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.get('/absensimasukCheckerGuru/:id', async (request, reply) => {
+    const id  = request.params.id;
+    const token  = request.headers.authorization;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT absen_masuk FROM absensiguru WHERE id = ?', [id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            if(Exist[0].absen_masuk){
+                return reply.status(200).send({ message: Exist[0].absen_masuk });
+            }else{
+                return reply.status(404).send({ message: 'not found' });
+            }
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.get('/absensikeluarCheckerGuru/:id', async (request, reply) => {
+    const id  = request.params.id;
+    const token  = request.headers.authorization;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT absen_keluar FROM absensiguru WHERE id = ?', [id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            if(Exist[0].absen_keluar){
+                return reply.status(200).send({ message: Exist[0].absen_keluar });
+            }else{
+                return reply.status(404).send({ message: err });
+            }
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.get('/absensiCheckerGuru/:id', async (request, reply) => {
+    const id  = request.params.id;
+    const token  = request.headers.authorization;
+
+    if (!token) {
+        return reply.status(401).send({ message: "Token not provided" });
+    }
+
+    try{
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT status FROM absensiguru WHERE id = ? AND status = ?', [id, 'open'], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Exist.length > 0){
+            return reply.status(200).send({ message: Exist[0].status });
+        }else{
+            return reply.status(404).send({ message: 'Not found' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+// Admin
 fastify.get('/admin', async (request, reply) => {
     try {
-        const token  = request.headers.authorization;
+        const token = request.headers.authorization;
         if (!token) {
             return reply.status(401).send({ message: "Token not provided" });
         }
@@ -643,8 +946,6 @@ fastify.get('/admin', async (request, reply) => {
     }
 });
 
-
-// Admin
 
 // -data-siswa
 fastify.get('/getSiswa_Admin', async (request, reply) => {
