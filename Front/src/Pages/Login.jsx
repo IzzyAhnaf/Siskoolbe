@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Auth from "../Layout/Auth";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { IoIosLock } from "react-icons/io";
@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 
 
 const Login = () => {
+    const navTo = useNavigate();
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState('');
     const [check, setCheck] = useState(false);
@@ -29,7 +30,7 @@ const Login = () => {
                         setCookies('token', response.data.token, 30)
                     }            
                     sessionStorage.setItem('token', response.data.token);
-                    window.location.href = '/Siskoolbe/'
+                    navTo('/Siskoolbe/')
                 })
             }
             else{ 

@@ -15,7 +15,7 @@ const path = require('path');
 const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
-    origin: 'http://localhost:5173',
+    origin: 'http://192.168.0.200:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 });
@@ -1785,7 +1785,7 @@ const start = async () => {
     try {
       await fastify.listen({
         port: 5000,
-        host: '127.0.0.1'
+        host: '192.168.0.200'
       });
     } catch (err) {
       console.error(err);

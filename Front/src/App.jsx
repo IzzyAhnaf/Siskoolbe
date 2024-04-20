@@ -156,39 +156,41 @@ function App() {
     const { pathname } = location;
     const { role } = decoded;
 
-    if (pathname === '/Siskoolbe/') {
-      if (role === 'siswa') {
-        navTo('/Siskoolbe/Siswa', { replace: true });
-      } else if (role === 'guru') {
-        navTo('/Siskoolbe/Guru', { replace: true });
-      } else if (role === 'admin') {
-        navTo('/Siskoolbe/Admin', { replace: true });
-      } else {
-        navTo('/Siskoolbe/login', { replace: true });
-      }
-    } else if (pathname.startsWith('/Siskoolbe/Admin')) {
-      if (role === 'siswa') {
-        navTo('/Siskoolbe/Siswa', { replace: true });
-      } else if(role === 'guru') {
-        navTo('/Siskoolbe/Guru', { replace: true });
-      } else if (role === undefined) {
-        navTo('/Siskoolbe/login', { replace: true });
-      }
-    } else if(pathname.startsWith('/Siskoolbe/Guru')) {
-      if (role === 'siswa') {
-        navTo('/Siskoolbe/Siswa', { replace: true });
-      } else if(role === 'admin') {
-        navTo('/Siskoolbe/Admin', { replace: true });
-      } else if (role === undefined) {
-        navTo('/Siskoolbe/login', { replace: true });
-      }
-    } else if (pathname.startsWith('/Siskoolbe/Siswa')) {
-      if (role === 'admin') {
-        navTo('/Siskoolbe/Admin', { replace: true });
-      } else if(role === 'guru') {
-        navTo('/Siskoolbe/Guru', { replace: true });
-      }else if (role === undefined) {
-        navTo('/Siskoolbe/login', { replace: true });
+    if(role){
+      if (pathname === '/Siskoolbe/') {
+        if (role === 'siswa') {
+          navTo('/Siskoolbe/Siswa', { replace: true });
+        } else if (role === 'guru') {
+          navTo('/Siskoolbe/Guru', { replace: true });
+        } else if (role === 'admin') {
+          navTo('/Siskoolbe/Admin', { replace: true });
+        } else {
+          navTo('/Siskoolbe/login', { replace: true });
+        }
+      } else if (pathname.startsWith('/Siskoolbe/Admin')) {
+        if (role === 'siswa') {
+          navTo('/Siskoolbe/Siswa', { replace: true });
+        } else if(role === 'guru') {
+          navTo('/Siskoolbe/Guru', { replace: true });
+        } else if (role === undefined) {
+          navTo('/Siskoolbe/login', { replace: true });
+        }
+      } else if(pathname.startsWith('/Siskoolbe/Guru')) {
+        if (role === 'siswa') {
+          navTo('/Siskoolbe/Siswa', { replace: true });
+        } else if(role === 'admin') {
+          navTo('/Siskoolbe/Admin', { replace: true });
+        } else if (role === undefined) {
+          navTo('/Siskoolbe/login', { replace: true });
+        }
+      } else if (pathname.startsWith('/Siskoolbe/Siswa')) {
+        if (role === 'admin') {
+          navTo('/Siskoolbe/Admin', { replace: true });
+        } else if(role === 'guru') {
+          navTo('/Siskoolbe/Guru', { replace: true });
+        }else if (role === undefined) {
+          navTo('/Siskoolbe/login', { replace: true });
+        }
       }
     }
   }, [decoded.role, location]);
