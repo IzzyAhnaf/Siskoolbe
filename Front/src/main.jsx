@@ -41,7 +41,6 @@ const router = createBrowserRouter([
   {
     path: '/Siskoolbe/',
     element: <App />,
-
     children: [
       {
         path: '/Siskoolbe/AboutUS',

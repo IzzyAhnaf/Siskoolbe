@@ -46,7 +46,9 @@ function App() {
   const navTo = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [decoded, setDecoded] = useState({role: '', email: ''});
   const [selectedImage, setSelectedImage] = useState(null);
+
   const [dataProfilsiswa, setDataProfilsiswa] = useState(
     {
       nama: '',
@@ -78,18 +80,30 @@ function App() {
     nik: '',
     gambar_profil: null,
   })
+
   const token = sessionStorage.getItem('token') || getCookies.token;
 
 
-  if (!token) {
-    navTo('/Siskoolbe/login');
-    return null;
-  }
+  useEffect(() => {
+    if(token){
+        sessionStorage.setItem('token', token);
+        const decodedToken = jwtDecode(token);
+        setDecoded(decodedToken);
+      }else{
+        navTo('/Siskoolbe/login')
+      }
+    setTimeout(() => setLoading(false), 1000)
+  }, []);
 
-  const decoded = jwtDecode(token);
+  useEffect(() => {
+    if (decoded.role) {
+      getProfile();
+    }
+  }, [decoded.role]);
 
   const getProfile = _debounce(async () => {
     try {
+      console.log(decoded);
       const resp = await api.get(decoded.role === 'siswa' ? '/siswa' : decoded.role === 'guru' ? '/guru' : '/admin', {
         headers: {
           Authorization: `${token}`
@@ -136,11 +150,6 @@ function App() {
       navTo('/Siskoolbe/login')
     }
   }, 60);
-
-  useEffect(() => {
-    token ? [sessionStorage.setItem('token', token), getProfile()] : navTo('/Siskoolbe/login')
-    setTimeout(() => setLoading(false), 1000)
-  }, []);
 
 
   useEffect(() => {

@@ -11,9 +11,9 @@ import api from "../../api";
 import base64ToFile from "../../base64toFile";
 import Swal from "sweetalert2";
 import { RxExit } from "react-icons/rx";
+import { removeCookies } from "../../setCookies";
 
 const Profile = ({getProfileImage, setSelectedImage}) => {
-
 
     const [formData, setFormData] = useState({
         nama: '',
@@ -29,6 +29,8 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
         tempat_lahir: '',
         tgl_lahir: '',
     });
+
+    const navTo = useNavigate();
 
     const toggleCard = () => {
         setCardVisible(!isCardVisible);
@@ -143,8 +145,14 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
         getData();
     }, [])
 
+    const logout = () => {
+        sessionStorage.clear();
+        localStorage.clear();
+        removeCookies('token');
+        navTo('/Siskoolbe/login', {replace: true});
+    }
+
     const Wmobile = CustomWidth() <= 767;
-    const navTo = useNavigate();
 
     return (
         <>
@@ -196,7 +204,7 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
                             </button>
 
                             <button className="bg-white mt-[90px] w-60 h-15 py-2 rounded-lg text-red-800 hover:text-white hover:bg-red-800 border-2 border-red-800" 
-                            onClick={() => ''}>
+                            onClick={() => logout()}>
                                 <div className=" justify-center items-center flex relative">
                                     <h1 className="font-bold">Keluar</h1>
                                     <RxExit className="w-4 h-4 absolute right-4"/>

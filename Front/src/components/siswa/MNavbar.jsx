@@ -50,7 +50,7 @@ const Mnvbar = () => {
                             </svg>
                             <span className="mx-4 font-normal font-inter">Profile</span>
                         </Link>
-                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 dark:text-black
+                        {/* <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 dark:text-black
                         ${SelectNavbar === 1 ? 'bg-[#1E6CB1]' : ''}`}
                             to="/Siskoolbe/Siswa/Profile"
                             onClick={() => SelectSidebars(1)}>
@@ -59,7 +59,7 @@ const Mnvbar = () => {
                                 <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentcolor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             <span className="mx-4 font-normal font-inter">Logout</span>
-                        </Link>
+                        </Link> */}
                     </nav>
 
                 </>

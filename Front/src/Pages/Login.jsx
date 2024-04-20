@@ -15,6 +15,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [check, setCheck] = useState(false);
     const [password, setPassword] = useState('');
+
     const HLogin = async () => {
         try{
         const response = await api.post('/login', { email, password });
@@ -46,6 +47,8 @@ const Login = () => {
             )
         }
     }
+
+    
 
     return (
         <Auth type="login">
