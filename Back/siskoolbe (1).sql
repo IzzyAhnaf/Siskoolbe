@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Apr 2024 pada 11.12
+-- Waktu pembuatan: 20 Apr 2024 pada 06.36
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -31,13 +31,20 @@ CREATE TABLE `absensiguru` (
   `id` int(11) NOT NULL,
   `idguru` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `absen_masuk` datetime NOT NULL,
-  `absen_keluar` datetime NOT NULL,
-  `izin` enum('sakit','keterangan','tanpa_keterangan') NOT NULL,
-  `detail-izin` text NOT NULL,
-  `foto-izin_absensi` text NOT NULL,
+  `absen_masuk` datetime DEFAULT NULL,
+  `absen_keluar` datetime DEFAULT NULL,
+  `izin` enum('sakit','keterangan','tanpa_keterangan') DEFAULT NULL,
+  `detail-izin` text DEFAULT NULL,
+  `foto-izin_absensi` text DEFAULT NULL,
   `status` enum('open','closed') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `absensiguru`
+--
+
+INSERT INTO `absensiguru` (`id`, `idguru`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail-izin`, `foto-izin_absensi`, `status`) VALUES
+(1, 1, '2024-04-18', '2024-04-18 14:54:21', NULL, '', '', '', 'open');
 
 -- --------------------------------------------------------
 
@@ -64,7 +71,9 @@ CREATE TABLE `absensisiswa` (
 INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail_izin`, `foto_izin_absensi`, `status`) VALUES
 (31, 2012321, '2024-04-04', NULL, NULL, 'tanpa_keterangan', '', '', 'closed'),
 (32, 2012321, '2024-04-05', NULL, NULL, 'keterangan', 'mokel', '1712200071658-ikan-mujair-goreng.jpg', 'closed'),
-(33, 2012321, '2024-04-06', '2024-04-05 06:19:10', NULL, NULL, NULL, NULL, 'open');
+(33, 2012321, '2024-04-06', '2024-04-05 06:19:10', NULL, NULL, NULL, NULL, 'closed'),
+(36, 2012321, '2024-04-07', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(38, 2012321, '2024-04-18', NULL, NULL, NULL, NULL, NULL, 'open');
 
 -- --------------------------------------------------------
 
@@ -162,7 +171,7 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id`, `jurusanid`, `idguru`, `kelas`) VALUES
-(31, 15, NULL, '10'),
+(31, 15, 1, '10'),
 (32, 15, NULL, '11'),
 (33, 15, NULL, '12');
 
@@ -197,7 +206,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `idkelas`, `alamat`, `no_hp`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1712296857715-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-05 06:00:57');
+(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1712417786093-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-06 15:36:26');
 
 --
 -- Indexes for dumped tables
@@ -259,13 +268,13 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT untuk tabel `absensiguru`
 --
 ALTER TABLE `absensiguru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `absensisiswa`
 --
 ALTER TABLE `absensisiswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT untuk tabel `admin`
@@ -319,6 +328,12 @@ ALTER TABLE `absensisiswa`
 ALTER TABLE `kelas`
   ADD CONSTRAINT `kelas_ibfk_2` FOREIGN KEY (`jurusanid`) REFERENCES `jurusan` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `kelas_ibfk_3` FOREIGN KEY (`idguru`) REFERENCES `guru` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`idkelas`) REFERENCES `kelas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
