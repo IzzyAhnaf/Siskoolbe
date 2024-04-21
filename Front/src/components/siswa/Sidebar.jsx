@@ -33,7 +33,7 @@ const Sidebar = ({nama, gambar_profil}) => {
         if (pathname.startsWith("/Siskoolbe/Siswa")) SelectSidebars(0);
         else if (pathname.startsWith("/Siskoolbe/Siswa/Profile")) SelectSidebars(1);
         else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(2);
-    }, [])
+    }, [location])
 
     return (
         <aside className={`flex flex-col px-4 py-8 rounded-xl bg-sky-700`}>

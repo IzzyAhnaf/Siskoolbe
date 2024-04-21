@@ -15,7 +15,8 @@ const path = require('path');
 const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
-    origin: 'http://192.168.0.200:5173',
+    // origin: 'http://192.168.0.200:5173',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 });
@@ -658,9 +659,17 @@ fastify.get('/guru', async (request, reply) => {
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                const imagePath = './Gambar/Guru/Profil/' + item.gambar_profil;
-                const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
-                return { ...item, gambar_profil: base64 };
+                try{
+                    const imagePath = './Gambar/Guru/Profil/' + item.gambar_profil;
+                    const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
+                    return { 
+                        ...item, 
+                        gambar_profil: base64,
+                        nama_gambar: item.gambar_profil
+                    };
+                }catch(err){
+                    return { ...item, gambar_profil: null };
+                }
             }))
             return reply.status(200).send(data);
         }
@@ -896,6 +905,77 @@ fastify.get('/absensiCheckerGuru/:id', async (request, reply) => {
             return reply.status(200).send({ message: Exist[0].status });
         }else{
             return reply.status(404).send({ message: 'Not found' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/editguruProfile/:email', async (request, reply) => {
+    const email  = request.params.email;
+    const { nama, alamat, no_hp } = request.body;
+
+    try{
+        const update = await new Promise((resolve, reject) => {
+            db.query('UPDATE guru SET nama = ?, alamat = ?, no_hp = ? WHERE email = ?', [nama, alamat, no_hp, email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(update.affectedRows > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/editguruProfileImage/:email', async (request, reply) => {
+    const email  = request.params.email;
+    const file = await request.file();
+
+    try{
+        if(!file){
+            return reply.status(401).send({ message: 'File not found' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Guru/Profil/');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir);
+        }
+
+        const getImage = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar_profil FROM guru WHERE email = ?', [email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(getImage.length > 0){
+            fs.unlinkSync(path.join(__dirname, `./Gambar/Guru/Profil/${getImage[0].gambar_profil}`));
+            const update = await new Promise((resolve, reject) => {
+                db.query('UPDATE guru SET gambar_profil = ? WHERE email = ?', [filepath, email], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+
+            if(update.affectedRows > 0){
+                fs.renameSync(file.filepath, filepath);
+                return reply.status(200).send({ message: 'Success' });
+            }
         }
     }catch(err){
         return reply.status(500).send({ message: err.message });

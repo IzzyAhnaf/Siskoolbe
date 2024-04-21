@@ -6,6 +6,7 @@ import { ImExit } from "react-icons/im";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { TbCalendarTime } from "react-icons/tb";
 import { FaUserTie } from "react-icons/fa6";
+import { removeCookies } from "../../setCookies";
 
 const SidebarGuru = ({nama, gambar_profil}) => {
     const [SelectSidebar, setSelectSidebar] = useState(0);
@@ -26,9 +27,8 @@ const SidebarGuru = ({nama, gambar_profil}) => {
     useEffect(() => {
         const { pathname } = location;
         if (pathname.startsWith("/Siskoolbe/Guru")) SelectSidebars(0);
-        else if (pathname.startsWith("/Siskoolbe/Guru/Profile")) SelectSidebars(1);
+        else if (pathname.startsWith("/Siskoolbe/Guru/ProfileGuru")) SelectSidebars(1);
         else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(2);
-
     }, [])
 
     return (
@@ -43,8 +43,8 @@ const SidebarGuru = ({nama, gambar_profil}) => {
             <div className="flex space-y-2 mt-[8px]">
                 <nav className="space-y-2">
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-5 text-gray-100  
-                                ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100' : ''}
-                                rounded-lg dark:text-gray-100 hover:bg-gray-300 hover:bg-opacity-50 hover:text-gray-100`}
+                        ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100' : ''}
+                        rounded-lg dark:text-gray-100 hover:bg-gray-300 hover:bg-opacity-50 hover:text-gray-100`}
                         to="/Siskoolbe/Guru"
                         onClick={() => setSelectSidebar(0)}>
                         {SelectSidebar === 0 ? <AiFillHome className="w-5 h-5" /> : <AiOutlineHome className="w-5 h-5" />}
@@ -63,7 +63,7 @@ const SidebarGuru = ({nama, gambar_profil}) => {
 
                     <Link className={`flex flex-col items-center space-y-2 px-1 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
-                    ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
+                    ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
                         to="/Siskoolbe/AboutUs"
                         onClick={() => setSelectSidebar(2)}>

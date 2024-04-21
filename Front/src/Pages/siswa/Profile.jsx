@@ -32,10 +32,6 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
 
     const navTo = useNavigate();
 
-    const toggleCard = () => {
-        setCardVisible(!isCardVisible);
-    };
-
     const handleOpenFileExplorer = (event) => {
         const input = document.createElement('input');
         input.type = 'file';
@@ -157,33 +153,46 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
     return (
         <>
             {!Wmobile ? (
-                <div className="flex w-full rounded-3xl bg-[#D9D9D9] mx-4 p-8">
-                    <div className="flex flex-col mx-auto space-y-4 w-full">
-                            <div className="flex bg-white rounded-lg p-4 items-center space-x-8 justify-between">
+                <div className="flex w-full rounded-3xl bg-[#D9D9D9] mx-4 p-8 font-inter">
+                    <div className="flex flex-col mx-auto w-full">
+
+                            <div className="bg-blue-500 p-4" style={{borderRadius: '10px 10px 0 0'}}>
+                                <span className="text-white font-semibold text-xl">Foto Profil</span>
+                            </div>
+                            <div className="flex bg-white p-4 items-center space-x-8 justify-between lg:mb-10 md:mb-20"
+                            style={{borderRadius: '0 0 10px 10px'}}>
                                 <div className="" onClick={handleOpenFileExplorer}>
                                     <ProfilePicture onClick={handleOpenFileExplorer} gambar_profil={getProfileImage || formData.gambar_profil} />
                                 </div>
                                 <div className="flex space-x-8 pe-4">
                                     <div className="">
-                                        <p className="font-bold text-3xl">Upload a New Photo</p>
-                                        <p>Profile-pic.jpg</p>
+                                        <p className="font-bold text-3xl">Upload Gambar Baru</p>
                                     </div>
                                     <div>
                                         <button className="bg-white text-black border-solid border-2
                                         hover:bg-black
                                         border-black py-2 px-4 rounded hover:text-gray-100"
-                                        onClick={() => update(formData)}>Ubah</button>
+                                        onClick={handleOpenFileExplorer}
+                                        >
+                                            Upload
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="bg-blue-500 p-4"
+                            style={{borderRadius: '10px 10px 0 0'}}>
+                                <span className="text-white font-semibold text-xl">Data diri</span>
+                            </div>
                             <Form nama={formData.nama} email={formData.email} alamat={formData.alamat} nik={formData.nik} no_hp={formData.no_hp}
-                            nis={formData.nis} nisn={formData.nisn} kelas={formData.kelas} jenis_kelamin={formData.jenis_kelamin} handleInputChange={handleInputChange}  
+                            nis={formData.nis} nisn={formData.nisn} kelas={formData.kelas} jenis_kelamin={formData.jenis_kelamin} handleInputChange={handleInputChange} 
+                            update={update}
                             /> 
                     </div>
                 </div>
             ) : (
                 <>
-                    <div className="flex flex-col items-center w-full h-[88%] rounded-3xl bg-[#1E6CB1] mx-[5px] mt-4 font-inter text-white">
+                    <div className="flex flex-col items-center w-full h-[88%] rounded-3xl bg-[#1E6CB1] mx-[5px] mt-2 font-inter text-white">
                         <div className="flex flex-col mt-8 items-center">
                             <img src={getProfileImage} className="object-cover w-28 h-28 rounded-full" alt="" />
                             <h4 className="text-2xl font-bold mt-3">{formData.nama}</h4>

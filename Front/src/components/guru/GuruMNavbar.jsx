@@ -19,8 +19,9 @@ const GrMnvbar = () => {
     useEffect(() => {
         const { pathname } = location;
         if (pathname.startsWith('/Siskoolbe/Guru')) SelectSidebars(0);
-        else if (pathname.startsWith('/Siskoolbe/Guru/Profile')) SelectSidebars(1);
+        else if (pathname.startsWith('/Siskoolbe/Guru/ProfileGuru')) SelectSidebars(1);
         else if (pathname.startsWith('/Siskoolbe/AboutUs')) SelectSidebars(1);
+        else if (pathname.startsWith('/Siskoolbe/Guru/ProfSetGuru')) SelectSidebars(1);
     }, [])
     return (
         <>

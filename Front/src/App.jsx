@@ -218,8 +218,8 @@ function App() {
              {WMobile ? <GrMnvbar /> : <SidebarGuru nama={dataProfilGuru.nama} gambar_profil={selectedImage}/>}
             <Routes>
               <Route path='/Guru' element={<HomesGuru nama={dataProfilGuru.nama} token={token} WMobile={WMobile} DekstopLow={DekstopLow}/>}></Route>
-              <Route path='/Guru/ProfileGuru' element={<ProfileGuru />}></Route>
-              <Route path='/Guru/ProfSetGuru' element={<ProfSetGr />}></Route>
+              <Route path='/Guru/ProfileGuru' element={<ProfileGuru getProfileImage={selectedImage} setSelectedImage={setSelectedImage}/>}></Route>
+              <Route path='/Guru/ProfSetGuru' element={<ProfSetGr getProfileImage={selectedImage} setSelectedImage={setSelectedImage} />}></Route>
               <Route path='/Guru/IzinGuru' element={<Izin_Guru />}></Route>
               <Route path='/Guru/AbsenMasuk/:id' element={<CheckinGuru />}></Route>
               <Route path='/Guru/AbsenKeluar/:id' element={<CheckoutGuru />}></Route>

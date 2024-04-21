@@ -71,16 +71,20 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
             <span className="font-semibold font-inter text-lg text-white mx-2">SMKN 1 Depok, Gang Bhakti Suci No.100, Cimpaeun, Tapos, Kota Depok, Jawa Barat, 16459</span>
           </div>
 
-          <div className="flex justify-between items-center">
-            <span className="text-xl mt-8 font-medium font-inter text-black mx-32">Absensi {DateNow()}</span>
-            <span className="text-lg mt-8 font-medium font-inter text-white mx-32 bg-red-600 py-2 px-12 rounded-lg hover:cursor-pointer"
+          <div className="flex justify-between items-center bg-blue-500 py-2
+          mx-[120px] mt-4 px-7"
+          style={{borderRadius: '10px 10px 0 0'}}>
+            <span className="lg:text-lg md:text-md sm:text-sm font-medium font-inter text-white">Absensi {DateNow()}</span>
+            <span className="lg:text-lg md:text-md sm:text-sm my-2 font-medium font-inter text-white bg-red-600 py-2 px-12
+            rounded-lg hover:cursor-pointer"
             onClick={() => navTo('/Siskoolbe/Siswa/Izin-Sakit')}>Ajukan Izin</span>
           </div>
 
-          <div className={`overflow-y-auto flex flex-col slim-scroll py-2 ${DekstopLow ? 'h-[280px]' : 'h-[90%]'}`}>
+          <div className={`overflow-y-auto flex flex-col slim-scroll ${DekstopLow ? 'h-[280px]' : 'h-[90%]'}`}>
             {dataAbsen.map((entry, index) => (
               
-            <div className="flex bg-white mt-2 mx-[120px] justify-between h-20 rounded-3xl" key={index}>
+            <div className="flex bg-white mx-[120px] justify-between h-20" key={index}
+            style={{borderBottom: '1px solid #D9D9D9'}}>
               <div className="flex flex-col items-center justify-center bg-[#05FF00] bg-opacity-60 mx-6 px-6 w-[100px] rounded-2xl py-1 h-14 mt-3">
                 <span className="font-inter font-semibold text-[16px] text-slate-950">{new Date(entry.tanggal).toLocaleDateString("id-ID", { day: 'numeric' })}</span>
                 <span className="font-inter font-semibold text-[16px] text-slate-950">{new Date(entry.tanggal).toLocaleDateString("id-ID", { weekday: 'long' })}</span>
@@ -198,7 +202,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
                 {dataAbsen.map((entry, index) => (
                 <>
                   <div className="flex bg-white mt-2 justify-between mx-3 h-16 rounded-xl overflow-y-auto slim-scroll">
-                    <div className="flex flex-col rounded-lg items-center justify-center bg-opacity-60 bg-[#05FF00] mx-3 px-6 h-12 my-auto">
+                    <div className="flex flex-col rounded-lg items-center justify-center bg-opacity-60 bg-[#05FF00] w-20 mx-3 px-6 h-12 my-auto">
                       <span className="font-inter font-semibold text-[12px] text-slate-950">{new Date(entry.tanggal).toLocaleDateString("id-ID", { day: 'numeric' })}</span>
                       <span className="font-inter font-semibold text-[12px] text-slate-950">{new Date(entry.tanggal).toLocaleDateString("id-ID", { weekday: 'long' })}</span>
                     </div>
@@ -210,7 +214,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
                         {/* Absen Masuk */}
                         {!entry.absen_masuk || entry.absen_masuk === '' ? (
                           <div className="outline outline-1 outline-[#269400] 
-                          justify-center items-center flex flex-col rounded-lg cursor-pointer mx-3 px-4 h-12 my-auto hover:bg-gray-100"
+                          justify-center items-center flex flex-col rounded-lg cursor-pointer w-16 px-4 h-12 my-auto hover:bg-gray-100"
                           onClick={() => navTo('./AbsenMasuk/'+entry.id+'/'+entry.nis)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2048 2048"
                             color="#269400"><path fill="currentColor"
@@ -231,7 +235,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
 
                         {!entry.absen_masuk || entry.absen_masuk === '' ? (
                           <div className="outline outline-1 outline-[#706e67]
-                          justify-center items-center flex flex-col rounded-lg cursor-pointer mx-3 px-4 h-12 my-auto hover:bg-gray-100"
+                          justify-center items-center flex flex-col rounded-lg cursor-pointer w-16 ml-2 mr-1 px-4 h-12 my-auto hover:bg-gray-100"
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2048 2048"
                             color="#706e67"><path fill="currentColor"
@@ -241,7 +245,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
                           </div>
                         ) : entry.absen_keluar === '' || !entry.absen_keluar ? (
                           <div className="outline outline-1 outline-[#ff1100]
-                          justify-center items-center flex flex-col rounded-lg cursor-pointer mx-3 px-4 h-12 my-auto hover:bg-gray-100"
+                          justify-center items-center flex flex-col rounded-lg cursor-pointer w-16 ml-2 mr-1 px-4 h-12 my-auto hover:bg-gray-100"
                           onClick={() => navTo('./AbsenKeluar/'+entry.id+'/'+entry.nis)}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2048 2048"

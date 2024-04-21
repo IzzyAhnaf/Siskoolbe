@@ -1,367 +1,291 @@
 import React, { useState } from 'react';
 import "../Styling.css"
 import CustomWidth from '../../CustomWidth';
+import formatDate from '../../formattedDate';
 
 
-const FormProfGuru = () => {
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        address: '',
-        nik: '',
-        nohp: '',
-        selectedJabatan: '',
-        selectedstatus: '',
-        gender: '',
-    });
+const FormProfGuru = ({nama, email, alamat, nik, no_hp, jenis_kelamin, tempat_lahir, tgl_lahir, agama, status, handleInputChange, update}) => {
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-    };
     const WMobile = CustomWidth() <= 767;
+
+    const DateBorn = () => {
+        const date = new Date(tgl_lahir);
+        const year = date.getFullYear();
+        const monthNamesIndonesia = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const monthIndex = date.getMonth();
+        const month = monthNamesIndonesia[monthIndex];
+        const day = date.getDate();
+
+        return `${day}, ${month} ${year}`;
+    }
 
     return (
         <>
             {!WMobile ? (
-                <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                    <div className='container3 '>
-                        <h1 className='font-bold text-2xl mt-4'>Change User Information Here</h1>
-                        <div className="mb-4 flex flex-row ">
-                            <div className='mt-4'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Full Name
+                <form className="w-full overflow-y-auto slim-scroll mx-auto bg-white p-4 font-inter"
+                style={{borderRadius: '0 0 10px 10px'}}>
+                    <div className=''>
+                        <div className="mb-4 flex w-full space-x-2">
+                            <div className='mt-4 w-full'>
+                                <label htmlFor="nama" className="block text-sm ">
+                                    Nama
                                 </label>
                                 <input
                                     type="text"
-                                    id="fullName"
-                                    name="fullName"
-                                    value={formData.fullName}
+                                    id="nama"
+                                    name="nama"
+                                    value={nama}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="w-full flex border-1 border border-black rounded-md bg-transparent px-2 py-2  text-gray-900 placeholder:text-gray-400 focus:outline-0 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 />
                             </div>
-                            <div className='mt-4 ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                            <div className='mt-4 w-full'>
+                                <label htmlFor="nik" className="block text-sm ">
                                     Email
                                 </label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     id="email"
                                     name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[90px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    value={email}
+                                    className="flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     autoComplete='none'
-                                    required
+                                    disabled
                                 />
                             </div>
                         </div>
 
-                        <div className="mb-4 flex flex-row">
+                        <div className="mb-4 flex w-full">
                             <div className=''>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Address
+                                <label htmlFor="alamat" className="block text-sm ">
+                                    Alamat
                                 </label>
-                                <input
-                                    type="text"
-                                    id="address"
-                                    name="address"
-                                    value={formData.address}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[266px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    autoComplete='none'
-                                    required
-                                />
+                                <textarea
+                                id="alamat"
+                                name="alamat"
+                                value={alamat}
+                                onChange={handleInputChange}
+                                className='flex border-1 border border-black rounded-md p-4 bg-transparent text-gray-900 
+                                placeholder:text-gray-400 focus:ring-0 focus:outline-0 sm:text-sm sm:leading-6
+                                w-full'
+                                rows={4}
+                                cols={201}
+                                style={{ resize: 'none' }}>
+                                </textarea>
                             </div>
                         </div>
 
-                        <div className="mb-4 flex flex-row">
-                        <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
+                        <div className="mb-4 flex w-full">
+                            <div className='w-full'>
+                                <label htmlFor="nik" className="block text-sm ">
                                     NIK
                                 </label>
                                 <input
-                                    type="tel"
+                                    type="text"
                                     id="nik"
                                     name="nik"
-                                    value={formData.phoneNumber}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    value={nik}
+                                    className="flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     autoComplete='none'
-                                    required
+                                    disabled
                                 />
                             </div>
-                            <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    No.Hp
-                                </label>
-                                <input
-                                    type="tel"
-                                    id="nohp"
-                                    name="nohp"
-                                    value={formData.nisn}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    autoComplete='none'
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="mb-4 flex flex-row">
-                        <div className=''>
-                                <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                    Jabatan
-                                </label>
-                                <select
-                                    id="selectedJabatan"
-                                    name="selectedJabatan"
-                                    value={formData.selectedClass}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[124px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    required
-                                >
-                                    <option value="">Select Jabatan</option>
-                                    <option value="classA">Guru</option>
-                                    <option value="classB">Kepala Program</option>
-                                    <option value="classC">Staff</option>
-                                </select>
-                            </div>
-                            <div className=''>
-                                <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                    Status
-                                </label>
-                                <select
-                                    id="selectedstatus"
-                                    name="selectedstatus"
-                                    value={formData.selectedClass}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[124px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    required
-                                >
-                                    <option value="">Select Status</option>
-                                    <option value="classA">PNS</option>
-                                    <option value="classB">Honorer</option>
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div className="mb-2 flex flex-row">
-                            <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Tempat Lahir
+                            <div className='ml-2 w-full'>
+                                <label htmlFor="no_hp" className="block text-sm ">
+                                    Nomor Hp
                                 </label>
                                 <input
                                     type="text"
-                                    id="TempatLahir"
-                                    name="TempatLahir"
-                                    value={formData.nisn}
+                                    id="no_hp"
+                                    name="no_hp"
+                                    value={no_hp}
+                                    className="flex border-black rounded-md px-2 border-1 border py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 focus:outline-0 sm:text-sm sm:leading-6 w-full
+                                    no-InDecrement"
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    autoComplete='none'
-                                    required
-                                />
-                            </div>
-                            <div className='ml-2'>
-                                <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                    Tanggal Lahir
-                                </label>
-                                <input
-                                    type="date"
-                                    id="TanggalLahir"
-                                    name="TanggalLahir"
-                                    value={formData.nisn}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[90px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     autoComplete='none'
                                     required
                                 />
                             </div>
                         </div>
 
+                        <div className="mb-2 flex w-full">
+                            <div className='w-full'>
+                                <label htmlFor="" className="block text-sm">
+                                    Tempat Lahir
+                                </label>
+                               <input type="text"
+                               className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                               disabled
+                               value={tempat_lahir}
+                               />
+                            </div>
+                            <div className='ml-2 w-full'>
+                                <label htmlFor="" className="block text-sm ">
+                                    Tanggal Lahir
+                                </label>
+                                <input type="text"
+                                className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                disabled
+                                value={DateBorn()}
+                                />
+                            </div>
+                        </div>
 
+                        <div className="mb-2 flex w-full">
+                            <div className='w-full'>
+                                <label htmlFor="" className="block text-sm">
+                                    Agama
+                                </label>
+                               <input type="text"
+                               className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                               disabled
+                               value={agama}
+                               />
+                            </div>
+                            <div className='ml-2 w-full'>
+                                <label htmlFor="" className="block text-sm ">
+                                    Jenis Kelamin
+                                </label>
+                                <input type="text"
+                                className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                disabled
+                                value={jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="w-full mt-8">
+                            <button type="button"
+                            onClick={update}
+                            className='w-full bg-blue-500 rounded py-2 text-white'>
+                                <span>Simpan</span>
+                            </button>
+                        </div>
                     </div>
                 </form>
             ) : (
                 <>
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                        <div className=' justify-center items-center ml-2'>
-                            <h1 className='font-bold text-[20px] mt-4'>Change User Information Here</h1>
-                        </div>
-                        <div className={`container5 items-center justify-center flex flex-col ${WMobile ? 'overflow-y-auto mt-[12px] slim-scroll t-[200px] h-[380px] pt-[100px] pb-[20px]' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}>
-                            <div className="comtaimer5 mb-4 flex flex-col justify-center items-center">
-
-                                <div className='mt-4'>
-
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        Full Name
+                   <form className="w-full text-black font-inter">
+                            <div className="mb-4 flex flex-col justify-center items-center space-y-2 px-8">
+                                <div className='mt-4 w-full'>
+                                    <label htmlFor="nama" className="block text-sm">
+                                        nama
                                     </label>
                                     <input
                                         type="text"
-                                        id="fullName"
-                                        name="fullName"
-                                        value={formData.fullName}
+                                        id="nama"
+                                        name="nama"
+                                        value={nama}
                                         onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent w-full py-1 text-gray-900 placeholder:text-gray-400
+                                        focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4 focus:outline-0"
                                         autoComplete='none'
                                         required
                                     />
                                 </div>
-                                <div className='mt-4'>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Email
+                                <div className='w-full'>
+                                    <label htmlFor="alamat" className="block text-sm">
+                                        Alamat
                                     </label>
+                                    <textarea value={alamat} onChange={handleInputChange} id="alamat" name="alamat" required
+                                    className='flex border-[1px] border-black rounded-md px-4 py-1 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
+                                    w-full focus:outline-0'
+                                    rows={4}
+                                    cols={201}
+                                    style={{ resize: 'none' }}>
 
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
+                                    </textarea>
                                 </div>
-
-
-
-                                <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Address
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        name="address"
-                                        value={formData.address}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent  py-1 p-[60px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        NIK
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="nik"
-                                        name="nik"
-                                        value={formData.nis}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-                                <div >
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        No Hp
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="nohp"
-                                        name="nohp"
-                                        value={formData.nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        autoComplete='none'
-                                        required
-                                    />
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        jabatan
+                                <div className='w-full'>
+                                    <label htmlFor="no_hp" className="block text-sm">
+                                        Nomor Hp
                                     </label>
                                     <input
                                         type="tel"
-                                        id="phoneNumber"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
+                                        id="no_hp"
+                                        name="no_hp"
+                                        value={no_hp}
                                         onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent w-full py-1  text-gray-900 placeholder:text-gray-400 
+                                        focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4 focus:outline-0"
                                         autoComplete='none'
                                         required
                                     />
                                 </div>
-                                <div className=''>
-                                    <label htmlFor="address" className="block text-sm" style={{ fontStyle: 'italic' }}>
-                                        Status
+                                <div className='w-full'>
+                                <label htmlFor="nik" className="block text-sm ">
+                                        Email
                                     </label>
-                                    <select
-                                        id="selectedClass"
-                                        name="selectedClass"
-                                        value={formData.selectedClass}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[98px] py-1.5  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        required
-                                    >
-                                        <option value="">Select Status</option>
-                                        <option value="classA">PNS</option>
-                                        <option value="classB">Honorer</option>
-                                    </select>
-                                </div>
-
-
-
-                                <div>
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        tempat Lahir
-                                    </label>
-                                    <div className="flex items-center space-x-4">
                                     <input
                                         type="text"
-                                        id="Tempat Lahir"
-                                        name="Temapat Lahir"
-                                        value={formData.nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        id="email"
+                                        name="email"
+                                        value={email}
+                                        className="flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                        no-InDecrement"
                                         autoComplete='none'
-                                        required
+                                        disabled
                                     />
-                                    </div>
                                 </div>
-                                <div>
-                                    <label htmlFor="address" className="block text-sm " style={{ fontStyle: 'italic' }}>
-                                        tanggal lahir
+                                <div className='w-full'>
+                                    <label htmlFor="nik" className="block text-sm ">
+                                        NIK
                                     </label>
-                                    <div className="flex items-center space-x-4">
                                     <input
-                                        type="date"
-                                        id="Tanggal Lahir"
-                                        name="Tanggal Lahir"
-                                        value={formData.nisn}
-                                        onChange={handleInputChange}
-                                        className="block flex-1 border-[1px] border-black rounded-md bg-transparent p-[60px] py-1  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        type="text"
+                                        id="nik"
+                                        name="nik"
+                                        value={nik}
+                                        className="flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                        no-InDecrement"
                                         autoComplete='none'
-                                        required
+                                        disabled
                                     />
-                                    </div>
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="" className="block text-sm">
+                                        Tempat Lahir
+                                    </label>
+                                    <input type="text"
+                                    className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                    disabled
+                                    value={tempat_lahir}
+                                />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="" className="block text-sm ">
+                                        Tanggal Lahir
+                                    </label>
+                                    <input type="text"
+                                    className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                    disabled
+                                    value={DateBorn()}
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="" className="block text-sm">
+                                        Agama
+                                    </label>
+                                    <input type="text"
+                                    className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                    disabled
+                                    value={agama}
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="" className="block text-sm ">
+                                        Jenis Kelamin
+                                    </label>
+                                    <input type="text"
+                                    className='flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                    disabled
+                                    value={jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}
+                                    />
                                 </div>
                             </div>
-                        </div>
-
-
-
                     </form>
                 </>
             )}

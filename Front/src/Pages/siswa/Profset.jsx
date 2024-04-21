@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 
 const ProfSet = ({getProfileImage, setSelectedImage}) => {
 
-    const [isContainerVisible, setContainerVisible] = useState(false);
 
 
     const [formData, setFormData] = useState({

@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/Siskoolbe/',
   server: {
-    host: '192.168.0.200'
+    // host: '192.168.0.200'
   }
 })
