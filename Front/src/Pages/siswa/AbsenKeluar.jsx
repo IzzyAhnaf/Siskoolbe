@@ -173,12 +173,14 @@ const Checkout = () => {
     <>
       {!WMobile ? (
         defaultCenter && (
-          <div className='flex flex-col w-screen item-centers justify-center h-screen bg-[#D9D9D9] mx-4'>
-            <div className="flex bg-sky-700 mt-4 mb-3 mx-[120px] h-16 rounded-3xl items-center px-2 py-2 ">
+          <div className='flex flex-col w-full items-center justify-center rounded-lg h-full bg-[#D9D9D9] mx-4'>
+            <div className="flex bg-sky-700 mt-4 w-11/12 mx-10 h-16 items-center px-2 py-2 "
+            style={{ borderRadius: "10px 10px 0 0" }}>
               <svg className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="white" d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"></path></svg>
               <span className="font-semibold font-inter text-[14px] text-white mx-2">{userAddress || "Lokasi Anda"}</span>
             </div>
-            <MapContainer ref={mapRef} className="justify-center items-center w-11/12 h-3/4 rounded-xl mx-10 z-0"
+            <MapContainer ref={mapRef} className="justify-center items-center w-11/12 h-3/4 mx-10 z-0"
+              style={{ borderRadius: "0 0 10px 10px" }}
               center={defaultCenter}
               zoom={17}
               scrollWheelZoom={false}
@@ -201,15 +203,16 @@ const Checkout = () => {
               </Marker>
               <Circle center={markerPosition} radius={circleRadius} pathOptions={{ color: 'red' }} />
             </MapContainer>
-            <button className="absolute bottom-36 right-5 mr-40"><RiFocus3Line className='w-12 h-12 absolute bg-white rounded-full px-2' style={{color:'#1E6CB1'}} onClick={handleFocusUserLocation}/></button>
-            <button onClick={handleAbsenClick} className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-94 text-center mx-56'>Absen Keluar</button>
+            <button className="absolute bottom-40 right-0 mr-32"><RiFocus3Line className='w-12 h-12 absolute bg-white rounded-full px-2' style={{color:'#1E6CB1'}} onClick={handleFocusUserLocation}/></button>
+            <button onClick={handleAbsenClick} 
+            className='bg-[#FF0000] text-white rounded-md py-2 px-5 mt-5 content-center text-base w-11/12 text-center mx-10'>Absen Keluar</button>
           </div>
         )
       ) : (
         <>
         {defaultCenter && (
           <div className="flex flex-col w-screen h-full">
-            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[90%] pb-6 mx-2 mt-1 z-0">
+            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[85%] pb-6 mx-2 mt-1 z-0">
             <MapContainer ref={mapRef} className="justify-center items-center w-full h-96 z-0"
                 center={defaultCenter}
                 zoom={17}

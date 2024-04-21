@@ -183,20 +183,26 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
       ) : (
         <>
             <div className="flex flex-col w-full rounded-2xl bg-[#D9D9D9] h-[85%] pb-4 mt-4">
-              <div className="flex flex-row bg-white mt-4 mx-3 h-32 rounded-2xl">
+              <div className="flex flex-row bg-white mt-4 mx-3 h-32 py-4"
+              style={{borderRadius: "10px 10px 0 0"}}>
                 <div className="flex flex-col">
-                  <span className="font-[600] font-inter text-sm mt-4 mx-4">Welcome {nama}</span>
+                  <span className="font-[600] font-inter text-sm mx-4">Welcome {nama}</span>
                   <span className="font-semibold font-inter text-[12px] mt-2 mx-4">semangatmu adalah kunci untuk meraih impianmu! dengan absensi ini adalah bukti kedisiplinanmu</span>
                 </div>
-                <img className="w-24 h-24 mt-4" src="https://i.pinimg.com/564x/f2/3d/95/f23d95272024a786778cf50db8fcc64b.jpg" alt="" />
+                {/* <img className="w-24 h-24 mt-4" src="https://i.pinimg.com/564x/f2/3d/95/f23d95272024a786778cf50db8fcc64b.jpg" alt="" /> */}
               </div>
 
-              <div className="flex flex-row bg-sky-700 mt-4 mx-3 h-12 rounded-3xl items-center px-4 py-2 ">
+              <div className="flex flex-row bg-sky-700 mx-3 h-12 items-center px-4 py-2 "
+              style={{borderRadius: "0 0 10px 10px"}}>
                 <svg className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="white" d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"></path></svg>
                 <span className="font-semibold font-inter text-[10px] text-white mx-2">SMKN 1 Depok, Gang Bhakti Suci No.100, Cimpaeun, Tapos, Kota Depok, Jawa Barat, 16459</span>
               </div>
 
-              <span className="text-base mt-4 font-semibold font-inter text-black mx-6">Absensi {DateNow()}</span>
+              <span className="text-base mt-4 font-semibold font-inter text-black mx-3">Absensi {DateNow()}</span>
+              <span className="lg:text-lg md:text-md sm:text-sm my-2 font-medium font-inter text-red-500 border border-1 border-red-500
+              mx-3 bg-white py-2 px-4
+              rounded-lg hover:cursor-pointer"
+              onClick={() => navTo('/Siskoolbe/Siswa/Izin-Sakit')}>Ajukan Izin</span>
 
               <div className="overflow-y-auto mt-2">
                 {dataAbsen.map((entry, index) => (

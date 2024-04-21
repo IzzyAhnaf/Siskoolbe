@@ -42,8 +42,12 @@ const Izin_Sakit = () => {
         <>
             {!Wmobile ? (
 
-                <div className="flex flex-col w-full rounded-3xl bg-[#D9D9D9] mx-4 ">
-                    <div className="flex flex-col items-center w-full my-auto">
+                <div className="flex flex-col w-full rounded-3xl mx-4">
+                    <div className="bg-blue-500 p-4 w-full"
+                    style={{borderRadius: '10px 10px 0 0'}}>
+                        <span className="text-white font-semibold text-xl">Izin</span>
+                    </div>
+                    <div className="w-full h-full overflow-y-auto hide-scroll border border-1">
                         <IzinForm navTo={navTo}/>
                     </div>
                 </div>
