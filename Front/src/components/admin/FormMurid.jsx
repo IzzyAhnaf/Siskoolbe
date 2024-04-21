@@ -194,32 +194,32 @@ const FormMurid = () => {
             {!Wmobile ? (
             <div className=''>
                 <form onSubmit={handleSubmit} className="font-inter">
-                    <div className={`overflow-y-auto mt-[12px] px-8 slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
+                    <div className={`overflow-y-auto mt-[12px] px-8 slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'}`}>
                         <div className="flex w-full space-x-2" >
                             <div className="w-full">
-                                <label htmlFor="nik">Nik:</label>
+                                <label htmlFor="nik">Nik</label>
                                 <input type="text" placeholder='Masukan Nik' id="nik" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nik" value={formData.nik} onChange={handleInputChange} />
                             </div>
                             <div className="w-full">
-                                <label htmlFor="nama">Nama:</label>
+                                <label htmlFor="nama">Nama</label>
                                 <input type="text" placeholder='Masukan Nama' id="nama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     name="nama" value={formData.nama} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="flex mt-4 space-x-2">
                             <div className="w-full">
-                                <label htmlFor="email">Email:</label>
+                                <label htmlFor="email">Email</label>
                                 <input type="email" placeholder='Masukan Email' id="email" name="email" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.email} onChange={handleInputChange} />
                             </div>
                             <div className="w-full">
-                                <label htmlFor="nik">Password:</label>
+                                <label htmlFor="nik">Password</label>
                                 <input type="text" id="nik" placeholder='Masukan Password' className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="Password" value={formData.Password} onChange={handleInputChange} />
 
                             </div>
                         </div>
                         <div className="flex mt-4 space-x-2">
                             <div className="w-full">
-                                <label htmlFor="alamat">Alamat:</label>
+                                <label htmlFor="alamat">Alamat</label>
                                 <textarea id="alamat" name="alamat" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     rows={4}
                                     style={{resize: "none"}}
@@ -227,28 +227,28 @@ const FormMurid = () => {
                                     onChange={handleInputChange} />
                             </div>
                             <div className="w-full">
-                                <label htmlFor="tempatLahir">Tempat Lahir:</label>
+                                <label htmlFor="tempatLahir">Tempat Lahir</label>
                                 <textarea type="text" id="tempatLahir" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
                                 style={{resize: "none"}} rows={4} name="tempatLahir" value={formData.tempatLahir} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="flex  mt-4 space-x-2">
                             <div className="w-full">
-                                <label htmlFor="tanggalLahir">Tanggal Lahir:</label>
+                                <label htmlFor="tanggalLahir">Tanggal Lahir</label>
                                 <input type="date" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" id="tanggalLahir" name="tanggalLahir" value={formData.tanggalLahir} onChange={handleInputChange} />
                             </div>
                             <div className="w-full">
-                                <label htmlFor="nis">NIS:</label>
+                                <label htmlFor="nis">NIS</label>
                                 <input type="text" id="nis" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nis" value={formData.nis} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="flex  mt-4 space-x-2">
                             <div className="w-full">
-                                <label htmlFor="nisn">NISN:</label>
+                                <label htmlFor="nisn">NISN</label>
                                 <input type="text" id="nisn" name="nisn" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.nisn} onChange={handleInputChange} />
                             </div>
                             <div className="w-full">
-                                <label htmlFor="jenisKelamin">Jenis Kelamin:</label>
+                                <label htmlFor="jenisKelamin">Jenis Kelamin</label>
                                 <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
                                     <option value="" selected disabled>Pilih Jenis Kelamin</option>
                                     <option value="laki-laki">Laki-laki</option>
@@ -258,7 +258,7 @@ const FormMurid = () => {
                         </div>
                         <div className="flex  mt-4 space-x-2">
                             <div className="w-full">
-                                <label htmlFor="agama">Agama:</label>
+                                <label htmlFor="agama">Agama</label>
                                 <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.agama} onChange={handleInputChange}>
                                     <option value="" selected disabled>Pilih Agama</option>
@@ -267,7 +267,7 @@ const FormMurid = () => {
                                 </select>
                             </div>
                             <div className="w-full">
-                                <label htmlFor="jurusan">Jurusan:</label>
+                                <label htmlFor="jurusan">Jurusan</label>
                                 <select id="jurusan" name="jurusan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.jurusan} onChange={handleInputChange}>
                                     <option value="" selected disabled>Pilih Jurusan</option>
                                     <option value="To1">To1</option>
@@ -287,7 +287,7 @@ const FormMurid = () => {
                         </div>
                         <div className="flex  mt-4 space-x-2">
                             <div className="w-full">
-                                <label htmlFor="kelas">Kelas:</label>
+                                <label htmlFor="kelas">Kelas</label>
                                 <select id="kelas" name="kelas" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.kelas} onChange={handleInputChange}>
                                     <option value="" selected disabled>Pilih Kelas</option>
                                     <option value="10">10</option>
@@ -296,7 +296,7 @@ const FormMurid = () => {
                                 </select>
                             </div>
                             <div className='w-full'>
-                                <label htmlFor="noHp">No HP:</label>
+                                <label htmlFor="noHp">No HP</label>
                                 <input type="number" id="noHp"
                                     name="noHp"
                                     className="block flex-1 bg-white border-[1px] no-InDecrement border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -308,7 +308,7 @@ const FormMurid = () => {
                         </div>
                         <div className='flex mt-4'>
                             <div className='w-full'>
-                                <label >Profile: </label>
+                                <label >Foto Profil </label>
                                 {showImageUP && (
                                     <div
                                         onClick={() => fileInputRef.current.click()} // Memicu klik pada input file saat div diklik

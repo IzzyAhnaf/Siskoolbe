@@ -11,6 +11,7 @@ import { removeCookies } from "../../setCookies";
 const SidebarGuru = ({nama, gambar_profil}) => {
     const [SelectSidebar, setSelectSidebar] = useState(0);
     const WMobile = CustomWidth() <= 767;
+    const DekstopLow = CustomWidth() <= 1366;
     const location = useLocation();
 
     const SelectSidebars = (props) => {
@@ -74,7 +75,7 @@ const SidebarGuru = ({nama, gambar_profil}) => {
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
-                        style={{ position: 'absolute', bottom: 10 }}
+                        style={!DekstopLow ? { position: 'absolute', bottom: 10 } : {}}
                         onClick={() => {Logout()}}>
                         {SelectSidebar === 3 ? <ImExit className=" w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">Log Out</span>

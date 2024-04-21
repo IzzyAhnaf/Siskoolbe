@@ -75,7 +75,7 @@ const AdminJurusan = () => {
       <div className={`flex flex-col h-full bg-[#D9D9D9] mx-4 rounded-3xl py-8`}>
         <div className="flex space-x-2 mx-6 lg:px-6 sm:px-7 bg-blue-500 py-4 text-white"
         style={{borderRadius: '10px 10px 0 0'}}>
-          <GiTrumpetFlag className="w-12 h-12 bg-white rounded-full px-2 text-black" />
+          <GiTrumpetFlag className="w-12 h-12 bg-white rounded-full px-2 text-blue-500" />
           <span className="font-semibold text-2xl font-inter mt-2">Jurusan</span>
         </div>
         <div className="flex justify-between mx-6 sm:px-8 lg:px-7 bg-white py-4">
@@ -124,9 +124,11 @@ const AdminJurusan = () => {
                   <tbody className="bg-white border-1 border rounded-full">
                   {jurusan && jurusan.length > 0 ? (
                       jurusan.map((jurusan, index) => (
-                    <tr className="cursor-pointer" style={{ borderRadius: '24px' }} onClick={() => navTo(`/Siskoolbe/Admin/Admin_DetailJurusan/${jurusan.id}`)}>
-                      <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
-                      <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
+                    <tr className="cursor-pointer" style={{ borderRadius: '24px', border: '1px solid #D9D9D9' }}>
+                      <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center"
+                      onClick={() => navTo(`/Siskoolbe/Admin/Admin_DetailJurusan/${jurusan.id}`)}>{index + 1}</td>
+                      <td className="text-sm text-gray-900 font-light px-[-15px] py-2"
+                      onClick={() => navTo(`/Siskoolbe/Admin/Admin_DetailJurusan/${jurusan.id}`)}>
                         <div className="flex space-x-1 items-center justify-center px-0 mx-auto">
                           <div style={{position: 'relative', display: 'inline-block'}}>
                             <img className="w-10 h-10 mr-4 object-cover" src={`data:image/png;base64,${jurusan.image}`} 
@@ -135,14 +137,17 @@ const AdminJurusan = () => {
                           <span className="items-center font-inter font-medium text-sm">{jurusan.namajurusan}</span>
                         </div>
                       </td>
-                      <td class="text-sm text-gray-900 font-medium px-0 py-2 text-center">
+                      <td class="text-sm text-gray-900 font-medium px-0 py-2 text-center"
+                      onClick={() => navTo(`/Siskoolbe/Admin/Admin_DetailJurusan/${jurusan.id}`)}>
                         {jurusan.sub_jurusan}
                       </td>
                       <td className="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
                         <div className="flex justify-center">
-                          <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_jurusan/${jurusan.id}`)}
+                          <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" 
+                          onClick={() => navTo(`/Siskoolbe/Admin/Edit_jurusan/${jurusan.id}`)}
                           onError={(e) => e.currentTarget.src = 'https://via.placeholder.com/150'}/>
-                          <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => handleDelete(jurusan.id)}/>
+                          <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" 
+                          onClick={() => handleDelete(jurusan.id)}/>
                         </div>
                       </td>
                     </tr>

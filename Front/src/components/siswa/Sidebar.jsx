@@ -77,7 +77,7 @@ const Sidebar = ({nama, gambar_profil}) => {
                     rounded-lg dark:text-gray-100 
                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
                         onClick={() => {Logout()}}
-                        style={{position: 'absolute', bottom: '10px'}}>
+                        style={!DekstopLow ? {position: 'absolute', bottom: '10px'} : {}}>
                         {SelectSidebar === 3 ? <ImExit className=" w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">Log Out</span>
                     </Link>

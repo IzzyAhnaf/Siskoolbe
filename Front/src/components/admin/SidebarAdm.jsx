@@ -32,10 +32,10 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
     useEffect(() => {
         const { pathname } = location;
         if (matchPath("/Siskoolbe/Admin", pathname)) SelectSidebars(0);
-        else if (matchPath("/Siskoolbe/Admin/Admin_Guru", pathname)) SelectSidebars(1);
-        else if (matchPath("/Siskoolbe/Admin/Admin_Murid", pathname)) SelectSidebars(2);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Guru", pathname) || matchPath("Siskoolbe/Admin/TambahGuru", pathname) || matchPath("Siskoolbe/Admin/Edit_Guru/:id", pathname)) SelectSidebars(1);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Murid", pathname) || matchPath("Siskoolbe/Admin/TambahMurid", pathname) || matchPath("Siskoolbe/Admin/Edit_Murid/:id", pathname)) SelectSidebars(2);
         else if (matchPath("/Siskoolbe/Admin/Admin_Kelas", pathname)) SelectSidebars(3);
-        else if (matchPath("/Siskoolbe/Admin/Admin_Jurusan", pathname)) SelectSidebars(3);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Jurusan", pathname) || matchPath("Siskoolbe/Admin/TambahJurusan", pathname)) SelectSidebars(3);
         else if (matchPath("/Siskoolbe/AboutUs", pathname)) SelectSidebars(4);
 
         const matchDetailKelas = matchPath("/Siskoolbe/Admin/Admin_DetailKelas/:id", pathname);

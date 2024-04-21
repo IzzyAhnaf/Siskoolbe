@@ -89,13 +89,14 @@ const AdminDetailKelas = () => {
     return(
         <>
          {!WMobile ? (
-        <div className="flex flex-col w-full font-inter">
-        <div className={`flex flex-col item-centers h-screen bg-[#D9D9D9] mx-4 rounded-3xl`}>
-            <div className="flex mt-12 space-x-4 mx-6 lg:px-6 sm:px-7">
-                <MdClass className="w-12 h-12 bg-white rounded-full px-2" />
+        <div className="flex flex-col w-full font-inter h-full">
+        <div className={`flex flex-col h-full bg-[#D9D9D9] mx-4 rounded-3xl py-8`}>
+            <div className="flex space-x-4 mx-6 lg:px-6 sm:px-7 bg-blue-500 py-4 text-white"
+            style={{borderRadius: '10px 10px 0 0'}}>
+                <MdClass className="w-12 h-12 bg-white text-blue-500 rounded-full px-2" />
                 <span className="font-semibold text-2xl font-inter mt-2">Kelas {dataKelas.kelas + " " + dataKelas.namajurusan + " " + dataKelas.sub_jurusan}</span>
             </div>
-            <div className="flex justify-between mt-14 lg:px-10 sm:px-8 items-center">
+            <div className="flex justify-between mx-6 py-4 lg:px-10 sm:px-8 bg-white items-center">
                 <div className="relative">
                     <div className="flex space-x-4 items-center">
                         <input type="text" className="rounded-lg outline-1 outline px-4 py-1 text-black placeholder:text-gray-500" placeholder="Wali Kelas" 
@@ -125,36 +126,40 @@ const AdminDetailKelas = () => {
                     <span>Ubah Wali Kelas</span>
                 </button>
             </div>
-            <div className="flex flex-col mt-4">
+            <div className="flex flex-col bg-white mx-6 h-full"
+            style={{borderRadius: '0 0 10px 10px'}}>
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-                <div className="py-2 inline-block min-w-full sm:px-8 lg:px-10">
+                <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
                 <div className="overflow-hidden">
                     <table className="min-w-full cursor-default">
-                    <thead className="">
-                      <tr className="px-3">
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-2 py-2 text-center">
+                    <thead className="bg-blue-500 border border-1 border-gray-400"
+                    style={{borderRadius: '10px 10px 0 0'}}>
+                      <tr className="px-3 text-white">
+                        <th scope="col" className="text-sm font-medium px-2 py-2 text-center">
                           No
                         </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-1 py-2 text-center ">
+                        <th scope="col" className="text-sm font-medium px-1 py-2 text-center ">
                           Nama
                         </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-2 py-2 text-center">
+                        <th scope="col" className="text-sm font-medium px-2 py-2 text-center">
                           Email
                         </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-2 py-2 text-center">
+                        <th scope="col" className="text-sm font-medium px-2 py-2 text-center">
                           No Hp
                         </th>
                       </tr>
                     </thead>
-                        <tbody className="bg-white border-1 rounded-full">
+                        <tbody className="bg-white border-1 border rounded-full">
                         {dataMurid && dataMurid.length > 0 ? (
                             dataMurid.map((dataMurid, index) => (
-                              <tr key={dataMurid.id} className="" style={{ borderRadius: '24px' }}>
+                              <tr key={dataMurid.id} className="" style={{ borderRadius: '24px', border: '1px solid #D9D9D9' }}>
                                 <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                                 <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
                                   <div className="flex flex-row space-x-1 w-24 px-0 mx-auto">
-                                    <img className="w-12 h-12 right-12 mr-4 rounded-full" src={`data:image/png;base64,${dataMurid.bukti}`}
-                                    onError={(e) => (e.target.src = "https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg")} alt="" />
+                                    <div style={{position: 'relative', display: 'inline-block'}}>
+                                        <img className="w-10 h-10 mr-4 rounded-full object-cover" src={`data:image/png;base64,${dataMurid.bukti}`}
+                                        onError={(e) => (e.target.src = "https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg")} alt="" />
+                                    </div>
                                     <span className="items-center mt-3 font-inter font-medium text-sm">{dataMurid.nama}</span>
                                   </div>
                                 </td>

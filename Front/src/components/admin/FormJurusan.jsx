@@ -162,42 +162,23 @@ const FormJurusan = () => {
         })
     };
     
-
-    const handleBack = () => {
-        navTo('/Siskoolbe/Admin/Admin_Jurusan', { replace: true }); 
-    };
-
-
-
     return (
         <>
             {!Wmobile ? (
                 <div className=''>
-                    <form onSubmit={handleSubmit} className="">
-                        <div className='flex space-x-4 '>
-                            <div className='mt-[20px]'>
-                                <GiTrumpetFlag className='text-blue-700 text-[30px] rounded-full ' />
-                            </div>
-                            <div>
-                                <h1 className='font-bold text-2xl mt-4'>Jurusan</h1>
-                            </div>
-                            <div className='mt-[20px]' onClick={handleBack}>
-                                <FaBackspace className='text-2xl ml-[930px]' />
-                            </div>
-                        </div>
-                        <div className={`overflow-y-auto mt-[12px] w-full slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
-                            <div className="flex flex-col " >
-
-                                <div className='flex'>
-                                    <div className='flex mt-4'>
-                                        <div className=''>
-                                            <label >Profile: </label>
+                    <form onSubmit={handleSubmit} className="font-inter">
+                        <div className={`overflow-y-auto mt-[12px] px-8 slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'}`}>
+                            <div className="flex flex-col w-full">
+                                <div className='flex w-full'>
+                                    <div className='flex w-full mt-4'>
+                                        <div className='w-full space-y-2'>
+                                            <label>Foto Jurusan</label>
                                             {showImageUP && (
                                                 <div
                                                     onClick={() => fileInputRef.current.click()} 
                                                     onDrop={handleDrop}
                                                     onDragOver={handleDragOver}
-                                                    className="border-[1px]  w-[530px] justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                    className="border-[1px] w-full justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                     required
                                                 >
                                                     <input
@@ -222,12 +203,10 @@ const FormJurusan = () => {
 
 
                                             {image && (
-                                                <div className='border-[1px] w-[530px] justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                                <div className='border-[1px] w-full justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                                    <IoMdClose onClick={handleDelete} className="text-[red] text-[30px] mr-auto ml-2" />
                                                     <div>
-                                                        <IoMdClose onClick={handleDelete} className="text-[white] text-[30px]  mt-[20px]" />
-                                                        <div>
-                                                            <img src={image} alt="Uploaded" className="w-auto z-0  " />
-                                                        </div>
+                                                        <img src={image} alt="Uploaded" className="w-[500px] z-0  " />
                                                     </div>
                                                 </div>
                                             )}
@@ -236,22 +215,25 @@ const FormJurusan = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex mt-4">
-                                    <div className="mr-4">
-                                        <label htmlFor="kelas">Nama Jurusan:</label>
+                                <div className="flex space-x-2 mt-4">
+                                    <div className="w-full space-y-2">
+                                        <label htmlFor="kelas">Nama Jurusan</label>
                                         <input type="text" id="namaJurusan"
                                             name="namaJurusan"
-                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             value={formData.namaJurusan}
-                                            onChange={handleInputChange} />
+                                            onChange={handleInputChange} 
+                                            placeholder='Masukan Nama Jurusan'/>
                                     </div>
-                                    <div className='mr-4'>
-                                        <label htmlFor="noHp">Urutan Jurusan:</label>
+                                    <div className='w-full space-y-2'>
+                                        <label htmlFor="noHp">Urutan Jurusan</label>
                                         <input type="text" id="urutanJurusan"
                                             name="urutanJurusan"
-                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             value={formData.urutanJurusan}
-                                            onChange={handleInputChange} />
+                                            onChange={handleInputChange} 
+                                            placeholder='Masukan Urutan Jurusan'
+                                            />
                                     </div>
                                 </div>
 

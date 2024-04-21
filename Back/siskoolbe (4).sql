@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Apr 2024 pada 16.35
+-- Waktu pembuatan: 21 Apr 2024 pada 22.30
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -73,7 +73,7 @@ INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar
 (32, 2012321, '2024-04-05', NULL, NULL, 'keterangan', 'mokel', '1712200071658-ikan-mujair-goreng.jpg', 'closed'),
 (33, 2012321, '2024-04-06', '2024-04-05 06:19:10', NULL, NULL, NULL, NULL, 'closed'),
 (36, 2012321, '2024-04-07', NULL, NULL, NULL, NULL, NULL, 'closed'),
-(38, 2012321, '2024-04-18', '2024-04-18 19:39:13', NULL, 'sakit', 'contjho', '1713704576530-image.jpeg', 'closed');
+(38, 2012321, '2024-04-18', '2024-04-18 19:39:13', NULL, '', NULL, NULL, 'open');
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,7 @@ CREATE TABLE `jurusan` (
 --
 
 INSERT INTO `jurusan` (`id`, `namajurusan`, `sub_jurusan`, `gambar`) VALUES
-(15, 'Pengembangan Perangkat Lunak dan Gim', 1, '1711507382196-1711474149565-logo-rpl.png');
+(15, 'Pengembangan Perangkat Lunak dan Gim', 1, '1713730636423-1711507382196-1711474149565-logo-rpl.png');
 
 -- --------------------------------------------------------
 
@@ -206,7 +206,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `idkelas`, `alamat`, `no_hp`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1712417786093-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-06 15:36:26');
+(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-21 19:41:51');
 
 --
 -- Indexes for dumped tables

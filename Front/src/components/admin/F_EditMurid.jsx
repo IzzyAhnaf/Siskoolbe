@@ -259,100 +259,88 @@ const FEditMurid = () => {
 
     };
 
-    const handleBack = () => {
-        navTo('/Siskoolbe/Admin/Admin_Murid', { replace: true });
-    };
-
-
-
     return (
         <>
             {!Wmobile ? (
                 <div className=''>
-                <form onSubmit={handleSubmit} className="">
-                    <div className='flex space-x-4'>
-                        <div className='mt-[20px]'>
-                            <FaUserTie className='text-blue-700 text-[30px] bg-white rounded-full ' />
-                        </div>
-                        <div>
-                            <h1 className='font-bold text-2xl mt-4'>Murid</h1>
-                        </div>
-                        <div className='mt-[20px]' onClick={handleBack}>
-                            <FaBackspace className='text-2xl ml-[930px]' />
-                        </div>
-                    </div>
-                    <div className={`overflow-y-auto mt-[12px] slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
-                        <div className="flex flex-row " >
-                            <div className="mr-4">
-                                <label htmlFor="nik">Nik:</label>
-                                <input type="text" placeholder='Masukan Nik' id="nik" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nik" value={formData.nik} onChange={handleInputChange} />
+                <form onSubmit={handleSubmit} className="font-inter">
+                    <div className={`overflow-y-auto mt-[12px] px-8 slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`}>
+                        <div className="flex w-full space-x-2" >
+                            <div className="w-full">
+                                <label htmlFor="nik">Nik</label>
+                                <input type="text" placeholder='Masukan Nik' id="nik" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nik" value={formData.nik} onChange={handleInputChange} />
                             </div>
-                            <div className="mr-4">
-                                <label htmlFor="nama">Nama:</label>
-                                <input type="text" placeholder='Masukan Nama' id="nama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            <div className="w-full">
+                                <label htmlFor="nama">Nama</label>
+                                <input type="text" placeholder='Masukan Nama' id="nama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     name="nama" value={formData.nama} onChange={handleInputChange} />
                             </div>
                         </div>
-                        <div className="flex flex-row mt-4">
-                            <div className="mr-4">
-                                <label htmlFor="email">Email:</label>
-                                <input type="email" placeholder='Masukan Email' id="email" name="email" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.email} onChange={handleInputChange} autoComplete='off'/>
+                        <div className="flex space-x-2 mt-4">
+                            <div className="w-full">
+                                <label htmlFor="email">Email</label>
+                                <input type="email" placeholder='Masukan Email' id="email" name="email" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.email} onChange={handleInputChange} autoComplete='off'/>
                             </div>
-                            <div className="mr-4">
-                                <label htmlFor="nik">Password:</label>
-                                <input type="password" id="nik" placeholder='Masukan Password' className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="Password" value={formData.Password} onChange={handleInputChange} />
+                            <div className="w-full">
+                                <label htmlFor="nik">Password</label>
+                                <input type="password" id="nik" placeholder='Masukan Password' className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="Password" value={formData.Password} onChange={handleInputChange} />
 
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
-                            <div className="mr-4">
-                                <label htmlFor="alamat">Alamat:</label>
-                                <textarea id="alamat" name="alamat" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        <div className="flex space-x-2  mt-4">
+                            <div className="w-full">
+                                <label htmlFor="alamat">Alamat</label>
+                                <textarea id="alamat" name="alamat" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    rows={4}
+                                    style={{resize: 'none'}}
                                     value={formData.alamat}
                                     onChange={handleInputChange} />
                             </div>
-                            <div className="mr-4">
-                                <label htmlFor="tempatLahir">Tempat Lahir:</label>
-                                <textarea type="text" id="tempatLahir" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[70px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="tempatLahir" value={formData.tempatLahir} onChange={handleInputChange} />
+                            <div className="w-full">
+                                <label htmlFor="tempatLahir">Tempat Lahir</label>
+                                <textarea type="text" id="tempatLahir"
+                                 className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="tempatLahir" value={formData.tempatLahir} onChange={handleInputChange} 
+                                 rows={4}
+                                 style={{resize: 'none'}}/>
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
-                            <div className="mr-4">
-                                <label htmlFor="tanggalLahir">Tanggal Lahir:</label>
-                                <input type="date" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" id="tanggalLahir" name="tanggalLahir" value={formData.tanggalLahir} onChange={handleInputChange} />
+                        <div className="flex space-x-2  mt-4">
+                            <div className="w-full">
+                                <label htmlFor="tanggalLahir">Tanggal Lahir</label>
+                                <input type="date" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" id="tanggalLahir" name="tanggalLahir" value={formData.tanggalLahir} onChange={handleInputChange} />
                             </div>
-                            <div className="mr-4">
-                                <label htmlFor="nis">NIS:</label>
-                                <input type="text" id="nis" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nis" value={formData.nis} onChange={handleInputChange} />
+                            <div className="w-full">
+                                <label htmlFor="nis">NIS</label>
+                                <input type="text" id="nis" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nis" value={formData.nis} onChange={handleInputChange} />
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
-                            <div className="mr-4">
-                                <label htmlFor="nisn">NISN:</label>
-                                <input type="text" id="nisn" name="nisn" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.nisn} onChange={handleInputChange} />
+                        <div className="flex space-x-2  mt-4">
+                            <div className="w-full">
+                                <label htmlFor="nisn">NISN</label>
+                                <input type="text" id="nisn" name="nisn" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.nisn} onChange={handleInputChange} />
                             </div>
-                            <div className="mr-4">
-                                <label htmlFor="jenisKelamin">Jenis Kelamin:</label>
-                                <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
+                            <div className="w-full">
+                                <label htmlFor="jenisKelamin">Jenis Kelamin</label>
+                                <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
                                     <option value="" disabled>Pilih Jenis Kelamin</option>
                                     <option value="laki-laki" selected={formData.jenisKelamin === "Laki-laki"}>Laki-laki</option>
                                     <option value="perempuan" selected={formData.jenisKelamin === "Perempuan"}>Perempuan</option>
                                 </select>
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
-                            <div className="mr-4">
-                                <label htmlFor="agama">Agama:</label>
-                                <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        <div className="flex space-x-2  mt-4">
+                            <div className="w-full">
+                                <label htmlFor="agama">Agama</label>
+                                <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.agama} onChange={handleInputChange}>
                                     <option value="" disabled>Pilih Agama</option>
                                     <option value="muslim" selected={formData.agama === "Muslim"}>Muslim</option>
                                     <option value="non muslim" selected={formData.agama === "Non-Muslim"}>Non Muslim</option>
                                 </select>
                             </div>
-                            <div className="mr-4">
-                                <label htmlFor="jurusan">Jurusan:</label>
-                                <select id="jurusan" name="jurusan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
+                            <div className="w-full">
+                                <label htmlFor="jurusan">Jurusan</label>
+                                <select id="jurusan" name="jurusan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
                                 value={formData.jurusan} onChange={handleInputChange}>
                                     <option value="" disabled>Pilih Jurusan</option>
                                     <option value="To1" selected={formData.selectedJurusan === "Teknik Otomotif-1"}>To1</option>
@@ -370,36 +358,36 @@ const FEditMurid = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="flex flex-row  mt-4">
-                            <div className="mr-4">
-                                <label htmlFor="kelas">Kelas:</label>
-                                <select id="kelas" name="kelas" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.kelas} onChange={handleInputChange}>
+                        <div className="flex space-x-2  mt-4">
+                            <div className="w-full">
+                                <label htmlFor="kelas">Kelas</label>
+                                <select id="kelas" name="kelas" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.kelas} onChange={handleInputChange}>
                                     <option value="">Pilih Kelas</option>
                                     <option value="10" selected={formData.kelas === "10"}>10</option>
                                     <option value="11" selected={formData.kelas === "11"}>11</option>
                                     <option value="12" selected={formData.kelas === "12"}>12</option>
                                 </select>
                             </div>
-                            <div className='mr-4'>
-                                <label htmlFor="noHp">No HP:</label>
+                            <div className='w-full'>
+                                <label htmlFor="noHp">No HP</label>
                                 <input type="text" id="noHp"
                                     name="noHp"
-                                    className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-[530px] h-[40px] pl-[20px] py-1 placeholder:text-[20px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     value={formData.noHp}
                                     onChange={handleInputChange} />
 
 
                             </div>
                         </div>
-                        <div className='flex flex-row mt-4'>
-                            <div className=''>
-                                <label >Profile: </label>
+                        <div className='flex mt-4'>
+                            <div className='w-full'>
+                                <label >Foto Profil </label>
                                 {showImageUP && (
                                     <div
                                         onClick={() => fileInputRef.current.click()} // Memicu klik pada input file saat div diklik
                                         onDrop={handleDrop}
                                         onDragOver={handleDragOver}
-                                        className="border-[1px]  w-[530px] justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="border-[1px] w-full justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         required
                                     >
                                         <input
@@ -424,12 +412,10 @@ const FEditMurid = () => {
 
 
                                 {image && (
-                                    <div className='border-[1px] w-[530px] justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                    <div className='border-[1px] w-full justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                        <IoMdClose onClick={handleDelete} className="text-[red] text-[30px] mr-auto ml-2" />
                                         <div>
-                                            <IoMdClose onClick={handleDelete} className="text-[white] text-[30px]  mt-[20px]" />
-                                            <div>
-                                                <img src={image} alt="Uploaded" className="w-auto z-0  " />
-                                            </div>
+                                            <img src={image} alt="Uploaded" className="w-auto " />
                                         </div>
                                     </div>
                                 )}

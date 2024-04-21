@@ -5,6 +5,7 @@ import ImageUploader from "../../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
 import FormMurid from "../../components/admin/FormMurid";
 import FEditMurid from "../../components/admin/F_EditMurid";
+import { FaBackspace, FaUserTie } from "react-icons/fa";
 
 
 
@@ -12,12 +13,25 @@ const EditMurid = () => {
     const Wmobile = CustomWidth() <= 767;
     const DekstopLow = CustomWidth() < 1366;
     const navTo = useNavigate();
+
+    const handleBack = () => {
+        navTo('/Siskoolbe/Admin/Admin_Murid', { replace: true });
+    };
     return (
         <>
             {!Wmobile ? (
-
-                <div className={`flex flex-col bg-[#D9D9D9] rounded-xl mx-4 ${DekstopLow ? 'p-4' : 'w-full'} `}>
-                    <div className="flex flex-col items-center w-full my-auto ">
+                <div className="flex flex-col rounded-xl mx-4 w-full">
+                    <div className="bg-blue-500 p-4 w-full flex justify-between items-center"
+                    style={{borderRadius: '10px 10px 0 0'}}>
+                        <div className="flex space-x-2 items-center">
+                            <FaUserTie className='text-white text-[24px] rounded-full' />
+                            <span className="text-white font-semibold text-xl">Edit Murid</span>
+                        </div>
+                        <div>
+                            <FaBackspace className='text-white text-[24px] rounded-full' onClick={handleBack} />
+                        </div>
+                    </div>
+                    <div className="w-full h-full overflow-y-auto hide-scroll border border-1">
                         <FEditMurid />
                     </div>
                 </div>

@@ -1875,7 +1875,7 @@ fastify.get('/getKelas_Admin/:id', async (request, reply) => {
     const id = request.params.id;
     try {
         const resp = await new Promise((resolve, reject) => {
-            db.query('SELECT kelas.id AS id, kelas.jurusanid, jurusan.namajurusan, jurusan.sub_jurusan, kelas.kelas, guru.nama FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id LEFT JOIN guru ON kelas.idguru = guru.id WHERE kelas.jurusanid = ?', [id], (err, result) => {
+            db.query('SELECT kelas.id AS id, kelas.jurusanid, jurusan.namajurusan, jurusan.sub_jurusan, kelas.kelas, guru.nama AS namaguru FROM kelas JOIN jurusan ON kelas.jurusanid = jurusan.id LEFT JOIN guru ON kelas.idguru = guru.id  WHERE kelas.jurusanid = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
