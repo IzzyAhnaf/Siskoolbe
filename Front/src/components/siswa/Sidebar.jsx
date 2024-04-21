@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { Link, useNavigate, useLocation, matchPath } from "react-router-dom"
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { TbCalendarTime } from "react-icons/tb";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
@@ -30,9 +30,9 @@ const Sidebar = ({nama, gambar_profil}) => {
 
     useEffect(() => {
         const { pathname } = location;
-        if (pathname.startsWith("/Siskoolbe/Siswa")) SelectSidebars(0);
-        else if (pathname.startsWith("/Siskoolbe/Siswa/Profile")) SelectSidebars(1);
-        else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(2);
+        if (matchPath("/Siskoolbe/Siswa", pathname)) SelectSidebars(0);
+        else if (matchPath("/Siskoolbe/Siswa/Profile", pathname)) SelectSidebars(1);
+        else if (matchPath("/Siskoolbe/AboutUs", pathname)) SelectSidebars(2);
     }, [location])
 
     return (

@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, matchPath, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react";
 import CustomWidth from "../../CustomWidth";
 import { PiScrollLight, PiScrollFill } from "react-icons/pi";
@@ -26,9 +26,9 @@ const SidebarGuru = ({nama, gambar_profil}) => {
 
     useEffect(() => {
         const { pathname } = location;
-        if (pathname.startsWith("/Siskoolbe/Guru")) SelectSidebars(0);
-        else if (pathname.startsWith("/Siskoolbe/Guru/ProfileGuru")) SelectSidebars(1);
-        else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(2);
+        if (matchPath("/Siskoolbe/Guru", pathname)) SelectSidebars(0);
+        else if (matchPath("/Siskoolbe/Guru/Profile", pathname)) SelectSidebars(1);
+        else if (matchPath("/Siskoolbe/AboutUs", pathname)) SelectSidebars(2);
     }, [])
 
     return (

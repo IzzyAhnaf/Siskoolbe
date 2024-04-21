@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { Link, useNavigate, useLocation, matchPath } from "react-router-dom"
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { TbCalendarTime } from "react-icons/tb";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
@@ -6,6 +6,7 @@ import CustomWidth from "../../CustomWidth";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoIosHome } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { PiScrollFill, PiScrollLight } from "react-icons/pi";
 
 const Mnvbar = () => {
     const [SelectNavbar, setNavbar] = useState(0);
@@ -18,10 +19,14 @@ const Mnvbar = () => {
 
     useEffect(() => {
         const { pathname } = location;
-        if (pathname.startsWith('/Siskoolbe/Siswa')) SelectSidebars(0);
-        else if (pathname.startsWith('/Siskoolbe/Siswa/Profile')) SelectSidebars(1);
-        else if (pathname.startsWith('/Siskoolbe/AboutUs')) SelectSidebars(1);
-    }, [])
+        if (matchPath('/Siskoolbe/Siswa', pathname)) SelectSidebars(0);
+        else if (matchPath('/Siskoolbe/Siswa/Profile', pathname)) SelectSidebars(1);
+        else if (matchPath('/Siskoolbe/AboutUs', pathname)) {
+            // SelectSidebars(1)
+            SelectSidebars(2)
+        }
+        else if(matchPath('/Siskoolbe/Siswa/Profset', pathname)) SelectSidebars(1);
+    }, [location])
 
     return (
         <>
@@ -31,35 +36,35 @@ const Mnvbar = () => {
                 </div>
             ) : (
                 <>
-                    <nav className="flex fixed items-center bottom-0 bg-[#000000] dark:bg-opacity-20 w-full ml-[-10px]">
-                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 dark:text-black
-                        ${SelectNavbar === 0 ? 'bg-[#1E6CB1] bg-opacity-50' : ''}`}
+                    <nav className="flex fixed bottom-0 left-0 w-full bg-[#D9D9D9]"
+                    style={{borderTop: '1px solid #000000'}}>
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 m-3
+                        ${SelectNavbar === 0 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
+                        `}
                             to="/Siskoolbe/Siswa"
                             onClick={() => SelectSidebars(0)}>
                             {SelectNavbar === 0 ? <AiFillHome className="w-5 h-5" /> : <AiOutlineHome className="w-5 h-5" />}
-                            <span className="mx-4 font-normal font-inter ">Home</span>
+                            <span className={`mx-2 text-[14px] font-normal font-inter`}>Home</span>
                         </Link>
 
-                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 dark:text-black
-                        ${SelectNavbar === 1 ? 'bg-[#1E6CB1]' : ''}`}
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 m-3
+                        ${SelectNavbar === 1 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
+                        `}
                             to="/Siskoolbe/Siswa/Profile"
                             onClick={() => SelectSidebars(1)}>
-                            <svg className="w-5 h-5 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentcolor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentcolor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <span className="mx-4 font-normal font-inter">Profile</span>
+                            {SelectNavbar === 1 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
+                            <span className="mx-2 text-[14px] font-normal font-inter">Profile</span>
                         </Link>
-                        {/* <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 dark:text-black
-                        ${SelectNavbar === 1 ? 'bg-[#1E6CB1]' : ''}`}
-                            to="/Siskoolbe/Siswa/Profile"
-                            onClick={() => SelectSidebars(1)}>
-                            <svg className="w-5 h-5 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentcolor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentcolor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <span className="mx-4 font-normal font-inter">Logout</span>
-                        </Link> */}
+
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 m-3
+                        ${SelectNavbar === 2 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
+                        `}
+                            to="/Siskoolbe/AboutUs"
+                            onClick={() => SelectSidebars(2)}>
+                            {SelectNavbar === 2 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
+                            <span className="mx-2 text-[14px] font-normal font-inter">About Us</span>
+                        </Link>
+                        
                     </nav>
 
                 </>

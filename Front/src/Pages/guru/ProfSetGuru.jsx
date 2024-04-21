@@ -7,6 +7,7 @@ import _debounce from 'lodash/debounce';
 import api from "../../api";
 import base64ToFile from '../../base64toFile';
 import Swal from 'sweetalert2';
+import CustomWidth from '../../CustomWidth';
 
 
 const ProfSetGr = ({getProfileImage, setSelectedImage}) => {
@@ -27,6 +28,8 @@ const ProfSetGr = ({getProfileImage, setSelectedImage}) => {
     const [nama, setNama] = useState('')
 
     const navTo = useNavigate();
+
+    const WMobile = CustomWidth() <= 767;
 
     const update = async () => {
         try{
@@ -137,13 +140,18 @@ const ProfSetGr = ({getProfileImage, setSelectedImage}) => {
         }));
     }
 
+
     useEffect(() => {
-        getData();
-    }, [nama])
+        if(!WMobile){
+            navTo('/Siskoolbe/Guru/ProfileGuru', { replace: true })
+        }else{
+            getData();
+        }
+    }, [])
 
     return (
         <>
-           <div className="flex flex-col w-full font-inter">
+           <div className="flex flex-col w-full font-inter overflow-y-auto">
                 <IoMdArrowBack className="w-6 h-6 absolute top-0 left-0 m-4" onClick={() => navTo('/Siskoolbe/Guru/ProfileGuru', { replace: true })}/>
 
                 <div className="border border-1 mt-12 bg-blue-500 p-2"
@@ -167,7 +175,7 @@ const ProfSetGr = ({getProfileImage, setSelectedImage}) => {
                 style={{borderRadius: '10px 10px 0 0'}}>
                     <h1 className='font-semibold text-md p-3 text-white'>Data Diri</h1>
                 </div>
-                <div className="flex flex-col w-full h-full rounded-2xl bg-white pb-8 overflow-y-auto hidden-scroll mb-10 text-white border-1 border"
+                <div className="flex flex-col w-full h-full bg-white pb-8 overflow-y-auto hidden-scroll mb-20 border-1 border"
                 style={{borderRadius: '0 0 10px 10px'}}>
                     <FormProfGuru nama={formData.nama} alamat={formData.alamat} no_hp={formData.no_hp} 
                     jenis_kelamin={formData.jenis_kelamin} agama={formData.agama} tempat_lahir={formData.tempat_lahir} tgl_lahir={formData.tgl_lahir}

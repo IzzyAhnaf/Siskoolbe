@@ -189,15 +189,16 @@ const ProfileGuru = ({getProfileImage, setSelectedImage}) => {
             ) : (
                 <>
                     <div className="flex flex-col items-center w-full h-[88%] mx-[5px] font-inter text-white">
-                        <div className=" bg-blue-500 border-border-1 w-full p-3"
+                        <div className=" bg-blue-500 border border-1 w-full p-3 border-gray-400"
                         style={{borderRadius: '10px 10px 0 0'}}>
                             <span className="text-lg font-semibold text-white">
                                 Profil
                             </span>
                         </div>
-                        <div className="flex flex-col items-center border border-1/2 border-gray-400 w-full h-full text-black py-4"
+                        <div className="flex flex-col items-center border border-1
+                        border-gray-400 w-full h-full text-black py-4"
                         style={{borderRadius: '0 0 10px 10px'}}>
-                            <img src={getProfileImage} className="object-cover w-28 h-28 rounded-full mt-8" alt="" />
+                            <img src={getProfileImage} className="object-cover w-28 h-28 rounded-full" alt="" />
                             <h4 className="text-2xl font-bold mt-3">{formData.nama}</h4>
                             <h4 className="text-sm mt-1 hover:underline" 
                             onClick={''}>{formData.email}</h4>

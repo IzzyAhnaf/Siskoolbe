@@ -13,12 +13,19 @@ import Swal from "sweetalert2";
 const ProfSet = ({getProfileImage, setSelectedImage}) => {
 
 
-
     const [formData, setFormData] = useState({
         nama: '',
         email: '',
         alamat: '',
+        nik: '',
+        nis: '',
+        nisn: '',
         no_hp: '',
+        kelas: '',
+        jenis_kelamin: '',
+        agama: '',
+        tempat_lahir: '',
+        tgl_lahir: '',
     });
 
     const getData = _debounce(async () => {
@@ -29,7 +36,16 @@ const ProfSet = ({getProfileImage, setSelectedImage}) => {
                     nama: res.data[0].nama,
                     email: res.data[0].email,
                     alamat: res.data[0].alamat,
+                    nik: res.data[0].nik,
+                    nis: res.data[0].nis,
+                    nisn: res.data[0].nisn,
                     no_hp: res.data[0].no_hp,
+                    kelas: res.data[0].kelas,
+                    jenis_kelamin: res.data[0].jenis_kelamin,
+                    agama: res.data[0].agama,
+                    tempat_lahir: res.data[0].tempat_lahir,
+                    tgl_lahir: res.data[0].tgl_lahir,
+                    gambar_profil: 'data:image/png;base64,' + res.data[0].gambar_profil,
                     file: file
                 })
             })
@@ -37,12 +53,6 @@ const ProfSet = ({getProfileImage, setSelectedImage}) => {
             console.log(error);
         }
     }, 50)
-
-    const [isCardVisible, setCardVisible] = useState(false);
-
-    const toggleCard = () => {
-        setCardVisible(!isCardVisible);
-    };
 
     const handleOpenFileExplorer = (event) => {
         const input = document.createElement('input');
@@ -95,12 +105,12 @@ const ProfSet = ({getProfileImage, setSelectedImage}) => {
         }));
     };
 
-    const update = async ({ nama, alamat, no_hp }) => {
+    const update = async () => {
         try {
             const data = {
-                nama: nama,
-                alamat: alamat,
-                no_hp: no_hp,
+                nama: formData.nama,
+                alamat: formData.alamat,
+                no_hp: formData.no_hp,
             }
     
             const encoded = JSON.stringify(data);
@@ -111,7 +121,9 @@ const ProfSet = ({getProfileImage, setSelectedImage}) => {
                     'Berhasil',
                     'Data Berhasil diubah',
                     'success'
-                );
+                ).then(() => {
+                    getData();
+                });
             }
         } catch (err) {
             Swal.fire(
@@ -135,9 +147,15 @@ const ProfSet = ({getProfileImage, setSelectedImage}) => {
 
     return (
         <>    
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full font-inter overflow-y-auto">
                 <IoMdArrowBack className="w-6 h-6 absolute top-0 left-0 m-4" onClick={() => navTo('/Siskoolbe/Siswa/Profile', { replace: true })}/>
-                <div className="flex justify-start items-center px-2 space-x-8 mt-8">
+
+                <div className="border border-1 mt-12 bg-blue-500 p-2"
+                style={{borderRadius: '10px 10px 0 0'}}>
+                    <span className="text-md p-3 text-white font-semibold">Foto Profil</span>
+                </div>
+                <div className="flex justify-start items-center p-2 space-x-8 border border-1"
+                style={{borderRadius: '0 0 10px 10px'}}>
                     <img onClick={handleOpenFileExplorer} className="w-20 h-20 mt-2 object-cover rounded-full" 
                     src={getProfileImage}
                     onError={(e) => e.target.src = 'https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg'}
@@ -147,11 +165,20 @@ const ProfSet = ({getProfileImage, setSelectedImage}) => {
                         <span className="font-inter text-md mt-1">Pelajar</span>
                     </div>
                 </div>
-                <div className="flex flex-col w-full h-full mb-20 rounded-2xl bg-[#1E6CB1] pb-8 mt-4 text-white">
-                    <Form nama={formData.nama} alamat={formData.alamat} no_hp={formData.no_hp} handleInputChange={handleInputChange}  
+
+                <div className='justify-center items-center mt-4 bg-blue-500 border border-1'
+                style={{borderRadius: '10px 10px 0 0'}}>
+                    <h1 className='font-semibold text-md p-3 text-white'>Data Diri</h1>
+                </div>
+                <div className="flex flex-col w-full h-full overflow-y-auto hidden-scroll mb-20 bg-white pb-8 border border-1"
+                style={{borderRadius: '0 0 10px 10px'}}>
+                    <Form nama={formData.nama} alamat={formData.alamat} no_hp={formData.no_hp} 
+                    jenis_kelamin={formData.jenis_kelamin} kelas={formData.kelas} nis={formData.nis}
+                    nisn={formData.nisn} email={formData.email} nik={formData.nik}
+                    handleInputChange={handleInputChange}  
                     /> 
                     <button className="w-[80%] rounded-lg border border-1 border-green-500 text-green-500 bg-white hover:text-white hover:bg-green-500 mx-auto mt-auto py-1"
-                    onClick={() => update(formData.nama, formData.alamat, formData.no_hp)}>
+                    onClick={() => update()}>
                         Ubah
                     </button>
                 </div>

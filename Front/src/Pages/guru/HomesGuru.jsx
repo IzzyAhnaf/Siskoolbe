@@ -76,7 +76,7 @@ const HomesGuru = ({nama, token, WMobile, DekstopLow}) => {
             <span className="lg:text-lg md:text-md sm:text-sm font-medium font-inter text-white">Absensi {DateNow()}</span>
             <span className="lg:text-lg md:text-md sm:text-sm my-2 font-medium font-inter text-white bg-red-600 py-2 px-12
             rounded-lg hover:cursor-pointer"
-            onClick={() => navTo('/Siskoolbe/Guru/Izin-Sakit')}>Ajukan Izin</span>
+            onClick={() => navTo('/Siskoolbe/Guru/IzinGuru')}>Ajukan Izin</span>
           </div>
 
           <div className={`overflow-y-auto flex flex-col slim-scroll  ${DekstopLow ? 'h-[280px]' : 'h-[90%]'}`}>

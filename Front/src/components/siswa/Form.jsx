@@ -170,14 +170,9 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                 </form>
             ) : (
                 <>
-                    <form className="w-full">
-                        <div className='justify-center items-center'>
-                            <h1 className='font-bold text-[20px] mt-4 text-center'>Ubah Profil</h1>
-                        </div>
+                    <form className="w-full font-inter">
                             <div className="mb-4 flex flex-col justify-center items-center space-y-2 px-8">
-
                                 <div className='mt-4 w-full'>
-
                                     <label htmlFor="nama" className="block text-sm ">
                                         nama
                                     </label>
@@ -220,6 +215,86 @@ const Form = ({nama, email, alamat, nik, nis, nisn, no_hp, kelas, jenis_kelamin,
                                         focus:ring-0 sm:text-sm sm:leading-6 bg-white px-4"
                                         autoComplete='none'
                                         required
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="nik" className="block text-sm ">
+                                        Email
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="email"
+                                        name="email"
+                                        value={email}
+                                        className="flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                        no-InDecrement"
+                                        autoComplete='none'
+                                        disabled
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="nik" className="block text-sm ">
+                                        NIK
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="nik"
+                                        name="nik"
+                                        value={nik}
+                                        className="flex border-black rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                        no-InDecrement"
+                                        autoComplete='none'
+                                        disabled
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="nis" className="block text-sm ">
+                                        NIS
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="nis"
+                                        name="nis"
+                                        value={nis}
+                                        className="flex rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                        no-InDecrement"
+                                        autoComplete='none'
+                                        disabled
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="nisn" className="block text-sm ">
+                                        NISN
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="nisn"
+                                        name="nisn"
+                                        value={nisn}
+                                        className="flex rounded-md bg-gray-200  px-2 py-2  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full
+                                        no-InDecrement"
+                                        autoComplete='none'
+                                        disabled
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="" className="block text-sm">
+                                        Kelas
+                                    </label>
+                                    <input type="text"
+                                    className='flex rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                    disabled
+                                    value={kelas}
+                                    />
+                                </div>
+                                <div className='w-full'>
+                                    <label htmlFor="" className="block text-sm ">
+                                        Jenis Kelamin
+                                    </label>
+                                    <input type="text"
+                                    className='flex rounded-md bg-gray-200 px-2 py-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full' 
+                                    disabled
+                                    value={jenis_kelamin}
                                     />
                                 </div>
                             </div>

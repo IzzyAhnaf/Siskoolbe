@@ -216,7 +216,7 @@ const FormProfGuru = ({nama, email, alamat, nik, no_hp, jenis_kelamin, tempat_la
                                     />
                                 </div>
                                 <div className='w-full'>
-                                <label htmlFor="nik" className="block text-sm ">
+                                    <label htmlFor="nik" className="block text-sm ">
                                         Email
                                     </label>
                                     <input
