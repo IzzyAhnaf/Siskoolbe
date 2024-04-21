@@ -42,8 +42,8 @@ const Sidebar = ({nama, gambar_profil}) => {
                 <h4 className="mx-2 mt-2 font-medium text-gray-100 dark:text-gray-200">{nama}</h4>
                 <p className="mx-2 mt-1 text-sm font-medium text-gray-100 dark:text-gray-400">Murid</p>
             </div>
-            <div className={`flex space-y-2 mt-[8px] ${!DekstopLow ? '' : 'overflow-y-scroll hide-scroll'}`}>
-                <nav className="space-y-2">
+            <div className={`flex space-y-2 mt-[8px] ${!DekstopLow ? '' : 'overflow-y-scroll hide-scroll'} h-full`}>
+                <nav className="space-y-2 relative h-full">
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-5 text-gray-100  
                                 ${SelectSidebar === 0 ? 'bg-opacity-50 bg-gray-100' : ''}
                                 rounded-lg dark:text-gray-100 hover:bg-gray-300 hover:bg-opacity-50 hover:text-gray-100`}
@@ -76,7 +76,8 @@ const Sidebar = ({nama, gambar_profil}) => {
                     <Link className={`flex flex-col items-center space-y-2 px-4 py-2 mt-2 text-gray-100
                     rounded-lg dark:text-gray-100 
                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`} 
-                        onClick={() => {Logout()}}>
+                        onClick={() => {Logout()}}
+                        style={{position: 'absolute', bottom: '10px'}}>
                         {SelectSidebar === 3 ? <ImExit className=" w-5 h-5 " /> : <ImExit className="w-5 h-5" />}
                         <span className="mx-2 font-small text-center font-inter">Log Out</span>
                     </Link>

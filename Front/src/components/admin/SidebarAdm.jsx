@@ -31,11 +31,12 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
 
     useEffect(() => {
         const { pathname } = location;
-        if (pathname.startsWith("/Siskoolbe/Admin")) SelectSidebars(0);
-        else if (pathname.startsWith("/Siskoolbe/Admin/Admin_Guru")) SelectSidebars(1);
-        else if (pathname.startsWith("/Siskoolbe/Admin/Admin_Murid")) SelectSidebars(2);
-        else if (pathname.startsWith("/Siskoolbe/Admin/Admin_Jurusan")) SelectSidebars(3);
-        else if (pathname.startsWith("/Siskoolbe/AboutUs")) SelectSidebars(4);
+        if (matchPath("/Siskoolbe/Admin", pathname)) SelectSidebars(0);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Guru", pathname)) SelectSidebars(1);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Murid", pathname)) SelectSidebars(2);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Kelas", pathname)) SelectSidebars(3);
+        else if (matchPath("/Siskoolbe/Admin/Admin_Jurusan", pathname)) SelectSidebars(3);
+        else if (matchPath("/Siskoolbe/AboutUs", pathname)) SelectSidebars(4);
 
         const matchDetailKelas = matchPath("/Siskoolbe/Admin/Admin_DetailKelas/:id", pathname);
 
@@ -45,7 +46,7 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
             SelectSidebars(3);
         }
 
-    }, [])
+    }, [location])
 
     return (
         <aside className={`flex flex-col px-4 py-8 rounded-xl bg-sky-700`}>
