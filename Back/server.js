@@ -982,6 +982,85 @@ fastify.post('/editguruProfileImage/:email', async (request, reply) => {
     }
 })
 
+fastify.get('/CheckIzinGuru', async (request, reply) => {
+    const token  = request.headers.authorization;
+    if(!token){
+        return reply.status(401).send({ message: 'Token not found' });
+    }
+
+    let decoded;
+    try{
+        const decoded = jwt.verify(token, 'secret');
+        const Exist = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM `absensiguru` WHERE status = "open" ORDER BY `tanggal` DESC LIMIT 1', (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+        if(Exist.length > 0){
+            return reply.status(200).send({ message: Exist });
+        }else{
+            return reply.status(404).send({ message: 'Not found' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/IzinGuru', async (request, reply) => {
+    const token = request.headers.authorization;
+    const data = request.headers.data;
+    const { izinType, alasan } = JSON.parse(data);
+    const file = await request.file();
+
+    if(!token){
+        return reply.status(401).send({ message: 'Token not found' });
+    }
+
+    let decoded;
+    try{
+        decoded = jwt.verify(token, 'secret');
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Guru/Izin/');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        const SelectidAbsensi = await new Promise((resolve, reject) => {
+            db.query('SELECT id FROM `absensiguru` ORDER BY `tanggal` DESC LIMIT 1', (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        const idAbsen = SelectidAbsensi[0].id;
+
+        const IzinUpdate = await new Promise((resolve, reject) => {
+            db.query('UPDATE absensiguru SET izin = ?, detail_izin = ?, foto_izin_absensi = ?, status = ? WHERE id = ?', [`${izinType}`, `${alasan}`, `${timestamp}-${file.filename}`, `closed`, idAbsen], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(IzinUpdate.affectedRows > 0){
+            await pipeline(file.file, fs.createWriteStream(filepath));
+            return reply.status(200).send({ message: 'Success' });
+        }else{
+            return reply.status(404).send({ message: 'Not found' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
 // Admin
 fastify.get('/admin', async (request, reply) => {
     try {

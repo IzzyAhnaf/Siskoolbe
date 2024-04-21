@@ -6,6 +6,7 @@ import '../Styling.css'; // Impor CSS yang mengimpor font Inter
 import api from '../../api';
 import _debounce from 'lodash/debounce';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function IzinForm({navTo}) {
     const [formData, setFormData] = useState({
@@ -156,8 +157,10 @@ function IzinForm({navTo}) {
     return (
         <>
             {!WMobile ? (
-                <div className={`flex flex-col items-center justify-center w-full slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'} pb-[20px]`} onDragOver={handleDragOver} onDrop={handleDrop}>
-                    <form onSubmit={handleSubmit} className="inter-font">
+                <div className={`flex flex-col items-center w-full pb-5 bg-white font-inter`} 
+                onDragOver={handleDragOver} onDrop={handleDrop}
+                style={{borderRadius: '0 0 10px 10px'}}>
+                    <form onSubmit={handleSubmit} className="inter-font mt-4 w-full px-8">
                         {/* Form elements */}
                         <div className='w-full'>
                             <label className='text-[20px] font-bold' >
@@ -169,7 +172,8 @@ function IzinForm({navTo}) {
                                 value={formData.izinType}
                                 onChange={handleInputChange}
                                 placeholder='Pilih Izin'
-                                className="block flex-1 border-[1px] px-4 w-full py-2 border-black rounded-md bg-transparent text-gray-900  placeholder:text-gray-400 focus:ring-2 sm:text-[20px] sm:leading-4"
+                                className="block flex-1 border-[1px] 
+                                px-4 w-full py-3 border-black rounded-md bg-transparent text-gray-900  placeholder:text-gray-400 focus:ring-2 sm:text-[20px] sm:leading-4"
                                 required
                             >
                                 <option className='ml-[20px]' value="">Pilih izin</option>
@@ -186,7 +190,11 @@ function IzinForm({navTo}) {
                                 id="alasan"
                                 value={formData.alasan}
                                 onChange={handleInputChange}
-                                className="flex border-[1px] slim-scroll px-4 w-full py-4 border-black rounded-md bg-transparent  text-gray-900 placeholder:text-gray-400 focus:ring-0  sm:text-[20px] sm:leading-6"
+                                placeholder='Masukkan Alasan'
+                                rows={4}
+                                className="flex border-[1px] slim-scroll px-4 
+                                w-full py-4 border-black rounded-md bg-transparent
+                                text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-[20px] sm:leading-6"
                                 style={{resize: 'none'}}
                                 required
                             />
@@ -201,7 +209,8 @@ function IzinForm({navTo}) {
                                     onClick={() => fileInputRef.current.click()} 
                                     onDrop={handleDrop}
                                     onDragOver={handleDragOver}
-                                    className="border-[1px] w-[1050px] justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="border-[1px] 
+                                    w-full justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 >
                                     <input
@@ -226,32 +235,34 @@ function IzinForm({navTo}) {
 
 
                             {image && (
-                                <div className='border-[1px] w-[1050px] justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                <div className='border-[1px] w-full justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                    <IoMdClose onClick={handleDelete} className="text-[red] text-[30px] mr-auto ml-2" />
                                     <img src={image} alt="Uploaded" className="w-[80%] mt-[20px]" />
                                     <div className="text-[20px]">{formData.imageName}</div> {/* Menampilkan nama file */}
-                                    <IoMdClose onClick={handleDelete} className="text-[red] text-[30px]" />
                                 </div>
                             )}
                         </div>
 
-                        <button type='submit' className=' border-outline border-[1px] border-blue-700 rounded-lg mt-[20px] h-[50px] w-[1050px] text-[#1E6CB1]'> upload </button>
+                        <button type='submit' className=' border-outline border-[1px] border-blue-700 rounded-lg mt-[20px] 
+                        py-2 w-full text-[#1E6CB1]'> upload </button>
                     </form>
                 </div >
             ) : (
                 <>
-                    <div className={` pl-[50px] ${WMobile ? 'overflow-y-auto mt-[12px] slim-scroll t-[200px] h-[400px]  pb-[20px]' : DekstopLow ? 'overflow-y-auto slim-scroll h-96' : ''}`}
+                    <div className={`w-full flex justify-center`}
                         onDragOver={handleDragOver} onDrop={handleDrop}>
-                        <form onSubmit={handleSubmit} className="inter-font">
-                            <div>
-                                <label className='text-[20px] font-bold' >
-                                    Izin:
+                        <form onSubmit={handleSubmit} className="inter-font w-full px-4 mt-2">
+                            <div className='space-y-1'>
+                                <label className='text-[16px] font-bold' >
+                                    Tipe Izin:
                                 </label>
                                 <select
                                     name="izinType"
                                     id="izinType"
                                     value={formData.izinType}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] w-[250px] h-[35px]  border-black rounded-md bg-transparent    text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-[1px] 
+                                    w-full py-2 px-2 border-black rounded-md bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 >
                                     <option value="">Pilih jenis izin</option>
@@ -259,22 +270,9 @@ function IzinForm({navTo}) {
                                     <option value="Izin lainya">Izin lainya</option>
                                 </select>
                             </div>
-                            <div className='mt-[5px]'>
-                                <label className='text-[20px] font-bold'>
-                                    Tanggal Izin:
-                                </label>
-                                <input
-                                    type="date"
-                                    name="tanggalIzin"
-                                    id="tanggalIzin"
-                                    value={formData.tanggalIzin}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px]  w-[250px] h-[35px]  border-black rounded-md bg-transparent    text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    required
-                                />
-                            </div>
-                            <div className='mt-[5px]'>
-                                <label className='text-[20px] font-bold'>
+                            
+                            <div className='mt-[5px] space-y-1'>
+                                <label className='text-[16px] font-bold'>
                                     Alasan:
                                 </label>
                                 <textarea
@@ -282,12 +280,15 @@ function IzinForm({navTo}) {
                                     id="alasan"
                                     value={formData.alasan}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-[1px]  w-[250px] h-[35px]  border-black rounded-md bg-transparent    text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    rows="4"
+                                    style={{ resize: 'none' }}
+                                    className="block flex-1 border-[1px] 
+                                    w-full py-2 px-2 border-black rounded-md bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 />
                             </div>
-                            <div className='mt-[5px]'>
-                                <label className='text-[20px] \ font-bold'>
+                            <div className='mt-[5px] space-y-1'>
+                                <label className='text-[16px] font-bold'>
                                     Bukti:
                                 </label>
                             </div>
@@ -296,7 +297,7 @@ function IzinForm({navTo}) {
                                     onClick={() => fileInputRef.current.click()} // Memicu klik pada input file saat div diklik
                                     onDrop={handleDrop}
                                     onDragOver={handleDragOver}
-                                    className="border-[1px] w-[250px] justify-center flex border-black rounded-md bg-transparent h-[80px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="border-[1px] w-full justify-center flex border-black rounded-md bg-transparent h-[80px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 >
                                     <input
@@ -321,14 +322,15 @@ function IzinForm({navTo}) {
 
 
                             {image && (
-                                <div className='border-[1px] w-[250px] justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                <div className='border-[1px] w-full justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
                                     <img src={image} alt="Uploaded" className="w-[80%] mt-[20px]" />
                                     <div className="text-[20px]">{formData.imageName}</div> {/* Menampilkan nama file */}
                                     <IoMdClose onClick={handleDelete} className="text-[red] text-[30px]" />
                                 </div>
                             )}
 
-                            <button type='submit' className=' border-outline mb-[20px] border-[1px] border-blue-700 flex flex-col justify-center items-center  rounded-lg mt-[20px] h-[50px] w-[250px] text-[#1E6CB1]'> upload </button>
+                            <button type='submit' className=' border-outline mb-[20px] border-[1px] border-blue-700 flex flex-col justify-center items-center rounded-lg mt-[20px] 
+                            py-2 w-full text-[#1E6CB1]'> upload </button>
                         </form>
                     </div>
                 </>

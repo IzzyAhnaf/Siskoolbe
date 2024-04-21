@@ -225,7 +225,7 @@ const Profile = ({getProfileImage, setSelectedImage}) => {
                                 </div>
                             </button>
 
-                            <button className="bg-white mt-[90px] w-60 h-15 py-2 rounded-lg text-red-800 hover:text-white hover:bg-red-800 border-2 border-red-800" 
+                            <button className="bg-white mt-8 w-60 h-15 py-2 rounded-lg text-red-800 hover:text-white hover:bg-red-800 border-2 border-red-800" 
                             onClick={() => logout()}>
                                 <div className=" justify-center items-center flex relative">
                                     <h1 className="font-bold">Keluar</h1>

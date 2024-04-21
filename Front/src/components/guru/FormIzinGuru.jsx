@@ -3,8 +3,10 @@ import CustomWidth from '../../CustomWidth';
 import { IoMdClose } from "react-icons/io";
 import { BiImageAlt } from "react-icons/bi";
 import '../Styling.css'; // Impor CSS yang mengimpor font Inter
+import Swal from 'sweetalert2';
+import api from '../../api';
 
-function IzinFormGuru() {
+function IzinFormGuru({ navTo }) {
     const [formData, setFormData] = useState({
         izinType: '',
         tanggalIzin: '',
@@ -100,9 +102,45 @@ function IzinFormGuru() {
     };
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        const token  = sessionStorage.getItem("token");
+        const imageData = new FormData();
+        imageData.append('image', formData.bukti);
+
+        const data = {
+            izinType: formData.izinType,
+            alasan: formData.alasan
+        };
+        
+        try{
+            await api.post('IzinGuru', imageData, {
+                headers: {
+                    'Authorization': `${token}`,
+                    data: JSON.stringify(data),
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((res) => {
+                if(res.status === 200){
+                    Swal.fire(
+                        'Berhasil',
+                        'Izin Berhasil',
+                        'success'
+                    ).then(() => {
+                        navTo('/Siskoolbe/Guru', { replace: true });
+                    })
+                }
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire(
+                    'Gagal',
+                    'Izin Gagal',
+                    'error'
+                )
+            })
+        }catch(err){
+            console.log(err);
+        }
     };
 
 
@@ -138,21 +176,6 @@ function IzinFormGuru() {
                         </div>
                         <div className='mt-[20px]'>
                             <label className='text-[20px] font-bold'>
-                                Tanggal Izin:
-                            </label>
-                            <input
-                                type="date"
-                                name="tanggalIzin"
-                                id="tanggalIzin"
-                                value={formData.tanggalIzin}
-                                onChange={handleInputChange}
-                                className="block flex-1 border-[1px]
-                                w-full py-3 border-black rounded-md bg-transparent px-4 text-gray-900 placeholder:text-gray-400 focus:ring-0  sm:text-[20px] sm:leading-6"
-                                required
-                            />
-                        </div>
-                        <div className='mt-[20px]'>
-                            <label className='text-[20px] font-bold'>
                                 Alasan:
                             </label>
                             <textarea
@@ -164,11 +187,11 @@ function IzinFormGuru() {
                                 rows={4}
                                 style={{resize: 'none'}}
                                 className="flex border-[1px] px-4
-                                w-full py-2 border-black rounded-md bg-transparent  text-gray-900 placeholder:text-gray-400 focus:ring-0  sm:text-[20px] sm:leading-6"
+                                w-full py-2 slim-scroll border-black rounded-md bg-transparent
+                                text-gray-900 placeholder:text-gray-400 focus:ring-0  sm:text-[20px] sm:leading-6"
                                 required
                             />
                         </div>
-
                         <label>
                             Bukti:
                         </label>
@@ -178,7 +201,7 @@ function IzinFormGuru() {
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
                                 className="border-[1px] 
-                                w-fulljustify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                w-full justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 required
                             >
                                 <input
@@ -235,25 +258,10 @@ function IzinFormGuru() {
                                     w-full py-2 px-2 border-black rounded-md bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     required
                                 >
-                                    <option value="">Pilih jenis izin</option>
+                                    <option value="" disabled selected>Pilih jenis izin</option>
                                     <option value="Sakit">Sakit</option>
                                     <option value="Izin lainya">Izin lainya</option>
                                 </select>
-                            </div>
-                            <div className='mt-[5px] space-y-1'>
-                                <label className='text-[16px] font-bold'>
-                                    Tanggal Izin:
-                                </label>
-                                <input
-                                    type="date"
-                                    name="tanggalIzin"
-                                    id="tanggalIzin"
-                                    value={formData.tanggalIzin}
-                                    onChange={handleInputChange}
-                                    className="block flex-1 border-[1px] 
-                                    w-full py-2 px-2 border-black rounded-md bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    required
-                                />
                             </div>
                             <div className='mt-[5px] space-y-1'>
                                 <label className='text-[16px] font-bold'>

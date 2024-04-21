@@ -5,12 +5,38 @@ import { useNavigate } from "react-router-dom";
 import ImageUploader from "../../components/TestImageUp";
 import { IoMdSettings } from "react-icons/io";
 import { BiArrowBack } from "react-icons/bi";
-
-
+import api from "../../api";
+import _debounce from 'lodash/debounce';
+import { useEffect } from "react";
 
 const Izin_Guru = () => {
     const Wmobile = CustomWidth() <= 767;
     const navTo = useNavigate();
+
+    const check = _debounce(async () => {
+        try{
+            const check = await api.get('/CheckIzinGuru', {
+                headers: {
+                    Authorization: `${sessionStorage.getItem('token')}`
+                }
+            })
+
+            if(check.status === 200){
+                
+            }else{
+                navTo('/Siskoolbe/guru', { replace: true });
+            }
+        }catch(err){
+            navTo('/Siskoolbe/guru', { replace: true });
+        }
+    }, 50)
+
+    useEffect(() => {
+        check()
+        return () => {
+            check.cancel()
+        }
+    }, [])
     return (
         <>
             {!Wmobile ? (
@@ -21,7 +47,7 @@ const Izin_Guru = () => {
                     </div>
                     <div className="w-full h-full overflow-y-auto hide-scroll border border-1"
                     style={{borderRadius: '0 0 10px 10px'}}>
-                        <IzinFormGuru />
+                        <IzinFormGuru navTo={navTo}/>
                     </div>
                 </div>
             ) : (
@@ -34,7 +60,7 @@ const Izin_Guru = () => {
                         </div>
                         <div className="border border-1 w-full h-full mb-20 overflow-y-auto"
                         style={{borderRadius: '0 0 10px 10px'}}>
-                            <IzinFormGuru />
+                            <IzinFormGuru navTo={navTo}/>
                         </div>
                     </div>
 

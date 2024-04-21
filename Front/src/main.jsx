@@ -74,7 +74,7 @@ const router = createBrowserRouter([
         path: '/Siskoolbe/Siswa/Absen/:id',
         element: <DetailIzin />
       },
-      // Guru
+      // Admin
       {
         path: '/Siskoolbe/Admin',
         element: <HomesAdmin />
@@ -139,6 +139,10 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Guru/ProfSetGuru',
         elemen: <ProfSetGr />
+      },
+      {
+        path: '/Siskoolbe/Guru/Absen/:id',
+        element: <DetailIzinGuru />
       },
       {
         path: '/Siskoolbe/Guru/AbsenMasuk/:id',
