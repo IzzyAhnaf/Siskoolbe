@@ -15,7 +15,6 @@ const path = require('path');
 const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
-    // origin: 'http://192.168.0.200:5173',
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
@@ -1061,6 +1060,40 @@ fastify.post('/IzinGuru', async (request, reply) => {
     }
 })
 
+fastify.get('/DetailIzinGuru/:id', async (request, reply) => {
+    const id = request.params.id;
+    const token = request.headers.authorization;
+
+    if(!token){
+        return reply.status(401).send({ message: 'Token not found' });
+    }
+    try{
+        const Select = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM absensiguru WHERE id = ?', [id], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Select[0].izin === "keterangan" || Select[0].izin === "sakit"){
+            const data = await Promise.all(Select.map(async (item) => {
+                const imagePath = path.join(__dirname, 'Gambar/Guru/Izin/', item.foto_izin_absensi);
+                const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
+                return { ...item, bukti: base64 };
+            }))
+            return reply.status(200).send(data);
+        }else{
+            return reply.status(401).send({ message: 'failed' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+    return reply.status(200).send({ message: Select });
+})
+
 // Admin
 fastify.get('/admin', async (request, reply) => {
     try {
@@ -1944,7 +1977,7 @@ const start = async () => {
     try {
       await fastify.listen({
         port: 5000,
-        host: '192.168.0.200'
+        host: 'localhost'
       });
     } catch (err) {
       console.error(err);

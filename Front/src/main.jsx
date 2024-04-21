@@ -35,6 +35,7 @@ import AboutUS from './Pages/AboutUs.jsx'
 import AdminKelas from './Pages/admin/Admin_Kelas.jsx'
 import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan.jsx'
 import AdminDetailKelas from './Pages/admin/Admin_DetailKelas.jsx'
+import DetailIzinGuru from './Pages/guru/Detail-izin-guru.jsx'
 
 
 const router = createBrowserRouter([

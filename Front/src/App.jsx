@@ -38,6 +38,7 @@ import AdminKelas from './Pages/admin/Admin_Kelas'
 import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan'
 import AdminDetailKelas from './Pages/admin/Admin_DetailKelas'
 import SidebarGuru from './components/guru/GuruSidebar'
+import DetailIzinGuru from './Pages/guru/Detail-izin-guru'
 
 
 function App() {
@@ -221,6 +222,7 @@ function App() {
               <Route path='/Guru/ProfileGuru' element={<ProfileGuru getProfileImage={selectedImage} setSelectedImage={setSelectedImage}/>}></Route>
               <Route path='/Guru/ProfSetGuru' element={<ProfSetGr getProfileImage={selectedImage} setSelectedImage={setSelectedImage} />}></Route>
               <Route path='/Guru/IzinGuru' element={<Izin_Guru />}></Route>
+              <Route path='/Guru/Absen/:id' element={<DetailIzinGuru WMobile={WMobile} />}></Route>
               <Route path='/Guru/AbsenMasuk/:id' element={<CheckinGuru />}></Route>
               <Route path='/Guru/AbsenKeluar/:id' element={<CheckoutGuru />}></Route>
               <Route path='/AboutUs' element={<AboutUS /> }></Route>
