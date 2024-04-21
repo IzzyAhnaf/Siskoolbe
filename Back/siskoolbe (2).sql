@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Apr 2024 pada 06.36
+-- Waktu pembuatan: 21 Apr 2024 pada 16.35
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -34,8 +34,8 @@ CREATE TABLE `absensiguru` (
   `absen_masuk` datetime DEFAULT NULL,
   `absen_keluar` datetime DEFAULT NULL,
   `izin` enum('sakit','keterangan','tanpa_keterangan') DEFAULT NULL,
-  `detail-izin` text DEFAULT NULL,
-  `foto-izin_absensi` text DEFAULT NULL,
+  `detail_izin` text DEFAULT NULL,
+  `foto_izin_absensi` text DEFAULT NULL,
   `status` enum('open','closed') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -43,8 +43,8 @@ CREATE TABLE `absensiguru` (
 -- Dumping data untuk tabel `absensiguru`
 --
 
-INSERT INTO `absensiguru` (`id`, `idguru`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail-izin`, `foto-izin_absensi`, `status`) VALUES
-(1, 1, '2024-04-18', '2024-04-18 14:54:21', NULL, '', '', '', 'open');
+INSERT INTO `absensiguru` (`id`, `idguru`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail_izin`, `foto_izin_absensi`, `status`) VALUES
+(1, 1, '2024-04-18', '2024-04-18 14:54:21', NULL, 'sakit', 'Contoh', '1713707621900-image.jpeg', 'closed');
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar
 (32, 2012321, '2024-04-05', NULL, NULL, 'keterangan', 'mokel', '1712200071658-ikan-mujair-goreng.jpg', 'closed'),
 (33, 2012321, '2024-04-06', '2024-04-05 06:19:10', NULL, NULL, NULL, NULL, 'closed'),
 (36, 2012321, '2024-04-07', NULL, NULL, NULL, NULL, NULL, 'closed'),
-(38, 2012321, '2024-04-18', NULL, NULL, NULL, NULL, NULL, 'open');
+(38, 2012321, '2024-04-18', '2024-04-18 19:39:13', NULL, 'sakit', 'contjho', '1713704576530-image.jpeg', 'closed');
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `jenis_kelamin`, `alamat`, `tempat_lahir`, `tgl_lahir`, `agama`, `jabatan`, `status`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 98273172391, 'L', 'Las Vegas', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL);
+(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 31287391732, 'L', 'contoh', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
