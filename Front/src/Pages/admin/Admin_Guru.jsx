@@ -99,12 +99,12 @@ const Adminguru = () => {
               <span className="text-white border-0  mx-2 font-inter text-sm">Tambah Guru</span>
             </button>
           </div>
-          <div class="flex flex-col bg-white mx-6 h-full"
+          <div className="flex flex-col bg-white mx-6 h-full"
           style={{borderRadius: '0 0 10px 10px'}}>
-            <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5 h-full mb-8">
-              <div class="py-2 inline-block min-w-full sm:px-8 lg:px-6">
-                <div class="overflow-hidden">
-                  <table class="min-w-full">
+            <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5 h-full mb-8">
+              <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
+                <div className="overflow-hidden">
+                  <table className="min-w-full">
                     <thead className="bg-blue-500 border border-1 border-gray-400"
                     style={{borderRadius: '10px 10px 0 0'}}>
                       <tr className="px-3 text-white">
@@ -131,9 +131,9 @@ const Adminguru = () => {
                     <tbody className="bg-white border-1 border">
                       {guru && guru.length > 0 ? (
                         guru.map((Guru, index) => (
-                      <tr class="" style={{ borderRadius: '24px' }}>
-                        <td class="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
-                        <td class="text-sm text-gray-900 font-light px-[-15px] py-2">
+                      <tr className="" style={{ borderRadius: '24px' }}>
+                        <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
+                        <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
                           <div className="flex space-x-1 w-24 px-0 mx-auto items-center">
                             <div style={{position: 'relative', display: 'inline-block'}}>
                               <img className="w-10 h-10 mr-4 rounded-full object-cover" 
@@ -143,16 +143,16 @@ const Adminguru = () => {
                             <span className="items-center font-inter font-medium text-sm">{Guru.nama}</span>
                           </div>
                         </td>
-                        <td class="text-sm text-gray-900 font-medium px-0 py-2 text-center">
+                        <td className="text-sm text-gray-900 font-medium px-0 py-2 text-center">
                           {Guru.jabatan}
                         </td>
-                        <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
+                        <td className="text-sm text-gray-900 font-medium px-2 py-2 text-center">
                           {Guru.status}
                         </td>
-                        <td class="text-sm text-gray-900 font-medium px-2 py-2 text-center">
+                        <td className="text-sm text-gray-900 font-medium px-2 py-2 text-center">
                           {Guru.no_hp}
                         </td>
-                        <td class="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
+                        <td className="text-sm text-gray-900 font-medium px-4 py-2 space-x-0">
                           <div className="flex justify-center">
                             <RiPencilFill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1" color="#1E6CB1" onClick={() => navTo(`/Siskoolbe/Admin/Edit_Guru/${Guru.id}`)}/>
                             <BsFillTrash3Fill className="w-7 h-7 bg-gray-400 bg-opacity-50 rounded-lg px-1 ml-2" color="#FF0000" onClick={() => deleteGuru(Guru.id)}/>
