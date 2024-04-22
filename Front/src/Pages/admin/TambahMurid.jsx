@@ -38,7 +38,8 @@ const TambahMurid = () => {
                     <div className="flex flex-col items-center w-full">
                         <div className="bg-blue-500 p-4 w-full flex items-center"
                         style={{borderRadius: '10px 10px 0 0'}}>
-                            <BiArrowBack className="w-6 h-6 mt-1 mr-2 text-white" onClick={() => navTo('/Siskoolbe/Siswa', { replace: true })} />
+                            <BiArrowBack className="w-6 h-6 mt-1 mr-2 text-white" onClick={handleBack} />
+                            <FaUserTie className='text-white text-[24px] rounded-full mx-2' />
                             <span className="text-white font-semibold text-xl">Tambah Murid</span>
                         </div>
                         <div className="border border-1 w-full h-full mb-20 overflow-y-auto"

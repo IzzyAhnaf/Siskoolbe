@@ -180,7 +180,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex w-full mx-2 h-full rounded-xl bg-[#D9D9D9] font-inter">
+                <div className="flex w-full mx-2 h-[90%] rounded-xl bg-[#D9D9D9] border border-1 font-inter">
                     <div className="flex flex-col w-full">
                         <div className="bg-blue-500 p-4"
                         style={{borderRadius: '10px 10px 0 0'}}>
@@ -217,7 +217,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                                 </select>
                             </div>
                         </div>
-                        <div className="flex flex-col bg-white p-1 h-[60%]"
+                        <div className="flex flex-col bg-white p-1 h-full border border-1 overflow-y-auto"
                         style={{borderRadius: '0 0 10px 10px'}}>
                             <div className={`overflow-y-auto slim-scroll ${DekstopLow ? 'h-[355px]' : 'h-full'}`}>
                                 <table className="min-w-full">
@@ -250,7 +250,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="mt-auto flex mx-auto mb-4 space-x-2 items-center">
+                            <div className="mt-auto flex mx-auto pt-2 space-x-2 items-center">
                                 <MdKeyboardArrowLeft onClick={() => handlePrev()} disabled={currentPage === 1}
                                 className={`${currentPage === 1 ? 'cursor-not-allowed' : ''}`}/>
                                 <span className="bg-[#1E6CB1] text-white px-2 border border-1 border-[#D9D9D9]">{currentPage}</span>

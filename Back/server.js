@@ -1304,15 +1304,35 @@ fastify.get('/getSiswa_Admin', async (request, reply) => {
                 })
 
                 const data = await Promise.all(Exist.map(async (item) => {
-                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
-                    const image = fs.readFileSync(imagePath, 'base64');
+                    if(item.gambar_profil){
+                        try{
+                            const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                            const image = fs.readFileSync(imagePath, 'base64');
 
-                    return {
-                        ...item,
-                        jurusan: selectJurusan[0].namajurusan,
-                        sub_jurusan: selectJurusan[0].sub_jurusan,
-                        kelas: selectidjurusan[0].kelas,
-                        gambar_profil: image,
+                            return {
+                                ...item,
+                                jurusan: selectJurusan[0].namajurusan,
+                                sub_jurusan: selectJurusan[0].sub_jurusan,
+                                kelas: selectidjurusan[0].kelas,
+                                gambar_profil: image,
+                            }
+                        }catch(err){
+                            return {
+                                ...item,
+                                jurusan: selectJurusan[0].namajurusan,
+                                sub_jurusan: selectJurusan[0].sub_jurusan,
+                                kelas: selectidjurusan[0].kelas,
+                                gambar_profil: null,
+                            }
+                        }
+                    }else{
+                        return {
+                            ...item,
+                            jurusan: selectJurusan[0].namajurusan,
+                            sub_jurusan: selectJurusan[0].sub_jurusan,
+                            kelas: selectidjurusan[0].kelas,
+                            gambar_profil: null,
+                        }
                     }
                 }))
 
@@ -1366,15 +1386,35 @@ fastify.get('/getSiswa_Admin/:id', async (request, reply) => {
                 })
 
                 const data = await Promise.all(Exist.map(async (item) => {
-                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
-                    const image = fs.readFileSync(imagePath, 'base64');
+                    if(item.gambar_profil){
+                        try{
+                            const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                            const image = fs.readFileSync(imagePath, 'base64');
 
-                    return {
-                        ...item,
-                        jurusan: selectJurusan[0].namajurusan,
-                        sub_jurusan: selectJurusan[0].sub_jurusan,
-                        kelas: selectidjurusan[0].kelas,
-                        bukti: image
+                            return {
+                                ...item,
+                                jurusan: selectJurusan[0].namajurusan,
+                                sub_jurusan: selectJurusan[0].sub_jurusan,
+                                kelas: selectidjurusan[0].kelas,
+                                bukti: image
+                            }
+                        }catch(err){
+                            return {
+                                ...item,
+                                jurusan: selectJurusan[0].namajurusan,
+                                sub_jurusan: selectJurusan[0].sub_jurusan,
+                                kelas: selectidjurusan[0].kelas,
+                                bukti: null
+                            }
+                        }
+                    }else{
+                        return {
+                            ...item,
+                            jurusan: selectJurusan[0].namajurusan,
+                            sub_jurusan: selectJurusan[0].sub_jurusan,
+                            kelas: selectidjurusan[0].kelas,
+                            bukti: null
+                        }
                     }
                 }))
 
@@ -1435,15 +1475,35 @@ fastify.get('/getSiswa_Admin/Search', async (request, reply) => {
                 })
 
                 const data = await Promise.all(Exist.map(async (item) => {
-                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
-                    const image = fs.readFileSync(imagePath, 'base64');
+                    if(item.gambar_profil){
+                        try{
+                            const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                            const image = fs.readFileSync(imagePath, 'base64');
 
-                    return {
-                        ...item,
-                        jurusan: selectJurusan[0].namajurusan,
-                        sub_jurusan: selectJurusan[0].sub_jurusan,
-                        kelas: selectidjurusan[0].kelas,
-                        gambar_profil: image
+                            return {
+                                ...item,
+                                jurusan: selectJurusan[0].namajurusan,
+                                sub_jurusan: selectJurusan[0].sub_jurusan,
+                                kelas: selectidjurusan[0].kelas,
+                                gambar_profil: image
+                            }
+                        }catch(err){
+                            return {
+                                ...item,
+                                jurusan: selectJurusan[0].namajurusan,
+                                sub_jurusan: selectJurusan[0].sub_jurusan,
+                                kelas: selectidjurusan[0].kelas,
+                                gambar_profil: null
+                            }
+                        }
+                    }else{
+                        return {
+                            ...item,
+                            jurusan: selectJurusan[0].namajurusan,
+                            sub_jurusan: selectJurusan[0].sub_jurusan,
+                            kelas: selectidjurusan[0].kelas,
+                            gambar_profil: null
+                        }
                     }
                 }))
 
