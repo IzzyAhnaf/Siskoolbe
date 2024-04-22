@@ -1272,6 +1272,76 @@ fastify.get('/getSiswa_Admin/:id', async (request, reply) => {
     }
 })
 
+fastify.get('/getSiswa_Admin/Search', async (request, reply) => {
+    const keyword = request.query.keyword;
+    try{
+        const [Exist, ExistLength]= await Promise.all ([
+            new Promise((resolve, reject) => {
+                db.query('SELECT * FROM siswa WHERE nama LIKE ? OR nis LIKE ? OR nisn LIKE ?', [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            }),
+            new Promise((resolve, reject) => {
+                db.query('SELECT COUNT(*) AS total FROM siswa WHERE nama LIKE ? OR nis LIKE ? OR nisn LIKE ?', [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+        ])
+
+        if(Exist.length > 0){
+            const selectidjurusan = await new Promise((resolve, reject) => {
+                db.query('SELECT jurusanid, kelas FROM kelas WHERE id = ?', [Exist[0].idkelas],(err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+            if(selectidjurusan.length > 0){
+                const selectJurusan =  await new Promise((resolve, reject) => {
+                    db.query('SELECT namajurusan, sub_jurusan FROM jurusan WHERE id = ?', [selectidjurusan[0].jurusanid],(err, result) => {
+                        if(err){
+                            reject(err);
+                        }else{
+                            resolve(result);
+                        }
+                    })
+                })
+
+                const data = await Promise.all(Exist.map(async (item) => {
+                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                    const image = fs.readFileSync(imagePath, 'base64');
+
+                    return {
+                        ...item,
+                        jurusan: selectJurusan[0].namajurusan,
+                        sub_jurusan: selectJurusan[0].sub_jurusan,
+                        kelas: selectidjurusan[0].kelas,
+                        gambar_profil: image
+                    }
+                }))
+
+                dataClean = {
+                    Length: ExistLength[0].total,
+                    data: data
+                }
+                return reply.status(200).send(dataClean);
+            }
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
 fastify.post('/addSiswa_Admin', async (request, reply) => {
     const data = request.headers.data;
     const { nama, nis, nisn, nik, email, Password, alamat, noHp, tempatLahir, tanggalLahir, jenisKelamin, agama, kelas, jurusan, sub_jurusan} = JSON.parse(data);
@@ -1540,6 +1610,51 @@ fastify.get('/getGuru_Admin/:id', async (request, reply) => {
     }
 })
 
+fastify.get('/getGuru_Admin/Search', async (request, reply) => {
+    const { keyword } = request.query;
+    try{
+        const [Exist, ExistLength] = await Promise.all([
+            new Promise((resolve, reject) => {
+                db.query('SELECT * FROM guru WHERE nama LIKE ? OR email LIKE ? OR no_hp LIKE ? OR nik LIKE ?', [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`],(err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            }),
+            new Promise((resolve, reject) => {
+                db.query('SELECT COUNT(*) AS total FROM guru WHERE nama LIKE ? OR email LIKE ? OR no_hp LIKE ? OR nik LIKE ?', [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+        ])
+
+        if(Exist.length > 0){
+            const data = await Promise.all(Exist.map(async (item) => {
+                const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
+                const Image = fs.readFileSync(ImagePath, 'base64');
+
+                return { ...item, gambar_profil: Image }
+            }))
+
+            dataClean = {
+                Length: ExistLength[0].total,
+                Data: data
+            }
+            return reply.status(200).send(dataClean);
+        }else{
+            return reply.status(401).send({ message: 'Failed' });
+        }
+    }catch(err){
+        return reply.status(401).send({ message: err.message });
+    }
+})
+
 fastify.post('/addGuru_Admin', async (request, reply) => {
     const data = request.headers.data;
     const { nik, nama, email, Password, alamat, noHp, tempatLahir, tanggalLahir, agama, jabatan, status, jenisKelamin } = JSON.parse(data);
@@ -1740,6 +1855,39 @@ fastify.get('/getJurusan_Admin/:id', async (request, reply) => {
         return reply.status(500).send({ message: err.message });
     }
 });
+
+fastify.get('/getJurusan_Admin/Search', async (request, reply) => {
+    const keyword = request.query.keyword;
+    try {
+        const jurusanData = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM jurusan WHERE namajurusan LIKE ?', [`%${keyword}%`], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        const jurusanWithImages = await Promise.all(jurusanData.map(async (jurusan) => {
+            const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
+            const image = fs.readFileSync(imagePath, 'base64');
+
+            return {
+                ...jurusan,
+                image: image
+            }
+        }))
+
+        if (jurusanWithImages.length > 0) {
+            return reply.status(200).send(jurusanWithImages);
+        }else{
+            return reply.status(401).send({ message: 'Data not found' });
+        }
+    } catch (err) {
+        return reply.status(500).send({ message: err.message });
+    }
+})
 
 fastify.post('/tambahjurusan', async (request, reply) => {
     const data = request.headers.data;

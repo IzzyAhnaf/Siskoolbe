@@ -14,7 +14,7 @@ const AdminMurid = () => {
   const Wmobile = CustomWidth() <= 767;
   const DekstopLow = CustomWidth() <= 1366;
   const [siswa, setSiswa] = useState([]);
-
+  
   const [totalData, setTotalData] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const limitPerPage = 10;
@@ -59,6 +59,18 @@ const AdminMurid = () => {
     });
   };
 
+  const handleKeyword = async (e) => {
+    try{
+      await api.get(`/getSiswa_Admin/Search?keyword=${e.target.value}`).then((res) => {
+        setSiswa(res.data.data);
+        setTotalData(res.data.Length);
+      });
+    }catch(err){
+      setGuru([]);
+      setTotalData(0);
+    }
+  }
+
   const handleNext = () => {
     if(currentPage < Math.ceil(totalData / limitPerPage)) {
       const newOffset = currentPage * limitPerPage;
@@ -84,7 +96,8 @@ const AdminMurid = () => {
         setTotalData(resp.data.Length);
       }
     } catch (err) {
-
+      setGuru([]);
+      setTotalData(0);
     }
   }, 50);
 
@@ -99,7 +112,7 @@ const AdminMurid = () => {
         <div className={`flex flex-col h-full bg-[#D9D9D9] mx-4 rounded-3xl py-8`}>
           <div className="flex space-x-2 mx-6 lg:px-6 sm:px-7 bg-blue-500 py-4 text-white"
           style={{borderRadius: '10px 10px 0 0'}}>
-            <FaUserTie className="w-12 h-12 bg-white rounded-full px-2 text-black" />
+            <FaUserTie className="w-12 h-12 bg-white rounded-full px-2 text-blue-500" />
             <span className="font-semibold text-2xl font-inter mt-2">Murid</span>
           </div>
           <div className="flex justify-between mx-6 sm:px-8 lg:px-7 bg-white py-4">
@@ -114,6 +127,7 @@ const AdminMurid = () => {
                   className="peer h-full w-full outline-none text-lg text-gray-700 pr-2"
                   type="text"
                   id="search"
+                  onChange={handleKeyword}
                   placeholder="Mencari Data Murid" />
               </div>
             </div>

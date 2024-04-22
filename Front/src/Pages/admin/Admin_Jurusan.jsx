@@ -14,6 +14,17 @@ const AdminJurusan = () => {
   const [jurusan, setJurusan] = useState([]);
   const DekstopLow = CustomWidth() <= 1366;
 
+  const handleKeyword = async (e) => {
+    try{
+
+      await api.get(`/getJurusan_Admin/Search?keyword=${e.target.value}`).then((res) => {
+        setJurusan(res.data);
+      });
+    }catch(err){
+      setJurusan([]);
+    }
+  }
+
   const handleDelete = async (id) => {
     Swal.fire({
       title: 'Yakin ingin menghapus Jurusan?',
@@ -58,7 +69,7 @@ const AdminJurusan = () => {
       const resp = await api.get("/getJurusan_Admin");
       resp.status === 200 && setJurusan(resp.data);
     }catch(err){
-
+      setJurusan([]);
     }
   }, 50);
 
@@ -90,6 +101,7 @@ const AdminJurusan = () => {
                 class="peer h-full w-full outline-none text-lg text-gray-700 pr-2"
                 type="text"
                 id="search"
+                onChange={handleKeyword}
                 placeholder="Mencari Data Jurusan" />
             </div>
           </div>
