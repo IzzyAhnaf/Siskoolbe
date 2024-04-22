@@ -5,6 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { set } from "lodash";
+import { MdDateRange } from 'react-icons/md';
+import { CustomDatePicker } from "../../components/CustomDatePicker";
+
+
 
 const AbsensiWaliKelas = ({idguru}) => {
     const WMobile = CustomWidth() <= 767;
@@ -13,6 +17,9 @@ const AbsensiWaliKelas = ({idguru}) => {
 
     const navTo = useNavigate();
 
+    const [startDate, setStartDate] = useState(null);
+    const [izinFilter, setIzinFilter] = useState("");
+
     const [totalData, setTotalData] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const limitPerPage = 10;
@@ -20,8 +27,8 @@ const AbsensiWaliKelas = ({idguru}) => {
     const handleKeyword = async (e) => {
         try{
             await api.get(`/AbsensiMurid/Search/${idguru}?keyword=${e.target.value}`).then((res) => {
-                setData(res.data);
-                setTotalData(0);
+                setData(res.data.data);
+                setTotalData(res.data.total);
             })
         }catch(err){
             setData([]);
@@ -47,7 +54,7 @@ const AbsensiWaliKelas = ({idguru}) => {
 
     const getData = _debounce(async (offset) => {
         try{
-            await api.get(`/AbsensiMurid/${idguru}?offset=${offset}`).then((res) => {
+            await api.get(`/AbsensiMurid/${idguru}?offset=${offset}&start_date=${startDate ? startDate.toISOString() : null}&izin_filter=${izinFilter}`).then((res) => {
                 setData(res.data.data);
                 setTotalData(res.data.total);
             })
@@ -56,6 +63,15 @@ const AbsensiWaliKelas = ({idguru}) => {
             setTotalData(0);
         }
     }, 50)
+
+    const handleDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleIzinFilterChange = (e) => {
+        setIzinFilter(e.target.value);
+    };
+
 
     const DateNow = (datedata) => {
         const date = new Date(datedata);
@@ -75,7 +91,7 @@ const AbsensiWaliKelas = ({idguru}) => {
 
     useEffect(() => {
         getData(0);
-    }, [])
+    }, [startDate, izinFilter]);
 
     return(
         <>
@@ -102,6 +118,21 @@ const AbsensiWaliKelas = ({idguru}) => {
                                     placeholder="Mencari Data Murid" />
                                 </div>
                             </div>
+                            <div className="mx-4 flex space-x-2">
+                                <span>Filter Tanggal</span>
+                                <CustomDatePicker handleChange={handleDateChange} selectedDate={startDate}/>
+                            </div>
+                            <div className="space-x-2">
+                                <span>Filter Izin</span>
+                                <select className="w-43 h-8 bg-white border-2 border-solid border-black rounded-lg"
+
+                                onChange={(e) => setIzinFilter(e.target.value)}>
+                                    <option value="">Semua</option>
+                                    <option value="sakit">Sakit</option>
+                                    <option value="keterangan">Keterangan</option>
+                                    <option value="tanpa_keterangan">Tanpa Keterangan</option>
+                                </select>
+                            </div>
                         </div>
                         <div className="flex flex-col bg-white p-4 h-full"
                         style={{borderRadius: '0 0 10px 10px'}}>
@@ -112,17 +143,19 @@ const AbsensiWaliKelas = ({idguru}) => {
                                         <th scope="col" className="text-sm font-medium px-2 py-2 text-center">No</th>
                                         <th scope="col" className="text-sm font-medium px-2 py-2 text-center">Nama</th>
                                         <th scope="col" className="text-sm font-medium px-2 py-2 text-center">Tanggal</th>
-                                        <th scope="col" className="text-sm font-medium px-2 py-2 text-center">Izin</th>
+                                        <th scope="col" className="text-sm font-medium px-2 py-2 text-center">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white border border-1">
+                                <tbody className="bg-white border border-1 border-gray-400">
                                     {data && data.length > 0 ? (
                                         data.map((item, index) => (
-                                        <tr key={index} className="text-center cursor-pointer" onClick={() => navTo(`./${item.idabsen}`)}>
+                                        <tr key={index} className={`text-center ${item.izin === 'izin' || item.izin === 'keterangan' ? 'cursor-pointer' : 'cursor-default'} border border-1`}
+                                        onClick={() => item.izin === 'izin' || item.izin === 'keterangan' && navTo(`./${item.idabsen}`)}
+                                        >
                                             <td className="text-sm font-medium px-2 py-2 text-center">{index + 1}</td>
                                             <td className="text-sm font-medium px-2 py-2 text-center">{item.nama}</td>
                                             <td className="text-sm font-medium px-2 py-2 text-center">{DateNow(item.tanggal)}</td>
-                                            <td className="text-sm font-medium px-2 py-2 text-center">{item.izin}</td>
+                                            <td className="text-sm font-medium px-2 py-2 text-center">{item.absen_masuk ? 'Hadir' : item.izin}</td>
                                         </tr>
                                     ))
                                     ) : (
