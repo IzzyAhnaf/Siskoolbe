@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SidebarAdmin from "../../components/admin/SidebarAdm";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { FaUserTie, FaPlus } from "react-icons/fa6";
 import { RiPencilFill } from "react-icons/ri";
 import Swal from 'sweetalert2';
@@ -14,6 +14,11 @@ const AdminMurid = () => {
   const Wmobile = CustomWidth() <= 767;
   const DekstopLow = CustomWidth() <= 1366;
   const [siswa, setSiswa] = useState([]);
+
+  const [totalData, setTotalData] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limitPerPage = 10;
+
   const handleDelete = async (id) => {
     Swal.fire({
       title: 'Yakin ingin menghapus murid?',
@@ -54,11 +59,29 @@ const AdminMurid = () => {
     });
   };
 
-  const getSiswa = _debounce(async () => {
+  const handleNext = () => {
+    if(currentPage < Math.ceil(totalData / limitPerPage)) {
+      const newOffset = currentPage * limitPerPage;
+      setCurrentPage(prevPage => prevPage + 1);
+      getSiswa(newOffset);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      const newOffset = (currentPage - 2) * limitPerPage;
+      setCurrentPage(prevPage => prevPage - 1);
+      getSiswa(newOffset);
+    }
+  }
+
+
+  const getSiswa = _debounce(async (offset) => {
     try {
-      const resp = await api.get("/getSiswa_Admin");
+      const resp = await api.get("/getSiswa_Admin?offset=" + offset);
       if (resp.status === 200) {
-        setSiswa(resp.data);
+        setSiswa(resp.data.data);
+        setTotalData(resp.data.Length);
       }
     } catch (err) {
 
@@ -66,7 +89,7 @@ const AdminMurid = () => {
   }, 50);
 
   useEffect(() => {
-    getSiswa();
+    getSiswa(0);
   }, []);
 
   return (
@@ -103,7 +126,7 @@ const AdminMurid = () => {
           style={{borderRadius: '0 0 10px 10px'}}>
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5 h-full mb-8">
               <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
-                <div className="overflow-hidden">
+                <div className={`overflow-y-auto slim-scroll ${DekstopLow? 'h-[355px]' : ''}`}>
                   <table className="min-w-full">
                     <thead className="bg-blue-500 border border-1 border-gray-400"
                     style={{borderRadius: '10px 10px 0 0'}}>
@@ -124,14 +147,14 @@ const AdminMurid = () => {
                           No Hp
                         </th>
                         <th scope="col" className="text-sm font-medium px-2 py-2 text-center">
-
+                          Opsi
                         </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white border-1 border rounded-full">
                     {siswa && siswa.length > 0 ? (
                       siswa.map((siswaItem, index) => (
-                        <tr key={siswaItem.id} className="" style={{ borderRadius: '24px' }}>
+                        <tr key={siswaItem.id} className="border border-1" style={{ borderRadius: '24px' }}>
                           <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                           <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
                             <div className="flex space-x-1 w-24 px-0 mx-auto">
@@ -169,6 +192,14 @@ const AdminMurid = () => {
                   </table>
                 </div>
               </div>
+            </div>
+            <div className="mt-auto flex mx-auto mb-4 space-x-2 items-center">
+              <MdKeyboardArrowLeft onClick={() => handlePrev()} disabled={currentPage === 1}
+              className={`${currentPage === 1 ? 'cursor-not-allowed' : ''}`}/>
+              <span className="bg-[#1E6CB1] text-white px-2 border border-1 border-[#D9D9D9]">{currentPage}</span>
+              <MdKeyboardArrowRight onClick={() => handleNext()} 
+              className={`${currentPage === Math.ceil(totalData / limitPerPage) ? 'cursor-not-allowed' : ''}`} 
+              disabled={(currentPage === Math.ceil(totalData / limitPerPage))}/>
             </div>
           </div>
         </div>

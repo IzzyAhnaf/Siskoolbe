@@ -83,7 +83,7 @@ const SidebarAdmin = ({nama, gambar_profil}) => {
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
                         to="/Siskoolbe/Admin/Admin_Murid"
                         onClick={() => SelectSidebars(2)}>
-                        {SelectSidebar === 3 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
+                        {SelectSidebar === 2 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
                         <span className="mx-4 font-medium text-center font-inter">Murid</span>
                     </Link>
 

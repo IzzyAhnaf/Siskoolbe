@@ -9,6 +9,7 @@ import CustomWidth from "../../CustomWidth";
 import _debounce from "lodash/debounce";
 import api from "../../api";
 import Swal from "sweetalert2";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 const Adminguru = () => {
   const navTo = useNavigate();
@@ -16,11 +17,33 @@ const Adminguru = () => {
   const DekstopLow = CustomWidth() <= 1366;
   const [guru, setGuru] = useState([]);
 
-  const getGuru = _debounce(async () => {
+  const [totalData, setTotalData] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limitPerPage = 10;
+
+  const handleNext = () => {
+    if(currentPage < Math.ceil(totalData / limitPerPage)) {
+      const newOffset = currentPage * limitPerPage;
+      setCurrentPage(prevPage => prevPage + 1);
+      getGuru(newOffset);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      const newOffset = (currentPage - 2) * limitPerPage;
+      setCurrentPage(prevPage => prevPage - 1);
+      getGuru(newOffset);
+    }
+  }
+
+  const getGuru = _debounce(async (offset) => {
     try{
-    const resp = await api.get("/getGuru_Admin");
-    resp.status === 200 && setGuru(resp.data);
-    console.log(resp.data);
+      const resp = await api.get("/getGuru_Admin?offset=" + offset);
+      if(resp.status === 200){
+        setGuru(resp.data.Data)
+        setTotalData(resp.data.Length)
+      }
     }catch(err){
 
     }
@@ -66,7 +89,7 @@ const Adminguru = () => {
   }
 
   useEffect(() => {
-    getGuru();
+    getGuru(0);
   },[])
 
   return (
@@ -103,7 +126,7 @@ const Adminguru = () => {
           style={{borderRadius: '0 0 10px 10px'}}>
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5 h-full mb-8">
               <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
-                <div className="overflow-hidden">
+                <div className={`overflow-y-auto slim-scroll ${DekstopLow ? 'h[355px]' : ''}`}>
                   <table className="min-w-full">
                     <thead className="bg-blue-500 border border-1 border-gray-400"
                     style={{borderRadius: '10px 10px 0 0'}}>
@@ -131,7 +154,7 @@ const Adminguru = () => {
                     <tbody className="bg-white border-1 border">
                       {guru && guru.length > 0 ? (
                         guru.map((Guru, index) => (
-                      <tr className="" style={{ borderRadius: '24px' }}>
+                      <tr className="border border-1" style={{ borderRadius: '24px' }}>
                         <td className="px-2 py-2 text-sm font-medium text-gray-900 text-center">{index + 1}</td>
                         <td className="text-sm text-gray-900 font-light px-[-15px] py-2">
                           <div className="flex space-x-1 w-24 px-0 mx-auto items-center">
@@ -169,6 +192,14 @@ const Adminguru = () => {
                   </table>
                 </div>
               </div>
+            </div>
+            <div className="mt-auto flex mx-auto mb-4 space-x-2 items-center">
+              <MdKeyboardArrowLeft onClick={() => handlePrev()} disabled={currentPage === 1}
+              className={`${currentPage === 1 ? 'cursor-not-allowed' : ''}`}/>
+              <span className="bg-[#1E6CB1] text-white px-2 border border-1 border-[#D9D9D9]">{currentPage}</span>
+              <MdKeyboardArrowRight onClick={() => handleNext()} 
+              className={`${currentPage === Math.ceil(totalData / limitPerPage) ? 'cursor-not-allowed' : ''}`} 
+              disabled={(currentPage === Math.ceil(totalData / limitPerPage))}/>
             </div>
           </div>
         </div>

@@ -1141,16 +1141,29 @@ fastify.get('/admin', async (request, reply) => {
 
 // -data-siswa
 fastify.get('/getSiswa_Admin', async (request, reply) => {
+    const { offset } = request.query || 0;
+    const offsetint = parseInt(offset, 10);
     try{
-        const Exist = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM siswa', (err, result) => {
-                if(err){
-                    reject(err);
-                }else{
-                    resolve(result);
-                }
+        const [Exist, ExistLength] = await Promise.all([
+            new Promise((resolve, reject) => {
+                db.query('SELECT * FROM siswa LIMIT 10 OFFSET ?', [offsetint], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            }),
+            new Promise((resolve, reject) => {
+                db.query('SELECT COUNT(*) AS total FROM siswa', (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
             })
-        })
+        ])
 
         if(Exist.length > 0){
             const selectidjurusan = await new Promise((resolve, reject) => {
@@ -1186,7 +1199,12 @@ fastify.get('/getSiswa_Admin', async (request, reply) => {
                     }
                 }))
 
-                return reply.status(200).send(data);
+                dataClean = {
+                    Length: ExistLength[0].total,
+                    data: data
+                }
+
+                return reply.status(200).send(dataClean);
             }          
         }
         else{
@@ -1447,16 +1465,29 @@ fastify.post('/deleteSiswa_Admin/:id', async (request, reply) => {
 
 // -data-guru
 fastify.get('/getGuru_Admin', async (request, reply) => {
+    const { offset } = request.query || 0;
+    const offsetint = parseInt(offset, 10);
     try{
-        const Exist = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM guru', (err, result) => {
-                if(err){
-                    reject(err);
-                }else{
-                    resolve(result);
-                }
+        const [Exist, ExistLength] = await Promise.all([
+            new Promise((resolve, reject) => {
+                db.query('SELECT * FROM guru LIMIT 10 OFFSET ?', [offsetint], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            }),
+            new Promise((resolve, reject) => {
+                db.query('SELECT COUNT(*) AS total FROM guru', (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
             })
-        })
+        ])
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
@@ -1465,7 +1496,12 @@ fastify.get('/getGuru_Admin', async (request, reply) => {
 
                 return { ...item, gambar_profil: Image }
             }))
-            return reply.status(200).send(data);
+
+            dataClean = {
+                Length: ExistLength[0].total,
+                Data: data
+            }
+            return reply.status(200).send(dataClean);
         }
         else{
             return reply.status(401).send({ message: 'Failed' });
@@ -1897,6 +1933,8 @@ fastify.get('/getKelas_Admin/:id', async (request, reply) => {
 
 fastify.get('/getDetailKelas/:id', async (request, reply) => {
     const id = request.params.id;
+    const { offset } = request.query || 0;
+    const offsetint = parseInt(offset, 10);
 
     try{
         const resp = await new Promise((resolve, reject) => {
@@ -1910,16 +1948,28 @@ fastify.get('/getDetailKelas/:id', async (request, reply) => {
             })
         })
 
-        const resp2 = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM siswa WHERE idkelas = ?', [id], (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else{
-                    resolve(result);
-                }
+        const [resp2, resp2Length] = await Promise.all([
+            new Promise((resolve, reject) => {
+                db.query('SELECT * FROM siswa WHERE idkelas = ? LIMIT 10 OFFSET ?', [id, offsetint], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else{
+                        resolve(result);
+                    }
+                })
+            }),
+            new Promise((resolve, reject) => {
+                db.query('SELECT COUNT(*) AS total FROM siswa WHERE idkelas = ?', [id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else{
+                        resolve(result);
+                    }
+                })
             })
-        })
+        ])
         
         const resp2data = await Promise.all(resp2.map(async (item) => {
             const imagePath = `./Gambar/Siswa/Profil/${item.gambar_profil}`;
@@ -1942,6 +1992,7 @@ fastify.get('/getDetailKelas/:id', async (request, reply) => {
         const data = {
             resp : resp[0],
             resp2data : resp2data,
+            resp2length : resp2Length[0].total,
             resp3 : resp3
         }
         

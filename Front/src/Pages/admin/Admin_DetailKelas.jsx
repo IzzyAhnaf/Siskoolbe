@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CustomWidth from "../../CustomWidth";
 import { useState, useEffect } from "react";
 import _debounce from "lodash/debounce";
-import { MdClass } from "react-icons/md";
+import { MdClass, MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import api from "../../api";
 import Swal from "sweetalert2";
 
@@ -18,6 +18,10 @@ const AdminDetailKelas = () => {
     const [dataGuru, setDataGuru] = useState([]);
     const [searchGuru, setSearchGuru] = useState({nama: "", id: ""});
     const [searchResults, setSearchResults] = useState([]);
+
+    const [totalData, setTotalData] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const limitPerPage = 10;
 
     const handleSearchChange = (event) => {
         const value = event.target.value;
@@ -36,6 +40,22 @@ const AdminDetailKelas = () => {
         }
     };
     
+    const handleNext = () => {
+        if(currentPage < Math.ceil(totalData / limitPerPage)) {
+          const newOffset = currentPage * limitPerPage;
+          setCurrentPage(prevPage => prevPage + 1);
+          getData(newOffset);
+        }
+    };
+    
+    const handlePrev = () => {
+        if (currentPage > 1) {
+          const newOffset = (currentPage - 2) * limitPerPage;
+          setCurrentPage(prevPage => prevPage - 1);
+          getData(newOffset);
+        }
+    }
+    
 
     const handleSelectGuru = (id, nama) => {
         setSearchGuru({ id, nama });
@@ -43,11 +63,12 @@ const AdminDetailKelas = () => {
         console.log({ id, nama });
     };
 
-    const getData = _debounce(async () => {
+    const getData = _debounce(async (offset) => {
         try{
-            const resp = await api.get('/getDetailKelas/' + id)
+            const resp = await api.get('/getDetailKelas/' + id + '?offset=' + offset)
             setDataKelas(resp.data.resp)
             setDataMurid(resp.data.resp2data)
+            setTotalData(resp.data.resp2length)
             setDataGuru(resp.data.resp3)
             setSearchGuru({nama: resp.data.resp.namaguru || "", id: resp.data.resp.idguru || ""})
         }catch(err){
@@ -77,7 +98,7 @@ const AdminDetailKelas = () => {
     }
 
     useEffect(() => {
-        getData()
+        getData(0)
     }, [])
 
     useEffect(() => {
@@ -130,7 +151,7 @@ const AdminDetailKelas = () => {
             style={{borderRadius: '0 0 10px 10px'}}>
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
                 <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
-                <div className="overflow-hidden">
+                <div className={`overflow-y-auto slim-scroll ${DekstopLow? 'h-[355px]' : ''}`}>
                     <table className="min-w-full cursor-default">
                     <thead className="bg-blue-500 border border-1 border-gray-400"
                     style={{borderRadius: '10px 10px 0 0'}}>
@@ -180,6 +201,14 @@ const AdminDetailKelas = () => {
                     </table>
                 </div>
                 </div>
+            </div>
+            <div className="mt-auto flex mx-auto mb-4 space-x-2 items-center">
+              <MdKeyboardArrowLeft onClick={() => handlePrev()} disabled={currentPage === 1}
+              className={`${currentPage === 1 ? 'cursor-not-allowed' : ''}`}/>
+              <span className="bg-[#1E6CB1] text-white px-2 border border-1 border-[#D9D9D9]">{currentPage}</span>
+              <MdKeyboardArrowRight onClick={() => handleNext()} 
+              className={`${currentPage === Math.ceil(totalData / limitPerPage) ? 'cursor-not-allowed' : ''}`} 
+              disabled={(currentPage === Math.ceil(totalData / limitPerPage))}/>
             </div>
             </div>
         </div>

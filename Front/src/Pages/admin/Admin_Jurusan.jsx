@@ -102,7 +102,7 @@ const AdminJurusan = () => {
           style={{borderRadius: '0 0 10px 10px'}}>
           <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
             <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
-              <div className="overflow-hidden">
+              <div className={`overflow-y-auto slim-scroll ${DekstopLow ? 'h-[355px]' : ''}`}>
                 <table className="min-w-full">
                   <thead className="bg-blue-500 border border-1 border-gray-400"
                     style={{borderRadius: '10px 10px 0 0'}}>
@@ -117,7 +117,7 @@ const AdminJurusan = () => {
                         Urutan Jurusan
                       </th>
                       <th scope="col" className="text-sm font-medium px-2 py-2 text-center">
-
+                        Opsi
                       </th>
                     </tr>
                   </thead>
