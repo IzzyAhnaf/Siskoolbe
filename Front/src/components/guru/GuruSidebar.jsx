@@ -29,7 +29,8 @@ const SidebarGuru = ({nama, gambar_profil}) => {
         const { pathname } = location;
         if (matchPath("/Siskoolbe/Guru", pathname)) SelectSidebars(0);
         else if (matchPath("/Siskoolbe/Guru/Profile", pathname)) SelectSidebars(1);
-        else if (matchPath("/Siskoolbe/AboutUs", pathname)) SelectSidebars(2);
+        else if (matchPath("/Siskoolbe/Guru/AbsensiMurid", pathname) || matchPath("/Siskoolbe/Guru/AbsensiMurid/:id", pathname)) SelectSidebars(2);
+        else if (matchPath("/Siskoolbe/AboutUs", pathname)) SelectSidebars(3);
     }, [])
 
     return (
@@ -66,8 +67,18 @@ const SidebarGuru = ({nama, gambar_profil}) => {
                     rounded-lg dark:text-gray-100 
                     ${SelectSidebar === 2 ? 'bg-gray-100 bg-opacity-50' : ''}
                     hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
-                        to="/Siskoolbe/AboutUs"
+                        to="/Siskoolbe/Guru/AbsensiMurid"
                         onClick={() => setSelectSidebar(2)}>
+                        {SelectSidebar === 2 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
+                        <span className="mx-4 font-small text-center font-inter">Absensi</span>
+                    </Link>
+
+                    <Link className={`flex flex-col items-center space-y-2 px-1 py-2 mt-2 text-gray-100
+                    rounded-lg dark:text-gray-100 
+                    ${SelectSidebar === 3 ? 'bg-gray-100 bg-opacity-50' : ''}
+                    hover:bg-gray-300 hover:bg-opacity-50 dark:hover:text-gray-100 hover:text-gray-100`}
+                        to="/Siskoolbe/AboutUs"
+                        onClick={() => setSelectSidebar(3)}>
                         {SelectSidebar === 3 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
                         <span className="mx-4 font-small text-center font-inter">About Us</span>
                     </Link>

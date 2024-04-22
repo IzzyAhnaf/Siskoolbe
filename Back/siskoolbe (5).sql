@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Apr 2024 pada 22.30
+-- Waktu pembuatan: 22 Apr 2024 pada 11.31
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -131,7 +131,8 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `jenis_kelamin`, `alamat`, `tempat_lahir`, `tgl_lahir`, `agama`, `jabatan`, `status`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 31287391732, 'L', 'contoh', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL);
+(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 31287391732, 'L', 'contoh', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL),
+(2, 93127173892163, 'Tono', 'Tono@g.com', '123', NULL, 'P', NULL, NULL, NULL, 'Non-Muslim', NULL, NULL, '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,7 +207,17 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `idkelas`, `alamat`, `no_hp`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-21 19:41:51');
+(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-21 19:41:51'),
+(17, 32147483647, 'Budi', 'Budi@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:15:54', '2024-04-22 02:25:34'),
+(18, 39721632321, 'Rian', 'Rian@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:16:54', '2024-04-22 02:25:34'),
+(19, 3638912612, 'Rina', 'Rina@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:16:54', '2024-04-22 02:25:34'),
+(20, 3971237312321, 'Yuda', 'Yuda@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Non-Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:17:47', '2024-04-22 02:25:34'),
+(21, 36743123131, 'Juan', 'Juan@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Non-Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:17:47', '2024-04-22 02:25:34'),
+(22, 37653712371, 'Udin', 'Udin@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:20:37', '2024-04-22 02:25:34'),
+(23, 379731837121, 'Dika', 'Dika@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:20:37', '2024-04-22 02:25:34'),
+(24, 386712835621, 'Tina', 'Tina@gmail.com', '123', NULL, NULL, 31, NULL, NULL, 'Perempuan', NULL, NULL, 'Non-Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27'),
+(25, 389987283121, 'Wati', 'Wati@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27'),
+(26, 3987312301291, 'Pou', 'Pou@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27');
 
 --
 -- Indexes for dumped tables
@@ -286,7 +297,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurusan`
@@ -304,7 +315,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

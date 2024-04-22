@@ -21,9 +21,9 @@ const GrMnvbar = () => {
         const { pathname } = location;
         if (matchPath('/Siskoolbe/Guru', pathname)) SelectSidebars(0);
         else if (matchPath('/Siskoolbe/Guru/Profile', pathname)) SelectSidebars(1);
+        else if (matchPath('/Siskoolbe/Guru/AbsensiMurid', pathname) || matchPath('/Siskoolbe/Guru/AbsensiMurid/:id', pathname)) SelectSidebars(2);
         else if (matchPath('/Siskoolbe/AboutUs', pathname)) {
-            // SelectSidebars(1)
-            SelectSidebars(2)
+            SelectSidebars(3)
         }
         else if (matchPath('/Siskoolbe/Guru/ProfSetGuru', pathname)) SelectSidebars(1);
     }, [location])
@@ -35,33 +35,42 @@ const GrMnvbar = () => {
                 </div>
             ) : (
                 <>
-                    <nav className="flex fixed bottom-0 left-0 w-full bg-[#D9D9D9]"
+                    <nav className="flex fixed bottom-0 left-0 w-full bg-[#D9D9D9] p-2"
                     style={{borderTop: '1px solid #000000'}}>
-                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 m-3
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50
                         ${SelectNavbar === 0 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
                         `}
                             to="/Siskoolbe/Guru"
                             onClick={() => SelectSidebars(0)}>
                             {SelectNavbar === 0 ? <AiFillHome className="w-5 h-5" /> : <AiOutlineHome className="w-5 h-5" />}
-                            <span className={`mx-2 text-[14px] font-normal font-inter`}>Home</span>
+                            <span className={`mx-2 text-[12px] font-normal font-inter`}>Home</span>
                         </Link>
 
-                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 m-3
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50
                         ${SelectNavbar === 1 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
                         `}
                             to="/Siskoolbe/Guru/ProfileGuru"
                             onClick={() => SelectSidebars(1)}>
                             {SelectNavbar === 1 ? <IoPerson className="w-5 h-5" /> : <IoPersonOutline className="w-5 h-5" />}
-                            <span className="mx-2 text-[14px] font-normal font-inter">Profile</span>
+                            <span className="mx-2 text-[12px] font-normal font-inter">Profile</span>
                         </Link>
 
-                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50 m-3
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50
                         ${SelectNavbar === 2 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
                         `}
-                            to="/Siskoolbe/AboutUs"
+                            to="/Siskoolbe/Guru/AbsensiMurid"
                             onClick={() => SelectSidebars(2)}>
                             {SelectNavbar === 2 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
-                            <span className="mx-2 text-[14px] font-normal font-inter">About Us</span>
+                            <span className="mx-2 text-[12px] font-normal font-inter">Absensi</span>
+                        </Link>
+                        
+                        <Link className={`flex flex-col w-full items-center px-2 py-2 text-black dark:bg-opacity-50
+                        ${SelectNavbar === 3 ? 'bg-blue-700 bg-opacity-50 text-white rounded-xl' : ''}
+                        `}
+                            to="/Siskoolbe/AboutUs"
+                            onClick={() => SelectSidebars(3)}>
+                            {SelectNavbar === 3 ? <PiScrollFill className="w-5 h-5 " /> : <PiScrollLight className="w-5 h-5" />}
+                            <span className="mx-2 text-[12px] font-normal font-inter">About Us</span>
                         </Link>
                         
                     </nav>

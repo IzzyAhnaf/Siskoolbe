@@ -39,6 +39,8 @@ import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan'
 import AdminDetailKelas from './Pages/admin/Admin_DetailKelas'
 import SidebarGuru from './components/guru/GuruSidebar'
 import DetailIzinGuru from './Pages/guru/Detail-izin-guru'
+import AbsensiWaliKelas from './Pages/guru/Absensi_Murid'
+import DetailAbsensiMurid from './Pages/guru/DetailAbsensiMurid'
 
 
 function App() {
@@ -129,6 +131,7 @@ function App() {
           setSelectedImage('data:image/png;base64,' + gambar_profil)
         } else if(decoded.role === 'guru'){
           setDataProfilGuru({
+            id: resp.data[0].id,
             nama: resp.data[0].nama,
             email: resp.data[0].email,
             noHp: resp.data[0].no_hp,
@@ -225,6 +228,8 @@ function App() {
               <Route path='/Guru/Absen/:id' element={<DetailIzinGuru WMobile={WMobile} />}></Route>
               <Route path='/Guru/AbsenMasuk/:id' element={<CheckinGuru />}></Route>
               <Route path='/Guru/AbsenKeluar/:id' element={<CheckoutGuru />}></Route>
+              <Route path='/Guru/AbsensiMurid' element={<AbsensiWaliKelas idguru={dataProfilGuru.id} /> }></Route>
+              <Route path='/Guru/AbsensiMurid/:id' element={<DetailAbsensiMurid WMobile={WMobile}/> }></Route>
               <Route path='/AboutUs' element={<AboutUS /> }></Route>
             </Routes>
             </>

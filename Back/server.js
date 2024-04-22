@@ -1094,6 +1094,86 @@ fastify.get('/DetailIzinGuru/:id', async (request, reply) => {
     return reply.status(200).send({ message: Select });
 })
 
+fastify.get('/AbsensiMurid/:id', async (request, reply) => {
+    const { offset } = request.query;
+    const id = request.params.id;
+    const offsetint = parseInt(offset, 10);
+
+    try{
+        const [Select, SelectLength] = await Promise.all([
+            new Promise((resolve, reject) => {
+                db.query('SELECT absensisiswa.izin, absensisiswa.tanggal, absensisiswa.detail_izin, absensisiswa.foto_izin_absensi, siswa.nama, absensisiswa.id AS idabsen FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis WHERE kelas.idguru = ? AND absensisiswa.izin = "sakit" OR absensisiswa.izin = "keterangan" ORDER BY absensisiswa.tanggal DESC LIMIT 10 OFFSET ?', [id, offsetint], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })    
+            }),
+            new Promise((resolve, reject) => {
+                db.query('SELECT COUNT(*) as total FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis WHERE kelas.idguru = ? AND absensisiswa.izin = "sakit" OR absensisiswa.izin = "keterangan"', [id], (err, result) => {
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+            })
+        ])
+
+        if(Select.length > 0){
+            const data = await Promise.all(Select.map(async (item) => {
+                const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin/', item.foto_izin_absensi);
+                const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
+                return { ...item, bukti: base64 };
+            }))
+
+            const dataClean = {
+                data: data,
+                total: SelectLength[0].total
+            }
+            return reply.status(200).send(dataClean);
+        }else{
+            return reply.status(404).send({ message: 'Not found' });
+        }
+        
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+
+})
+
+fastify.get('/AbsensiMurid/Search/:id', async (request, reply) => {
+    const id = request.params.id;
+    const {keyword} = request.query;
+
+    try{
+        const Select = await new Promise((resolve, reject) => {
+            db.query('SELECT absensisiswa.izin, absensisiswa.tanggal, absensisiswa.detail_izin, absensisiswa.foto_izin_absensi, siswa.nama, absensisiswa.id AS idabsen FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis WHERE kelas.idguru = ? AND (siswa.nama LIKE ? AND (absensisiswa.izin = "sakit" OR absensisiswa.izin = "keterangan")) ORDER BY absensisiswa.tanggal DESC', [id, '%'+keyword+'%'], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(Select.length > 0){
+            const data = await Promise.all(Select.map(async (item) => {
+                const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin/', item.foto_izin_absensi);
+                const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
+                return { ...item, bukti: base64 };
+            }))
+
+            return reply.status(200).send(data);
+        }else{
+            return reply.status(404).send({ message: 'Not found' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
 // Admin
 fastify.get('/admin', async (request, reply) => {
     try {

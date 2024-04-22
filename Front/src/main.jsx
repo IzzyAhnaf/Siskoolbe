@@ -36,6 +36,8 @@ import AdminKelas from './Pages/admin/Admin_Kelas.jsx'
 import AdminDetailJurusan from './Pages/admin/Admin_DetailJurusan.jsx'
 import AdminDetailKelas from './Pages/admin/Admin_DetailKelas.jsx'
 import DetailIzinGuru from './Pages/guru/Detail-izin-guru.jsx'
+import AbsensiWaliKelas from './Pages/guru/Absensi_Murid.jsx'
+import DetailAbsensiMurid from './Pages/guru/DetailAbsensiMurid.jsx'
 
 
 const router = createBrowserRouter([
@@ -157,6 +159,14 @@ const router = createBrowserRouter([
         path: '/Siskoolbe/Guru/IzinGuru',
         element: <Izin_Guru />
       },
+      {
+        path: '/Siskoolbe/Guru/AbsensiMurid',
+        element: <AbsensiWaliKelas/>
+      },
+      {
+        path: '/Siskoolbe/Guru/AbsensiMurid/:id',
+        element: <DetailAbsensiMurid/>
+      }
     ],
   },
   {
