@@ -355,9 +355,6 @@ const FormMurid = () => {
                     </div>
                 </form>
             </div>
-
-
-
             ) : (
                 <>
                     

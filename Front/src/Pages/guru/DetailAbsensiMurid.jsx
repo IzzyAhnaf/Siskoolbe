@@ -80,7 +80,7 @@ const DetailAbsensiMurid = ({WMobile}) => {
         <div className="w-full">
             <div className="w-full bg-blue-500 flex items-center p-4 space-x-2"
             style={{borderRadius: '10px 10px 0 0'}}>
-                <IoArrowBack className="text-xl text-white" onClick={() => navTo('/Siskoolbe/Siswa', {replace: true})}/>
+                <IoArrowBack className="text-xl text-white" onClick={() => navTo('/Siskoolbe/Guru/AbsensiMurid', {replace: true})}/>
                 <span className="text-lg font-semibold text-white">Detail Izin</span>
             </div>
             <div className="flex flex-col items-center w-full space-y-4 bg-white p-4 border border-1 
