@@ -1738,10 +1738,18 @@ fastify.get('/getGuru_Admin', async (request, reply) => {
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
-                const Image = fs.readFileSync(ImagePath, 'base64');
+                if(item.gambar_profil){
+                    try{
+                        const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
+                        const Image = fs.readFileSync(ImagePath, 'base64');
 
-                return { ...item, gambar_profil: Image }
+                        return { ...item, gambar_profil: Image }
+                    }catch(err){
+                        return { ...item, gambar_profil: null }
+                    }
+                }else{
+                    return { ...item, gambar_profil: null }
+                }
             }))
 
             dataClean = {
@@ -1772,10 +1780,18 @@ fastify.get('/getGuru_Admin/:id', async (request, reply) => {
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
-                const Image = fs.readFileSync(ImagePath, 'base64');
+                if(item.gambar_profil){
+                    try{
+                        const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
+                        const Image = fs.readFileSync(ImagePath, 'base64');
 
-                return { ...item, bukti: Image }
+                        return { ...item, bukti: Image }
+                    }catch(err){
+                        return { ...item, bukti: null }
+                    }
+                }else{
+                    return { ...item, bukti: null }
+                }
             }))
             return reply.status(200).send(data);
         }
@@ -1813,10 +1829,18 @@ fastify.get('/getGuru_Admin/Search', async (request, reply) => {
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
-                const Image = fs.readFileSync(ImagePath, 'base64');
+                if(item.gambar_profil){
+                    try{
+                        const ImagePath = `./Gambar/Guru/Profil/${item.gambar_profil}`
+                        const Image = fs.readFileSync(ImagePath, 'base64');
 
-                return { ...item, gambar_profil: Image }
+                        return { ...item, gambar_profil: Image }
+                    }catch(err){
+                        return { ...item, gambar_profil: null }
+                    }
+                }else{
+                    return { ...item, gambar_profil: null }
+                }
             }))
 
             dataClean = {
@@ -1982,13 +2006,25 @@ fastify.get('/getJurusan_Admin', async (request, reply) => {
         });
 
         const jurusanWithImages = await Promise.all(jurusanData.map(async (jurusan) => {
-            const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
-            const image = fs.readFileSync(imagePath, 'base64');
+            if(jurusan.gambar){
+                try{
+                    const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
+                    const image = fs.readFileSync(imagePath, 'base64');
 
-            return {
-                ...jurusan,
-                image: image
-            };
+                    return {
+                        ...jurusan,
+                        image: image
+                    };
+                }catch(err){
+                    return {
+                        ...jurusan
+                    };
+                }
+            }else{
+                return {
+                    ...jurusan
+                };
+            }
         }));
 
         if (jurusanWithImages.length > 0) {
@@ -2014,13 +2050,25 @@ fastify.get('/getJurusan_Admin/:id', async (request, reply) => {
         });
 
         const jurusanWithImages = await Promise.all(jurusanData.map(async (jurusan) => {
-            const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
-            const image = fs.readFileSync(imagePath, 'base64');
+            if(jurusan.gambar){
+                try{
+                    const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
+                    const image = fs.readFileSync(imagePath, 'base64');
 
-            return {
-                ...jurusan,
-                image: image
-            };
+                    return {
+                        ...jurusan,
+                        image: image
+                    };
+                }catch(err){
+                    return {
+                        ...jurusan
+                    };
+                }
+            }else{
+                return {
+                    ...jurusan
+                };
+            }
         }));
 
         if (jurusanWithImages.length > 0) {
@@ -2047,12 +2095,24 @@ fastify.get('/getJurusan_Admin/Search', async (request, reply) => {
         });
 
         const jurusanWithImages = await Promise.all(jurusanData.map(async (jurusan) => {
-            const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
-            const image = fs.readFileSync(imagePath, 'base64');
+            if(jurusan.gambar){
+                try{
+                    const imagePath = `./Gambar/Admin/Jurusan/${jurusan.gambar}`;
+                    const image = fs.readFileSync(imagePath, 'base64');
 
-            return {
-                ...jurusan,
-                image: image
+                    return {
+                        ...jurusan,
+                        image: image
+                    }
+                }catch(err){
+                    return {
+                        ...jurusan
+                    };
+                }
+            }else{
+                return {
+                    ...jurusan
+                };
             }
         }))
 
@@ -2297,10 +2357,18 @@ fastify.get('/getDetailKelas/:id', async (request, reply) => {
         ])
         
         const resp2data = await Promise.all(resp2.map(async (item) => {
-            const imagePath = `./Gambar/Siswa/Profil/${item.gambar_profil}`;
-            const Image = fs.readFileSync(imagePath, 'base64');
+            if(item.gambar_profil){
+                try{
+                    const imagePath = `./Gambar/Siswa/Profil/${item.gambar_profil}`;
+                    const Image = fs.readFileSync(imagePath, 'base64');
 
-            return { ...item, bukti: Image };
+                    return { ...item, bukti: Image };
+                }catch(err){
+                    return { ...item, bukti: '' };
+                }
+            }else{
+                return { ...item, bukti: '' };
+            }
         }))
 
         const resp3 = await new Promise((resolve, reject) => {

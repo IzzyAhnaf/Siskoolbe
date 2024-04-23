@@ -283,7 +283,87 @@ const FEditJurusan = () => {
                 </div>
             ) : (
                 <>
-              
+                    <div className="w-full flex justify-center">
+                        <form onSubmit={handleSubmit} className="font-inter">
+                        <div className={`overflow-y-auto mt-[12px] px-4 slim-scroll`}>
+                            <div className="flex flex-col w-full">
+                                <div className='flex w-full'>
+                                    <div className='flex w-full mt-4'>
+                                        <div className='w-full space-y-2'>
+                                            <label >Foto Jurusan</label>
+                                            {showImageUP && (
+                                                <div
+                                                    onClick={() => fileInputRef.current.click()} 
+                                                    onDrop={handleDrop}
+                                                    onDragOver={handleDragOver}
+                                                    className="border-[1px] w-full justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                    required
+                                                >
+                                                    <input
+                                                        type="file"
+                                                        name="gambar"
+                                                        id="gambar"
+                                                        accept="image/*"
+                                                        ref={fileInputRef}
+                                                        onChange={handleFileChange}
+                                                        className="hidden"
+                                                    />
+                                                    {showIcon && (
+                                                        <div className="image-icon flex flex-col items-center pt-[50px] pb-[50px]">
+                                                            <BiImageAlt className="w-[50px] h-[50px] text-[#00000099]" />
+                                                            <div>
+                                                                <h1 className="text-[20px] text-[#00000099] font-bold">Drag And Drop Here</h1>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {image && (
+                                                <div className='border-[1px] w-full justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                                <IoMdClose onClick={handleDelete} className="text-[red] hover:text-gray-400 text-[30px] mr-auto ml-2" />
+                                                    <div>
+                                                        <img src={`${image}`} alt="Uploaded" className="w-[500px] z-0"/>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col space-y-2 mt-4">
+                                    <div className="w-full space-y-2">
+                                        <label htmlFor="kelas">Nama Jurusan</label>
+                                        <input type="text" id="namaJurusan"
+                                            name="namaJurusan"
+                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            value={formData.namaJurusan}
+                                            onChange={handleInputChange} 
+                                            placeholder='Masukan Nama Jurusan'
+                                            />
+                                    </div>
+                                    <div className='w-full space-y-2'>
+                                        <label htmlFor="noHp">Urutan Jurusan</label>
+                                        <input type="text" id="urutanJurusan"
+                                            name="urutanJurusan"
+                                            className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full px-4 py-2 placeholder:text-[14px] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            value={formData.urutanJurusan}
+                                            onChange={handleInputChange} 
+                                            placeholder='Masukan Urutan Jurusan'
+                                            />
+                                    </div>
+                                </div>
+
+                                <div className="flex mt-4">
+                                    <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white w-full font-bold py-2 px-4 rounded mb-4'>Ubah Jurusan</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        </form>
+                    </div>
                 </>
             )}
         </>

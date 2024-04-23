@@ -1,4 +1,4 @@
-import IzinForm from "../../components/siswa/FormSakit";
+    import IzinForm from "../../components/siswa/FormSakit";
 import CustomWidth from "../../CustomWidth";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "../../components/TestImageUp";

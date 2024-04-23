@@ -359,7 +359,7 @@ const FormMurid = () => {
                 <>
                     <div className="w-full flex justify-center">
                         <form onSubmit={handleSubmit} className="font-inter">
-                        <div className={`overflow-y-auto mt-[12px] px-2 slim-scroll ${DekstopLow ? 'h-[550px]' : 'h-[850px]'}`}>
+                        <div className={`overflow-y-auto mt-[12px] px-2 slim-scroll`}>
                             <div className="flex flex-col w-full space-y-2" >
                                 <div className="w-full">
                                     <label htmlFor="nik">Nik</label>

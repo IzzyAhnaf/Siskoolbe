@@ -369,6 +369,182 @@ const FormGuru = () => {
 
             ) : (
                 <>
+                    <div className="w-full flex justify-center">
+                        <form onSubmit={handleSubmit} className="font-inter">
+                            <div className={`overflow-y-auto mt-[12px] px-2 slim-scroll`}>
+                            <div className="flex flex-col w-full space-y-2">
+                                <div className="w-full">
+                                    <label htmlFor="nik">Nik</label>
+                                    <input type="text" placeholder='Masukan Nik' id="nik" className="block flex-1 bg-white border-[1px]
+                                    border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]
+                                    text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="nik" value={formData.nik} onChange={handleInputChange} />
+                                </div>
+                                <div className="w-full">
+                                    <label htmlFor="nama">Nama Lengkap</label>
+                                    <input type="text" placeholder='Masukan Nama' id="nama" className="block flex-1 bg-white border-[1px]
+                                    border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        name="nama" value={formData.nama} onChange={handleInputChange} />
+                                </div>
+                            </div>
+                            <div className="flex flex-col mt-4 space-y-2 w-full">
+                                <div className="w-full">
+                                    <label htmlFor="email">Email</label>
+                                    <input type="email" placeholder='Masukan Email' id="email" name="email" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={formData.email} onChange={handleInputChange} />
+                                </div>
+                                <div className="w-full">
+                                    <label htmlFor="nik">Password</label>
+                                    <input type="text" id="nik" placeholder='Masukan Password' className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="Password" value={formData.Password} onChange={handleInputChange} />
+
+                                </div>
+                            </div>
+                            <div className="flex flex-col mt-4 space-y-2">
+                                <div className="w-full">
+                                    <label htmlFor="alamat">Alamat</label>
+                                    <textarea id="alamat"
+                                        name="alamat"
+                                        placeholder='Masukan Alamat'
+                                        rows={4}
+                                        style={{resize: 'none'}}
+                                        className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        value={formData.alamat}
+                                        onChange={handleInputChange} />
+                                </div>
+                                <div className="w-full">
+                                    <label htmlFor="tempatLahir">Tempat Lahir</label>
+                                    <textarea
+                                        type="text"
+                                        id="tempatLahir"
+                                        className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        name="tempatLahir"
+                                        placeholder='Masukan Tempat Lahir'
+                                        rows={4}
+                                        style={{resize: 'none'}}
+                                        value={formData.tempatLahir}
+                                        onChange={handleInputChange} />
+                                </div>
+                            </div>
+                            <div className="flex flex-col mt-4 space-y-2">
+                                <div className="w-full">
+                                    <label htmlFor="jabatan">Jabatan</label>
+                                    <select id="jabatan" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        name="jabatan"
+                                        value={formData.jabatan}
+                                        onChange={handleInputChange}>
+                                        <option value="" selected disabled>Pilih Jabatan</option>
+                                        <option value="Kepala Sekolah">Kepala Sekolah</option>
+                                        <option value="Wakil Kepala Sekolah">Wakil Kepala Sekolah</option>
+                                        <option value="Guru Kelas">Guru Kelas</option>
+                                        <option value="Koordinator atau Pembina Bidang">Koordinator atau Pembina Bidang</option>
+                                        <option value="Guru Mata Pelajaran">Guru Mata Pelajaran</option>
+                                        <option value="Guru Bimbingan Konseling (BK)">Guru Bimbingan Konseling (BK)</option>
+                                        <option value="Guru Agama">Guru Agama</option>
+                                        <option value="Guru Pendukung">Guru Pendukung</option>
+                                        <option value="Guru Pengajar Tambahan">Guru Pengajar Tambahan</option>
+                                        <option value="Guru Pembimbing">Guru Pembimbing</option>
+                                        <option value="Guru Pendidikan Khusus">Guru Pendidikan Khusus</option>
+                                        <option value="Guru Bahasa Asing">Guru Bahasa Asing</option>
+                                        <option value="Guru Pengampu Program Keahlian">Guru Pengampu Program Keahlian</option>
+                                    </select>
+                                </div>
+                                <div className="w-full">
+                                    <label htmlFor="status">Status</label>
+                                    <select id="status" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        name="status"
+                                        value={formData.status}
+                                        onChange={handleInputChange}>
+                                        <option value="" selected disabled>Pilih Status</option>
+                                        <option value="PNS">PNS</option>
+                                        <option value="Honorer">Honorer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="flex flex-col space-y-2 mt-4">
+                                <div className="w-full">
+                                    <label htmlFor="jenisKelamin">Jenis Kelamin</label>
+                                    <select id="jenisKelamin" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" name="jenisKelamin" value={formData.jenisKelamin} onChange={handleInputChange}>
+                                        <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                    </select>
+                                </div>
+
+                                <div className="w-full">
+                                    <label htmlFor="agama">Agama</label>
+                                    <select id="agama" name="agama" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        value={formData.agama} onChange={handleInputChange}>
+                                        <option value="" disabled selected>Pilih Agama</option>
+                                        <option value="Muslim">Muslim</option>
+                                        <option value="Non-Muslim">Non Muslim</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col space-y-2 mt-4">
+                                <div className="w-full">
+                                    <label htmlFor="tanggalLahir">Tanggal Lahir</label>
+                                    <input type="date" className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" id="tanggalLahir" name="tanggalLahir" value={formData.tanggalLahir} onChange={handleInputChange} />
+                                </div>
+
+                                <div className='w-full'>
+                                    <label htmlFor="noHp">No HP</label>
+                                    <input type="text"
+                                        id="noHp"
+                                        placeholder='Masukan Nomer hp'
+                                        name="noHp"
+                                        className="block flex-1 bg-white border-[1px]  border-black rounded-md bg-transparent w-full py-2 px-4 placeholder:text-[14px]  text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        value={formData.noHp}
+                                        onChange={handleInputChange} />
+                                </div>
+
+                            </div>
+
+                            <div className='flex mt-4'>
+                                <div className='w-full'>
+                                    <label >Foto Profil </label>
+                                    {showImageUP && (
+                                        <div
+                                            onClick={() => fileInputRef.current.click()} // Memicu klik pada input file saat div diklik
+                                            onDrop={handleDrop}
+                                            onDragOver={handleDragOver}
+                                            className="border-[1px] w-full justify-center flex border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            required
+                                        >
+                                            <input
+                                                type="file"
+                                                name="bukti"
+                                                id="bukti"
+                                                accept="image/*"
+                                                ref={fileInputRef} // Menghubungkan elemen input dengan useRef
+                                                onChange={handleFileChange}
+                                                className="hidden" // Menyembunyikan input file
+                                            />
+                                            {showIcon && (
+                                                <div className="image-icon flex flex-col items-center pt-[50px] pb-[50px]">
+                                                    <BiImageAlt className="w-[50px] h-[50px] text-[#00000099]" />
+                                                    <div>
+                                                        <h1 className="text-[20px] text-[#00000099] font-bold">Drag And Drop Here</h1>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                    {image && (
+                                        <div className='border-[1px] w-full justify-center flex flex-col items-center border-black rounded-md bg-transparent py-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ' >
+                                            <IoMdClose onClick={handleDelete} className="text-red-500 text-[30px] mr-auto ml-2" />
+                                            <div>
+                                                <img src={image} alt="Uploaded" className="w-auto" />
+                                            </div>
+                                        </div>
+                                    )}
+
+                                </div>
+                            </div>
+                            <div className="flex mt-4">
+                                <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white w-full font-bold py-2 px-4 mb-4 rounded'>Tambah Guru</button>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
                 </>
             )}
         </>
