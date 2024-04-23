@@ -32,7 +32,7 @@ const AMNavbar = () => {
             SelectSidebars(3);
         }
 
-    }, [location])
+    }, [location.pathname])
 
     
     return (

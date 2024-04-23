@@ -273,7 +273,7 @@ const AdminDetailKelas = () => {
                     style={{borderRadius: '0 0 10px 10px'}}>
                         <div className="overflow-y-auto hide-scroll">
                             <div className="py-2 inline-block min-w-full sm:px-8 lg:px-6">
-                                <div className={`overflow-y-auto slim-scroll ${DekstopLow? 'h-[355px]' : ''}`}>
+                                <div className={`overflow-y-auto slim-scroll`}>
                                     <table className="min-w-full cursor-default">
                                     <thead className="bg-blue-500 border border-1 border-gray-400"
                                     style={{borderRadius: '10px 10px 0 0'}}>

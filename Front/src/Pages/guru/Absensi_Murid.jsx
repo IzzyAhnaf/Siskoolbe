@@ -21,6 +21,7 @@ const AbsensiWaliKelas = ({idguru}) => {
     const [startDate, setStartDate] = useState(null);
     const [izinFilter, setIzinFilter] = useState("");
     const [keyword, setKeyword] = useState("");
+    const [kelas, setKelas] = useState({});
 
     const [totalData, setTotalData] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,6 +50,7 @@ const AbsensiWaliKelas = ({idguru}) => {
     const getData = _debounce(async (offset) => {
         try{
             await api.get(`/AbsensiMurid/${idguru}?offset=${offset}&start_date=${startDate ? startDate.toISOString() : null}&izin_filter=${izinFilter}&keyword=${keyword}`).then((res) => {
+                setKelas(res.data.kelas);
                 setData(res.data.data);
                 setTotalData(res.data.total);
             })
@@ -83,6 +85,20 @@ const AbsensiWaliKelas = ({idguru}) => {
         return `${dayName}, ${day} ${month} ${year}`;
     };
 
+    const shortJurusan = (jurusan) => {
+        if(jurusan === "Pengembangan Perangkat Lunak dan Gim"){
+        return "PPLG"
+        }else if(jurusan === "Akutansi Keuangan Lembaga"){
+        return "AKL"
+        }else if(jurusan === "Teknik Otomotif"){
+        return "TO"
+        }else if(jurusan === "Perhotelan"){
+        return "PH"
+        }else if(jurusan === "Desain Komunikasi Visual"){
+        return "DKV"
+        }
+    }
+
     useEffect(() => {
         getData(0);
     }, [keyword, startDate, izinFilter]);
@@ -94,7 +110,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                     <div className="flex flex-col w-full">
                         <div className="bg-blue-500 p-4"
                         style={{borderRadius: '10px 10px 0 0'}}>
-                            <span className="text-white font-semibold text-xl">Izin Murid</span>
+                            <span className="text-white font-semibold text-xl">Izin Murid  - {'Kelas ' + kelas.kelas + ' ' + kelas.namajurusan + ' ' + kelas.sub_jurusan}</span>
                         </div>
                         <div className="flex bg-white p-4 items-center">
                             <div className="max-w-md flex">
@@ -177,7 +193,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                     <div className="flex flex-col w-full">
                         <div className="bg-blue-500 p-4"
                         style={{borderRadius: '10px 10px 0 0'}}>
-                            <span className="text-white font-semibold text-lg">Izin Murid</span>
+                            <span className="text-white font-semibold text-lg">Izin Murid - {'Kelas ' + kelas.kelas + ' ' + shortJurusan(kelas.namajurusan) + ' ' + kelas.sub_jurusan}</span>
                         </div>
                         <div className="flex flex-col bg-white space-y-2 p-4">
                             <div className="max-w-md flex">
@@ -212,7 +228,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                         </div>
                         <div className="flex flex-col bg-white p-1 h-full border border-1 overflow-y-auto"
                         style={{borderRadius: '0 0 10px 10px'}}>
-                            <div className={`overflow-y-auto slim-scroll ${DekstopLow ? 'h-[355px]' : 'h-full'}`}>
+                            <div className={`overflow-y-auto slim-scroll`}>
                                 <table className="min-w-full">
                                     <thead className="bg-blue-500 border border-1 border-gray-400"
                                     style={{borderRadius: '10px 10px 0 0'}}>

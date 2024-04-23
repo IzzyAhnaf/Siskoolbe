@@ -26,7 +26,7 @@ const ProfilePicture = ({gambar_profil}) => {
                     id='gambarprofil'
                     className="object-cover lg:w-32 lg:h-32 md:w-24 md:h-24 mx-2 rounded-full"
                     src={gambar_profil}
-                    onError={(e) => (e.target.src = 'https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg')}
+                    onError={(e) => (e.target.src = "https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg")} 
                     alt="avatar"
                 />
                 <AiOutlineCamera className="camera-icon"

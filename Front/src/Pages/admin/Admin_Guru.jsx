@@ -184,7 +184,8 @@ const Adminguru = () => {
                             <div style={{position: 'relative', display: 'inline-block'}}>
                               <img className="w-10 h-10 mr-4 rounded-full object-cover" 
                               src={`data:image/png;base64,${Guru.gambar_profil}`} 
-                              onError={e => e.target.src = `"https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg"`} alt="" />
+                              onError={(e) => (e.target.src = "https://i.pinimg.com/564x/4c/85/31/4c8531dbc05c77cb7a5893297977ac89.jpg")} 
+                              alt="" />
                             </div>
                             <span className="items-center font-inter font-medium text-sm">{Guru.nama}</span>
                           </div>

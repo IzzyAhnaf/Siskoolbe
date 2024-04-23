@@ -1,4 +1,7 @@
 export default function base64ToFile(base64Data, filename) {
+    if(!base64Data) {
+        return null;
+    }
     const base64WithoutMetadata = base64Data.split(';base64,').pop();
 
     const byteCharacters = atob(base64WithoutMetadata);

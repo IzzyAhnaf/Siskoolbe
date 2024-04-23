@@ -155,7 +155,7 @@ const HomesGuru = ({nama, token, WMobile, DekstopLow}) => {
                   {entry.izin === 'sakit' || entry.izin === 'keterangan' ? (
                     <div className="p-2 rounded-2xl py-2 px-6 mx-2 my-4 items-center flex flex-col 
                     bg-[#ffec1c] justify-center cursor-pointer" 
-                    onClick={() => navTo(`/Siskoolbe/Siswa/Absen/${entry.id}`)}>
+                    onClick={() => navTo(`/Siskoolbe/Guru/Absen/${entry.id}`)}>
                       <span className="font-inter font-bold text-lg text-white">Izin</span>
                     </div>
                   ) : null}

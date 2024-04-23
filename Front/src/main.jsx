@@ -38,6 +38,7 @@ import AdminDetailKelas from './Pages/admin/Admin_DetailKelas.jsx'
 import DetailIzinGuru from './Pages/guru/Detail-izin-guru.jsx'
 import AbsensiWaliKelas from './Pages/guru/Absensi_Murid.jsx'
 import DetailAbsensiMurid from './Pages/guru/DetailAbsensiMurid.jsx'
+import AdminProfset from './Pages/admin/Admin_Profset.jsx'
 
 
 const router = createBrowserRouter([
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: '/Siskoolbe/Admin',
         element: <HomesAdmin />
+      },
+      {
+        path: '/Siskoolbe/Admin/Profset',
+        element: <AdminProfset />
       },
       {
         path: '/Siskoolbe/Admin/TambahMurid',

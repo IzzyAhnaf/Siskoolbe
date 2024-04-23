@@ -41,6 +41,7 @@ import SidebarGuru from './components/guru/GuruSidebar'
 import DetailIzinGuru from './Pages/guru/Detail-izin-guru'
 import AbsensiWaliKelas from './Pages/guru/Absensi_Murid'
 import DetailAbsensiMurid from './Pages/guru/DetailAbsensiMurid'
+import AdminProfset from './Pages/admin/Admin_Profset'
 
 
 function App() {
@@ -148,6 +149,7 @@ function App() {
             nik: resp.data[0].nik,
             gambar_profil: 'data:image/png;base64,' + resp.data[0].gambar_profil
           })
+          setSelectedImage('data:image/png;base64,' + resp.data[0].gambar_profil)
         }
       }
     } catch (err) {
@@ -237,7 +239,8 @@ function App() {
             <>
               {WMobile ? <AMNavbar /> : <SidebarAdmin nama={dataProfilAdmin.nama} gambar_profil={selectedImage} />}
               <Routes>
-                <Route path='/Admin' element={<HomesAdmin />}></Route>
+                <Route path='/Admin' element={<HomesAdmin getProfileImage={selectedImage} setSelectedImage={setSelectedImage}/>}></Route>
+                <Route path='/Admin/Profset' element={<AdminProfset getProfileImage={selectedImage} setSelectedImage={setSelectedImage}/>}></Route>
                 <Route path='/Admin/Admin_Guru' element={<Adminguru />}></Route>
                 <Route path='/Admin/Admin_Murid' element={<AdminMurid />}></Route>
                 <Route path='/Admin/Admin_Jurusan' element={<AdminJurusan />}></Route>

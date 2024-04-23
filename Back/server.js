@@ -311,16 +311,24 @@ fastify.get('/siswa', async (request, reply) => {
         })
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                try{
-                    const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
-                    const Image = fs.readFileSync(imagePath, 'base64');
-                    return {
-                        ...item,
-                        gambar_profil: Image,
-                        nama_gambar: item.gambar_profil,
-                        kelas: kelas[0].kelas
-                    }                    
-                }catch(err){
+                if(item.gambar_profil){
+                    try{
+                        const imagePath = './Gambar/Siswa/Profil/' + item.gambar_profil;
+                        const Image = fs.readFileSync(imagePath, 'base64');
+                        return {
+                            ...item,
+                            gambar_profil: Image,
+                            nama_gambar: item.gambar_profil,
+                            kelas: kelas[0].kelas
+                        }                    
+                    }catch(err){
+                        return {
+                            ...item,
+                            gambar_profil: null,
+                            kelas: kelas[0].kelas
+                        }
+                    }
+                }else{
                     return {
                         ...item,
                         gambar_profil: null,
@@ -497,7 +505,7 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
 })
 
 fastify.post('/editsiswaProfile/:email', async (request, reply) => {
-    const {nama, email, alamat, no_hp} = request.body;
+    const {nama, alamat, no_hp} = request.body;
 
     try{
         const update = await new Promise((resolve, reject) => {
@@ -617,9 +625,18 @@ fastify.get('/DetailIzinSiswa/:id', async (request, reply) => {
         })
         if(exist[0].izin === 'keterangan' || exist[0].izin === 'sakit'){
             const data  = await Promise.all(exist.map(async (item) => {
-                const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin', item.foto_izin_absensi);
-                const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
-                return { ...item, bukti: base64 };
+                if(item.foto_izin_absensi){
+                    try{
+                        const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin', item.foto_izin_absensi);
+                        const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
+
+                        return { ...item, bukti: base64 };
+                    }catch(err){
+                        return { ...item, bukti: null };
+                    }
+                }else{
+                    return { ...item, bukti: null };
+                }
             }))
             return reply.status(200).send(data);
         }else{
@@ -658,15 +675,19 @@ fastify.get('/guru', async (request, reply) => {
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                try{
-                    const imagePath = './Gambar/Guru/Profil/' + item.gambar_profil;
-                    const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
-                    return { 
-                        ...item, 
-                        gambar_profil: base64,
-                        nama_gambar: item.gambar_profil
-                    };
-                }catch(err){
+                if(item.gambar_profil){
+                    try{
+                        const imagePath = './Gambar/Guru/Profil/' + item.gambar_profil;
+                        const base64 = fs.readFileSync(imagePath, { encoding: 'base64' });
+                        return { 
+                            ...item, 
+                            gambar_profil: base64,
+                            nama_gambar: item.gambar_profil
+                        };
+                    }catch(err){
+                        return { ...item, gambar_profil: null };
+                    }
+                }else{
                     return { ...item, gambar_profil: null };
                 }
             }))
@@ -1080,9 +1101,17 @@ fastify.get('/DetailIzinGuru/:id', async (request, reply) => {
 
         if(Select[0].izin === "keterangan" || Select[0].izin === "sakit"){
             const data = await Promise.all(Select.map(async (item) => {
-                const imagePath = path.join(__dirname, 'Gambar/Guru/Izin/', item.foto_izin_absensi);
-                const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
-                return { ...item, bukti: base64 };
+                if(item.foto_izin_absensi){
+                    try{
+                        const imagePath = path.join(__dirname, 'Gambar/Guru/Izin/', item.foto_izin_absensi);
+                        const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
+                        return { ...item, bukti: base64 };
+                    }catch(err){
+                        return { ...item, bukti: '' };
+                    }
+                }else{
+                    return { ...item, bukti: '' };
+                }
             }))
             return reply.status(200).send(data);
         }else{
@@ -1091,7 +1120,6 @@ fastify.get('/DetailIzinGuru/:id', async (request, reply) => {
     }catch(err){
         return reply.status(500).send({ message: err.message });
     }
-    return reply.status(200).send({ message: Select });
 })
 
 fastify.get('/AbsensiMurid/:id', async (request, reply) => {
@@ -1140,6 +1168,16 @@ fastify.get('/AbsensiMurid/:id', async (request, reply) => {
             })
         ]);
 
+        const SelectClass = await new Promise((resolve, reject) => {
+            db.query('SELECT jurusan.namajurusan, jurusan.sub_jurusan, kelas.kelas FROM kelas JOIN jurusan ON jurusan.id = kelas.jurusanid WHERE kelas.idguru = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
+
         if (Select.length > 0) {
             const data = await Promise.all(Select.map(async (item) => {
                 if (item.foto_izin_absensi) {
@@ -1152,6 +1190,7 @@ fastify.get('/AbsensiMurid/:id', async (request, reply) => {
             }));
 
             const dataClean = {
+                kelas: SelectClass[0],
                 data: data,
                 total: SelectLength[0].total
             };
@@ -1167,6 +1206,7 @@ fastify.get('/AbsensiMurid/:id', async (request, reply) => {
 
 
 // fastify.get('/AbsensiMurid/Search/:id', async (request, reply) => {
+
 //     const id = request.params.id;
 //     const { keyword, start_date, izin_filter } = request.query;
 
@@ -1230,6 +1270,7 @@ fastify.get('/AbsensiMurid/:id', async (request, reply) => {
 //     }
 // })
 
+
 // Admin
 fastify.get('/admin', async (request, reply) => {
     try {
@@ -1257,11 +1298,15 @@ fastify.get('/admin', async (request, reply) => {
 
         if(Exist.length > 0){
             const data = await Promise.all(Exist.map(async (item) => {
-                try {
-                    const imagePath = './Gambar/Admin/Profil/' + item.gambar_profil;
-                    const image = fs.readFileSync(imagePath, 'base64');
-                    return { ...item, gambar_profil: image };       
-                } catch(err) {
+                if(item.gambar_profil) {
+                    try {
+                        const imagePath = './Gambar/Admin/Profil/' + item.gambar_profil;
+                        const image = fs.readFileSync(imagePath, 'base64');
+                        return { ...item, gambar_profil: image };       
+                    } catch(err) {
+                        return { ...item, gambar_profil: null };
+                    }
+                }else{
                     return { ...item, gambar_profil: null };
                 }
             }));
@@ -1274,6 +1319,71 @@ fastify.get('/admin', async (request, reply) => {
     }
 });
 
+fastify.post('/editadminProfileImage', async (request, reply) => {
+    const { email } = request.query;
+    const file = await request.file();
+
+    try{
+        if(!file){
+            return reply.status(400).send({ message: 'File not found' });
+        }
+
+        const timestamp = Date.now();
+        const uploadDir = path.join(__dirname, 'Gambar/Admin/Profil/');
+        const filepath = path.join(uploadDir, `${timestamp}-${file.filename}`);
+
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir);
+        }
+
+        const getImage = await new Promise((resolve, reject) => {
+            db.query('SELECT gambar_profil FROM admin WHERE email = ?', [email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(getImage.length > 0){
+            fs.unlinkSync(path.join(__dirname, `Gambar/Admin/Profil/${getImage[0].gambar_profil}`));               
+            db.query('UPDATE admin SET gambar_profil = ? WHERE email = ?', [timestamp + '-' + file.filename, email], (err, result) => {
+                if(err){
+                    return reply.status(500).send({ message: err.message });
+                }else{
+                    pipeline(file.file, fs.createWriteStream(filepath));
+                    return reply.status(200).send({ message: 'Success' });
+                }
+            })
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
+
+fastify.post('/editadminProfile', async (request, reply) => {
+    const { email } = request.query;
+    const {nama, nik, no_hp} = request.body;
+
+    try{
+        const update = await new Promise((resolve, reject) => {
+            db.query('UPDATE admin SET nama = ?, nik = ?, no_hp = ? WHERE email = ?', [nama, nik, no_hp, email], (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+
+        if(update.affectedRows > 0){
+            return reply.status(200).send({ message: 'Success' });
+        }
+    }catch(err){
+        return reply.status(500).send({ message: err.message });
+    }
+})
 
 // -data-siswa
 fastify.get('/getSiswa_Admin', async (request, reply) => {
