@@ -16,7 +16,7 @@ const AboutUS = ({ WMobile }) => {
     return (
         <>
             {/* {!WMobile ? ( */}
-                <div className="flex flex-col w-full h-[88%] rounded-xl bg-[#D9D9D9] mx-4 p-8 mb-4 font-inter overflow-y-auto slim-scroll">
+                <div className={`flex flex-col w-full ${WMobile ? 'h-[88%]' : 'h-full'} rounded-xl bg-[#D9D9D9] mx-4 p-8 mb-4 font-inter overflow-y-auto slim-scroll`}>
                     <div className={`flex flex-col items-center w-full space-y-4 ${WMobile ? "mb-2" : "mb-32"}`}>
                         <h1 className="text-4xl font-bold">How it Started</h1>
                         <p className="lg:text-2xl md:text-xl lg:w-[40%] md:w-1/3 text-center">

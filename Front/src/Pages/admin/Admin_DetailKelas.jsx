@@ -92,9 +92,10 @@ const AdminDetailKelas = () => {
 
     const ubahWaliKelas = async () => {
         try {
+            const idguruChange = searchGuru.id || searchResults[0].id;
             await api.post('/ubahWaliKelas', {
                 id: id,
-                idguru: searchGuru.id,
+                idguru: idguruChange,
             }).then(() => {
                 Swal.fire(
                     'Berhasil!',
