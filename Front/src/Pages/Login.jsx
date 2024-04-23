@@ -55,21 +55,23 @@ const Login = () => {
         <Auth type="login">
             <div className="font-inter flex flex-col space-y-4">
                 <div className="space-y-2">
-                    <p className="font-semibold">Email</p>
+                    <label htmlFor="email" className="font-semibold">Email</label>
                     <div className="flex border border-[#818283] rounded-md px-3 py-2 space-x-4">
                         <RiAccountCircleLine className="text-3xl" color="#1652C7"/>
                         <input type="email" 
+                        id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="outline-none placeholder:text-gray-700" placeholder="Masukkan Email"/>
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <p className="font-semibold">Password</p>
+                    <label htmlFor="password" className="font-semibold">Password</label>
                     <div className="flex border border-[#818283] rounded-md px-3 py-2 space-x-4">
                         <IoIosLock className="text-3xl" color="#1652C7"/>
                         <input type={show ? "text" : "password"} 
                         value={password}
+                        id="password"
                         onChange={(e) => setPassword(e.target.value)}
                         className="outline-none placeholder:text-gray-700 w-full" 
                         placeholder="Masukkan Kata Sandi"/>
@@ -77,9 +79,9 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="flex space-y-2 items-center">
-                    <p className="font-semibold"></p>
                     <div className="flex rounded-md px-3 py-2 space-x-4">
                         <input type="checkbox" 
+                        id="remember"
                         className="outline-none placeholder:text-gray-700"
                         onChange={(e) => 
                             {
@@ -87,7 +89,7 @@ const Login = () => {
                             }
                         }
                         value={check}/>
-                        <p className="text-sm">Ingat Saya</p>
+                        <label className="text-sm" htmlFor="remember">Ingat Saya</label>
                     </div>
                     <Link to={"/Siskoolbe/forgotpassword"} className="text-black text-sm underline ml-auto">Lupa Kata Sandi?</Link>
                 </div>

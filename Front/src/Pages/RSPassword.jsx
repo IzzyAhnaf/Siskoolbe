@@ -22,30 +22,33 @@ const RSPassword = () => {
         <Auth type="resetpassword">
             <div className="font-inter flex flex-col space-y-8">
                 <div className="space-y-2">
-                    <p className="font-semibold">Email</p>
+                    <label htmlFor="email" className="font-semibold">Email</label>
                     <div className="flex border border-black rounded-md px-3 py-2 space-x-4">
                         <TfiEmail className="text-3xl" />
                         <input type="email" 
+                        id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="outline-none placeholder:text-gray-700" placeholder="Enter your Email here"/>
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <p className="font-semibold">Kata Sandi</p>
+                    <label htmlFor="password" className="font-semibold">Kata Sandi</label>
                     <div className="flex border border-black rounded-md px-3 py-2 space-x-4">
                         {show ? <FaRegEyeSlash className="text-3xl" onClick={() => setShow(!show)}/> : <FaRegEye className="text-3xl" onClick={() => setShow(!show)}/>}
                         <input type={show ? "text" : "password"} 
                         value={password}
+                        id="password"
                         onChange={(e) => setPassword(e.target.value)}
                         className="outline-none placeholder:text-gray-700" placeholder="Masukkan Password Baru"/>
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <p className="font-semibold">Konfirmasi Kata Sandi</p>
+                    <label htmlFor="konfirmasipassword" className="font-semibold">Konfirmasi Kata Sandi</label>
                     <div className="flex border border-black rounded-md px-3 py-2 space-x-4">
                         <FaRegEye className="text-3xl" />
                         <input type="text" 
+                        id="konfirmasipassword"
                         value={Cpassword}
                         onChange={(e) => setCPassword(e.target.value)}
                         className="outline-none placeholder:text-gray-700" placeholder="Konfirmasi Password"/>

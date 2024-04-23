@@ -19,10 +19,11 @@ const FGPassword = () => {
         <Auth type="forgotpassword">
             <div className="font-inter flex flex-col space-y-12">
                 <div className="space-y-2">
-                    <p className="font-semibold">Email</p>
+                    <label htmlFor="email" className="font-semibold">Email</label>
                     <div className="flex border border-border-[#818283] rounded-md px-3 py-2 space-x-4">
                         <TfiEmail className="text-3xl" color="#1652C7"/>
                         <input type="email" 
+                        id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="outline-none placeholder:text-gray-700" placeholder="Masukkan Email"/>
