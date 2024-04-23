@@ -10,13 +10,14 @@ import base64ToFile from "../../base64toFile";
 
 const AdminProfset = ({getProfileImage, setSelectedImage}) => {
     const navTo = useNavigate();
+    const Wmobile = CustomWidth() <= 767;
     const [formData, setFormData] = useState({})
 
     const update = async () => {
         try{
             const data = {
                 nama: formData.nama,
-                alamat: formData.alamat,
+                nik: formData.nik,
                 no_hp: formData.no_hp
             }
 
@@ -125,7 +126,14 @@ const AdminProfset = ({getProfileImage, setSelectedImage}) => {
         navTo('/Siskoolbe/login', {replace: true});
     }
 
-    const Wmobile = CustomWidth() <= 767;
+
+    useEffect(() => {
+        if (!Wmobile) {
+            navTo('/Siskoolbe/Siswa/Profile', { replace: true });
+        }else{
+            getData();
+        }
+    }, []) 
 
     return(
         <>

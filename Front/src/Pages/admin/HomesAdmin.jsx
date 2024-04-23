@@ -17,7 +17,7 @@ const HomesAdmin = ({getProfileImage, setSelectedImage}) => {
         try{
             const data = {
                 nama: formData.nama,
-                alamat: formData.alamat,
+                nik: formData.nik,
                 no_hp: formData.no_hp
             }
 
