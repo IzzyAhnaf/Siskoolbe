@@ -1095,7 +1095,7 @@ fastify.get('/DetailIzinGuru/:id', async (request, reply) => {
 })
 
 fastify.get('/AbsensiMurid/:id', async (request, reply) => {
-    const { offset, start_date, izin_filter } = request.query;
+    const { offset, start_date, izin_filter, keyword } = request.query;
     const id = request.params.id;
     const offsetint = parseInt(offset, 10);
 
@@ -1111,6 +1111,11 @@ fastify.get('/AbsensiMurid/:id', async (request, reply) => {
     if (izin_filter && izin_filter !== 'null') {
         condition += ' AND absensisiswa.izin = ?';
         params.push(izin_filter);
+    }
+
+    if (keyword && keyword !== 'null') {
+        condition += ' AND siswa.nama LIKE ?';
+        params.push(`%${keyword}%`);
     }
 
     try {
@@ -1161,55 +1166,69 @@ fastify.get('/AbsensiMurid/:id', async (request, reply) => {
 });
 
 
-fastify.get('/AbsensiMurid/Search/:id', async (request, reply) => {
-    const id = request.params.id;
-    const {keyword} = request.query;
+// fastify.get('/AbsensiMurid/Search/:id', async (request, reply) => {
+//     const id = request.params.id;
+//     const { keyword, start_date, izin_filter } = request.query;
 
-    try{
-        const [Select, SelectLength] = await Promise.all([
-            new Promise((resolve, reject) => {
-                db.query('SELECT absensisiswa.absen_masuk, absensisiswa.izin, absensisiswa.tanggal, absensisiswa.detail_izin, absensisiswa.foto_izin_absensi, siswa.nama, absensisiswa.id AS idabsen FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis WHERE kelas.idguru = ? AND siswa.nama LIKE ? ORDER BY absensisiswa.tanggal DESC', [id, '%'+keyword+'%'], (err, result) => {
-                    if(err){
-                        reject(err);
-                    }else{
-                        resolve(result);
-                    }
-                })
-            }),
-            new Promise((resolve, reject) => {
-                db.query('SELECT COUNT(*) as total FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis WHERE kelas.idguru = ? AND siswa.nama LIKE ?', [id, '%'+keyword+'%'], (err, result) => {
-                    if(err){
-                        reject(err);
-                    }else{
-                        resolve(result);
-                    }
-                })
-            })
-        ])
+//     let condition = 'WHERE kelas.idguru = ?';
+//     const params = [id];
 
-        if(Select.length > 0){
-            const data = await Promise.all(Select.map(async (item) => {
-                if(item.foto_izin_absensi){
-                    const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin/', item.foto_izin_absensi);
-                    const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
-                    return { ...item, bukti: base64 };
-                }else{
-                    return { ...item, bukti: null };
-                }
-            }))
+//     if (start_date && start_date !== 'null') {
+//         const newDate = new Date(start_date);
+//         condition += ' AND absensisiswa.tanggal = ?';
+//         params.push(newDate);
+//     }
 
-            const dataClean = {
-                data: data,
-                total: SelectLength[0].total
-            }
-            return reply.status(200).send(dataClean);
-        }else{
-            return reply.status(404).send({ message: 'Not found' });
-        }
-    }catch(err){
-        return reply.status(500).send({ message: err.message });
-    }
-})
+//     if (izin_filter && izin_filter !== 'null') {
+//         condition += ' AND absensisiswa.izin = ?';
+//         params.push(izin_filter);
+//     }
+
+//     try{
+//         const [Select, SelectLength] = await Promise.all([
+//             new Promise((resolve, reject) => {
+//                 db.query(`SELECT absensisiswa.absen_masuk, absensisiswa.izin, absensisiswa.tanggal, absensisiswa.detail_izin, absensisiswa.foto_izin_absensi, siswa.nama, absensisiswa.id AS idabsen FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis ${condition} AND siswa.nama LIKE ? ORDER BY absensisiswa.tanggal DESC`, [...params, '%'+keyword+'%'], (err, result) => {
+//                     if(err){
+//                         reject(err);
+//                     }else{
+//                         resolve(result);
+//                     }
+//                 })
+//             }),
+//             new Promise((resolve, reject) => {
+//                 db.query(`SELECT COUNT(*) as total FROM kelas JOIN siswa ON siswa.idkelas = kelas.id JOIN absensisiswa ON absensisiswa.nis = siswa.nis ${condition} AND siswa.nama LIKE ?`, [...params, '%'+keyword+'%'], (err, result) => {
+//                     if(err){
+//                         reject(err);
+//                     }else{
+//                         resolve(result);
+//                     }
+//                 })
+//             })
+//         ])
+
+//         if(Select.length > 0){
+//             const data = await Promise.all(Select.map(async (item) => {
+//                 if(item.foto_izin_absensi){
+//                     const imagePath = path.join(__dirname, 'Gambar/Siswa/Izin/', item.foto_izin_absensi);
+//                     const base64 = fs.readFileSync(imagePath, {encoding: 'base64'});
+//                     return { ...item, bukti: base64 };
+//                 }else{
+//                     return { ...item, bukti: null };
+//                 }
+//             }))
+
+//             const dataClean = {
+//                 data: data,
+//                 total: SelectLength[0].total
+//             }
+//             return reply.status(200).send(dataClean);
+//         }else{
+//             return reply.status(404).send({ message: 'Not found' });
+//         }
+//     }catch(err){
+//         return reply.status(500).send({ message: err.message });
+//     }
+// })
 
 // Admin
 fastify.get('/admin', async (request, reply) => {

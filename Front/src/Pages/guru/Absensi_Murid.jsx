@@ -20,21 +20,14 @@ const AbsensiWaliKelas = ({idguru}) => {
 
     const [startDate, setStartDate] = useState(null);
     const [izinFilter, setIzinFilter] = useState("");
+    const [keyword, setKeyword] = useState("");
 
     const [totalData, setTotalData] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const limitPerPage = 10;
 
     const handleKeyword = async (e) => {
-        try{
-            await api.get(`/AbsensiMurid/Search/${idguru}?keyword=${e.target.value}`).then((res) => {
-                setData(res.data.data);
-                setTotalData(res.data.total);
-            })
-        }catch(err){
-            setData([]);
-            setTotalData(0);
-        }
+        setKeyword(e.target.value);
     }
 
     const handleNext = () => {
@@ -55,7 +48,7 @@ const AbsensiWaliKelas = ({idguru}) => {
 
     const getData = _debounce(async (offset) => {
         try{
-            await api.get(`/AbsensiMurid/${idguru}?offset=${offset}&start_date=${startDate ? startDate.toISOString() : null}&izin_filter=${izinFilter}`).then((res) => {
+            await api.get(`/AbsensiMurid/${idguru}?offset=${offset}&start_date=${startDate ? startDate.toISOString() : null}&izin_filter=${izinFilter}&keyword=${keyword}`).then((res) => {
                 setData(res.data.data);
                 setTotalData(res.data.total);
             })
@@ -92,7 +85,7 @@ const AbsensiWaliKelas = ({idguru}) => {
 
     useEffect(() => {
         getData(0);
-    }, [startDate, izinFilter]);
+    }, [keyword, startDate, izinFilter]);
 
     return(
         <>
@@ -157,7 +150,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                                                 <td className="text-sm font-medium px-2 py-2 text-center">{index + 1}</td>
                                                 <td className="text-sm font-medium px-2 py-2 text-center">{item.nama}</td>
                                                 <td className="text-sm font-medium px-2 py-2 text-center">{DateNow(item.tanggal)}</td>
-                                                <td className="text-sm font-medium px-2 py-2 text-center">{item.absen_masuk ? 'Hadir' : item.izin}</td>
+                                                <td className="text-sm font-medium px-2 py-2 text-center">{item.absen_masuk && !item.izin ? 'Hadir' : !item.absen_masuk && !item.izin ? 'Belum Hadir' : item.izin === 'tanpa_keterangan' ? 'tanpa keterangan' : item.izin}</td>
                                             </tr>
                                         ))
                                         ) : (
