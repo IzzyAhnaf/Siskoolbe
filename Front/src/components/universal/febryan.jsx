@@ -14,7 +14,7 @@ function CardZev() {
         setIsFlipped(false);
     };
 
-    const desktoplow = CustomWidth() <= 1366;
+    const WMobile = CustomWidth() <= 767;
 
     return (
         <div className={`flex-row `}>
@@ -25,8 +25,8 @@ function CardZev() {
             >
                 <div className="flip-card-inner-febryan border-3 border-blue-950 rounded-[20px] absolute">
                     <div className="flip-card-front absolute flex justify-center items-center border-1 rounded-lg  ">
-                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 
-                        items-center  justify-center px-20 rounded-md ">
+                        <div className={`flex-col text-center text-white bg-blue-500 mt-[300px] 
+                        items-center justify-center ${WMobile ? 'px-16 py-1' : 'px-20 py-2'} rounded-md `}>
                             <h1>Febryan</h1>
                             <h1>
                                 Front-End Dev

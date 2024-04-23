@@ -1,6 +1,7 @@
 import '../Styling.css';
 import React from 'react';
 import izzy from "../../assets/izzy.png"
+import CustomWidth from '../../CustomWidth';
 
 
 function CardIzzy() {
@@ -14,6 +15,8 @@ function CardIzzy() {
         setIsFlipped(false);
     };
 
+    const WMobile = CustomWidth() <= 767;
+
     return (
         <div className='flex-row'>
             <div
@@ -23,7 +26,8 @@ function CardIzzy() {
             >
                 <div className="flip-card-inner-izzy border-1 rounded-[20px] ">
                     <div className="flip-card-front flex justify-center items-center border-1 rounded-lg  ">
-                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 items-center  justify-center px-20 rounded-md ">
+                        <div className={`flex-col text-center text-white bg-blue-500 mt-[300px] 
+                        items-center justify-center ${WMobile ? 'px-16 py-1' : 'px-20 py-2'} rounded-md `}>
                             <h1>Izzy</h1>
                             <h1>
                                 Back-End Dev

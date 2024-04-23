@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../Styling.css'; // Pindahkan import ini ke atas file jika diperlukan
 import gilang from "../../assets/gilang.png";
+import CustomWidth from '../../CustomWidth';
 
 function CardGilang() {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -13,6 +14,8 @@ function CardGilang() {
         setIsFlipped(false);
     };
 
+    const WMobile = CustomWidth() <= 767;
+
     return (
         <div className='flex-row'>
             <div
@@ -22,8 +25,8 @@ function CardGilang() {
             >
                 <div className="flip-card-inner-gilang border-3 border-blue-950 rounded-[20px] absolute">
                     <div className="flip-card-front absolute flex justify-center items-center border-1 rounded-lg  ">
-                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 
-                        items-center  justify-center px-20 rounded-md ">
+                        <div className={`flex-col text-center text-white bg-blue-500 mt-[300px] 
+                        items-center justify-center ${WMobile ? 'px-16 py-1' : 'px-20 py-2'} rounded-md `}>
                             <h1>Gilang</h1>
                             <h1>
                                 UI/UX
