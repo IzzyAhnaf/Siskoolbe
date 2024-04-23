@@ -5,7 +5,13 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   base: '/Siskoolbe/',
-  // server: {
-
-  // }
+  server: {
+    // host: '192.168.18.116',
+    port: 5173,
+    cors: true,
+    // https: {
+    //   key: 'c:/React/Siskoolbe/key.pem',
+    //   cert: 'c:/React/Siskoolbe/cert.pem',
+    // }
+  }
 })

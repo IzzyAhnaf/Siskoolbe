@@ -1,8 +1,14 @@
+const fs = require('fs');
+const path = require('path');
 const fastify = require("fastify")({
     logger: true,
+    // https: {
+    //     key: fs.readFileSync('c:/React/Siskoolbe/key.pem'),
+    //     cert: fs.readFileSync('c:/React/Siskoolbe/cert.pem')
+    // },
     bodyLimit: 52428800,
     filePayload: 52428800  
-});
+})
 
 const cron = require("node-cron");
 const cors = require("@fastify/cors");
@@ -10,8 +16,6 @@ const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const multipart = require('@fastify/multipart');
 const nodemailer = require('nodemailer');
-const fs = require('fs');
-const path = require('path');
 const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
@@ -851,7 +855,7 @@ fastify.get('/absensimasukCheckerGuru/:id', async (request, reply) => {
     }
     try{
         const Exist = await new Promise((resolve, reject) => {
-            db.query('SELECT absen_masuk FROM absensiguru WHERE id = ?', [id], (err, result) => {
+            db.query('SELECT absen_masuk FROM absensiguru WHERE id = ? AND status = ?', [id, 'open'], (err, result) => {
                 if(err){
                     reject(err);
                 }else{
@@ -861,10 +865,10 @@ fastify.get('/absensimasukCheckerGuru/:id', async (request, reply) => {
         })
 
         if(Exist.length > 0){
-            if(Exist[0].absen_masuk){
-                return reply.status(200).send({ message: Exist[0].absen_masuk });
+            if(Exist[0].absen_masuk === null){
+                return reply.status(200).send({ message: 'Not Exist' });
             }else{
-                return reply.status(404).send({ message: 'not found' });
+                return reply.status(404).send({ message: 'Failed' });
             }
         }
     }catch(err){
@@ -891,8 +895,8 @@ fastify.get('/absensikeluarCheckerGuru/:id', async (request, reply) => {
         })
 
         if(Exist.length > 0){
-            if(Exist[0].absen_keluar){
-                return reply.status(200).send({ message: Exist[0].absen_keluar });
+            if(Exist[0].absen_keluar === null){
+                return reply.status(200).send({ message: 'Not Exist' });
             }else{
                 return reply.status(404).send({ message: err });
             }

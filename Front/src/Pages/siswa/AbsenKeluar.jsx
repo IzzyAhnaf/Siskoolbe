@@ -211,8 +211,8 @@ const Checkout = () => {
       ) : (
         <>
         {defaultCenter && (
-          <div className="flex flex-col w-screen h-full">
-            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] w-11/12 justify-center h-[85%] pb-6 mx-2 mt-1 z-0">
+          <div className="flex flex-col w-full h-full">
+            <div className="flex flex-col items-center rounded-xl bg-[#D9D9D9] justify-center h-[85%] pb-6 mx-2 mt-1 z-0">
             <MapContainer ref={mapRef} className="justify-center items-center w-full h-96 z-0"
                 center={defaultCenter}
                 zoom={17}
