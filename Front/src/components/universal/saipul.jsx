@@ -20,7 +20,7 @@ function CardIpul() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <div className="flip-card-inner-gilang border-1 rounded-[20px] ">
+                <div className="flip-card-inner-saipul border-1 rounded-[20px] ">
                     <div className="flip-card-front flex justify-center items-center border-1 rounded-lg  ">
                         <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 items-center  justify-center px-20 rounded-md ">
                             <h1>Saipul</h1>

@@ -91,15 +91,12 @@
 
 .flip-card-inner {
   width: 100%;
-
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
 
 .flip-card-inner-gilang {
   width: 100%;
-  border: 2px;
-  border-color: black;
   background-image: url("../assets/gilang.png");
   height: 100%;
   background-size: cover;
@@ -166,8 +163,6 @@
   color: black;
 }
 
-
-
 .flip-card-back {
   width: 300;
   height: 400;
@@ -185,5 +180,14 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 768px) {
+  .flip-card {
+    width: 280px;
+    height: 380px;
+    border: 1;
+    border-color: blue;
+    perspective: 1000px;
+  }
+}
 
 /*flipcard ends here*/

@@ -1,6 +1,7 @@
 import '../Styling.css';
 import React from 'react';
 import febryan from "../../assets/febryan2.png";
+import CustomWidth from '../../CustomWidth';
 
 function CardZev() {
     const [isFlipped, setIsFlipped] = React.useState(false);
@@ -13,16 +14,19 @@ function CardZev() {
         setIsFlipped(false);
     };
 
+    const desktoplow = CustomWidth() <= 1366;
+
     return (
-        <div className='flex-row'>
+        <div className={`flex-row `}>
             <div
-                className={`flip-card ${isFlipped ? 'is-flipped' : ''}`}
+                className={`flip-card ${isFlipped ? 'is-flipped' : ''} relative`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <div className="flip-card-inner-febryan border-3 border-blue-950 rounded-[20px] absolute ">
+                <div className="flip-card-inner-febryan border-3 border-blue-950 rounded-[20px] absolute">
                     <div className="flip-card-front absolute flex justify-center items-center border-1 rounded-lg  ">
-                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 items-center  justify-center px-20 rounded-md ">
+                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 
+                        items-center  justify-center px-20 rounded-md ">
                             <h1>Febryan</h1>
                             <h1>
                                 Front-End Dev

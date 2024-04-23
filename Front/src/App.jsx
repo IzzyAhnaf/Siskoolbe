@@ -216,7 +216,7 @@ function App() {
                 <Route path='/Siswa/Absen/:id' element={<DetailIzin WMobile={WMobile} />}></Route>
                 <Route path='/Siswa/AbsenMasuk/:id/:nis' element={<Checkin />}></Route>
                 <Route path='/Siswa/AbsenKeluar/:id/:nis' element={<Checkout />}></Route>
-                <Route path='/AboutUs' element={<AboutUS /> }></Route>
+                <Route path='/AboutUs' element={<AboutUS WMobile={WMobile}/> }></Route>
               </Routes>
             </>
           ) : decoded.role === 'guru' ? (
@@ -232,7 +232,7 @@ function App() {
               <Route path='/Guru/AbsenKeluar/:id' element={<CheckoutGuru />}></Route>
               <Route path='/Guru/AbsensiMurid' element={<AbsensiWaliKelas idguru={dataProfilGuru.id} /> }></Route>
               <Route path='/Guru/AbsensiMurid/:id' element={<DetailAbsensiMurid WMobile={WMobile}/> }></Route>
-              <Route path='/AboutUs' element={<AboutUS /> }></Route>
+              <Route path='/AboutUs' element={<AboutUS WMobile={WMobile}/> }></Route>
             </Routes>
             </>
           ) : decoded.role === 'admin' ? (
@@ -253,7 +253,7 @@ function App() {
                 <Route path='/Admin/Edit_Murid/:id' element={<EditMurid />}></Route>
                 <Route path='/Admin/Edit_Guru/:id' element={<EditGuru />}></Route>
                 <Route path='/Admin/Edit_Jurusan/:id' element={<EditJurusan />}></Route>
-                <Route path='/AboutUs' element={<AboutUS /> }></Route>
+                <Route path='/AboutUs' element={<AboutUS WMobile={WMobile}/> }></Route>
               </Routes>
             </>
           ) : null

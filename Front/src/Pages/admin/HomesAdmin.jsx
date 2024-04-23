@@ -8,6 +8,7 @@ import ProfilePicture from "../../components/Pp";
 import FormAdmin from "../../components/admin/FormAdmin";
 import Swal from "sweetalert2";
 import { RxExit } from "react-icons/rx";
+import { removeCookies } from "../../setCookies";
 
 const HomesAdmin = ({getProfileImage, setSelectedImage}) => {
     const navTo = useNavigate();

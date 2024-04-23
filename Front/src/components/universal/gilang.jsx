@@ -20,15 +20,18 @@ function CardGilang() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <div className="flip-card-inner-gilang  border-1 rounded-[20px] ">
-                    <div className="flip-card-front flex justify-center items-center border-1 rounded-lg  ">
-                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 items-center  justify-center px-20 rounded-md ">
+                <div className="flip-card-inner-gilang border-3 border-blue-950 rounded-[20px] absolute">
+                    <div className="flip-card-front absolute flex justify-center items-center border-1 rounded-lg  ">
+                        <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 
+                        items-center  justify-center px-20 rounded-md ">
                             <h1>Gilang</h1>
                             <h1>
-                                UI/UX Designer
+                                UI/UX
+                                Designer
                             </h1>
                         </div>
                     </div>
+
 
 
                     <div className="flip-card-back bg-white border-1 rounded-[20px]">
