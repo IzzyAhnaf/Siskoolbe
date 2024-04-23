@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../Styling.css'; // Pindahkan import ini ke atas file jika diperlukan
-import berdua from '../../assets/berdua.png';
+import gilang from "../../assets/gilang.png";
 
 function CardGilang() {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -20,8 +20,8 @@ function CardGilang() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <div className="flip-card-inner border-1 rounded-[20px] ">
-                    <div className="flip-card-front-gilang flex justify-center items-center border-1 rounded-lg  ">
+                <div className="flip-card-inner-gilang  border-1 rounded-[20px] ">
+                    <div className="flip-card-front flex justify-center items-center border-1 rounded-lg  ">
                         <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 items-center  justify-center px-20 rounded-md ">
                             <h1>Gilang</h1>
                             <h1>
@@ -31,9 +31,9 @@ function CardGilang() {
                     </div>
 
 
-                    <div className="flip-card-back bg-white border-1 rounded-[20px] mt-[-364px]">
-                        <div className="bg-berdua flex justify-center items-center">
-                            <img src={berdua} alt="Berdua" className="rounded-full w-40 h-40 mt-[50px] object-cover bg-white" />
+                    <div className="flip-card-back bg-white border-1 rounded-[20px]">
+                        <div className=" flex justify-center items-center">
+                            <img src={gilang} alt="Berdua" className="rounded-full w-40 h-40 mt-[50px] object-cover bg-white" />
                         </div>
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Gilang Aliansyah</p>

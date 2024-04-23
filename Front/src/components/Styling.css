@@ -84,17 +84,72 @@
 .flip-card {
   width: 300px;
   height: 400px;
+  border: 1;
+  border-color: blue;
   perspective: 1000px;
 }
 
 .flip-card-inner {
   width: 100%;
+
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner-gilang {
+  width: 100%;
+  border: 2px;
+  border-color: black;
+  background-image: url("../assets/gilang.png");
+  height: 100%;
+  background-size: cover;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner-febryan {
+  width: 100%;
+  background-image: url("../assets/febryan2.png");
+  background-size: cover;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner-izzy {
+  width: 100%;
+  background-image: url("../assets/izzy.png");
+  background-size: cover;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner-saipul {
+  width: 100%;
+  background-image: url("../assets/berdua.png");
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
 
 .flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card:hover .flip-card-inner-gilang {
+  transform: rotateY(180deg);
+}
+
+.flip-card:hover .flip-card-inner-febryan {
+  transform: rotateY(180deg);
+}
+
+.flip-card:hover .flip-card-inner-izzy {
+  transform: rotateY(180deg);
+}
+
+.flip-card:hover .flip-card-inner-saipul {
   transform: rotateY(180deg);
 }
 
@@ -107,12 +162,15 @@
 }
 
 .flip-card-front {
-  background-color: #f2f2f2;
+
   color: black;
 }
 
+
+
 .flip-card-back {
-  background-color: #2980b9;
+  width: 300;
+  height: 400;
   color: white;
   transform: rotateY(180deg);
 }
@@ -122,10 +180,6 @@
   height: 100%;
 }
 
-.bg-berdua {
-  background-image: url('/assets/berdua.jpg');
-  background-size: cover;
-}
 
 .flip-button {
   cursor: pointer;

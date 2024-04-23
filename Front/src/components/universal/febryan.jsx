@@ -1,6 +1,6 @@
 import '../Styling.css';
 import React from 'react';
-import berdua from '../../assets/berdua.png';
+import febryan from "../../assets/febryan2.png";
 
 function CardZev() {
     const [isFlipped, setIsFlipped] = React.useState(false);
@@ -20,8 +20,8 @@ function CardZev() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <div className="flip-card-inner border-1 border-blue rounded-[20px] ">
-                    <div className="flip-card-front-gilang flex justify-center items-center border-1 rounded-lg  ">
+                <div className="flip-card-inner-febryan border-3 border-blue-950 rounded-[20px] absolute ">
+                    <div className="flip-card-front absolute flex justify-center items-center border-1 rounded-lg  ">
                         <div className=" flex-col text-center text-white bg-blue-500 mt-[300px] py-2 items-center  justify-center px-20 rounded-md ">
                             <h1>Febryan</h1>
                             <h1>
@@ -31,9 +31,9 @@ function CardZev() {
                     </div>
 
 
-                    <div className="flip-card-back bg-white border-1 rounded-[20px] mt-[-364px]">
-                        <div className="bg-berdua flex justify-center items-center">
-                            <img src={berdua} alt="Berdua" className="rounded-full w-40 h-40 mt-[50px] object-cover" />
+                    <div className="flip-card-back bg-white border-1 rounded-[20px] ">
+                        <div className=" flex justify-center items-center">
+                            <img src={febryan} alt="Berdua" className="rounded-full w-40 h-40 mt-[50px] object-cover" />
                         </div>
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Febryan Triwibowo</p>
