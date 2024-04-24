@@ -124,10 +124,16 @@
 
 .flip-card-inner-saipul {
   width: 100%;
-  background-image: url("../assets/berdua.png");
+  background-image: url("../assets/ilham2.png");
   height: 100%;
+  background-size: cover;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+}
+
+.foto-ipul {
+  background-image: url("../assets/ilham2.png");
+  background-size: cover;
 }
 
 .flip-card:hover .flip-card-inner {

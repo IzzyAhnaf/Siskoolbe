@@ -3,6 +3,7 @@ import React from 'react';
 import febryan from "../../assets/febryan2.png";
 import CustomWidth from '../../CustomWidth';
 
+
 function CardZev() {
     const [isFlipped, setIsFlipped] = React.useState(false);
 
@@ -41,7 +42,7 @@ function CardZev() {
                         </div>
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Febryan Triwibowo</p>
-                            <p className="text-md">Quotes: "Sometimes I ba'tu blowwww"</p>
+                            <p className="text-md my-6  ">"ehhh ha'ah lahhhh"</p>
                             <p className="text-md">Email: zeverus1234@email.com</p>
                         </div>
                     </div>
