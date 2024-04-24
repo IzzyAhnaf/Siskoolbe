@@ -71,7 +71,7 @@ const transporter = nodemailer.createTransport({
 });
 
 
-cron.schedule('0 0 * * *', () => {
+cron.schedule('0 0 * * 1-5', () => {
     try {
         const sql = "SELECT nis FROM siswa";
         const sql2 = "SELECT id FROM guru";
@@ -363,8 +363,11 @@ fastify.get('/absensiswa', async (request, reply) => {
             })
         })
         if (nis.length > 0) {
+            const date = new Date();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
             const Exist = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM absensisiswa WHERE nis = ? ORDER BY tanggal DESC', [nis[0].nis], (err, result) => {
+                db.query('SELECT * FROM absensisiswa WHERE nis = ? AND MONTH(tanggal) = ? AND YEAR(tanggal) = ? ORDER BY tanggal DESC', [nis[0].nis, month, year], (err, result) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -510,6 +513,7 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
 
 fastify.post('/editsiswaProfile/:email', async (request, reply) => {
     const { nama, alamat, no_hp } = request.body;
+    const email = request.params.email;
 
     try {
         const update = await new Promise((resolve, reject) => {
@@ -725,9 +729,9 @@ fastify.get('/absenguru', async (request, reply) => {
         if (id.length > 0) {
             const date = new Date();
             const month = String(date.getMonth() + 1).padStart(2, '0');
-            
+            const year = date.getFullYear();
             const Exist = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM absensiguru WHERE idguru = ? ORDER BY tanggal DESC', [id[0].id], (err, result) => {
+                db.query('SELECT * FROM absensiguru WHERE idguru = ? AND MONTH(tanggal) = ? AND YEAR(tanggal) = ? ORDER BY tanggal DESC', [id[0].id, month, year], (err, result) => {
                     if (err) {
                         reject(err);
                     } else {
