@@ -43,7 +43,7 @@ function CardGilang() {
                         </div>
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Gilang Aliansyah</p>
-                            <p className="text-md">"Quote goes here"</p>
+                            <p className="text-md my-5">"Sudah terlambat jika menyesal. Realita akan terus bergerak dengan kejamnya"</p>
                             <p className="text-md">Email: gilang@email.com</p>
                         </div>
                     </div>
