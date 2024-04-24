@@ -60,9 +60,19 @@ const AbsensiWaliKelas = ({idguru}) => {
         }catch(err){
             setData([]);
             setTotalData(0);
-            setAkses(false);
+            // setAkses(false);
         }
     }, 50)
+
+    const getAccess = _debounce(async (offset) => {
+        try{
+            await api.get(`/AbsensiMurid/${idguru}?offset=${offset}&start_date=${startDate ? startDate.toISOString() : null}&izin_filter=${izinFilter}&keyword=${keyword}`).then((res) => {
+                setAkses(true);
+            })
+        }catch(err){
+            setAkses(false);
+        }
+    })
 
     const handleDateChange = (date) => {
         setStartDate(date);
@@ -102,6 +112,10 @@ const AbsensiWaliKelas = ({idguru}) => {
         return "DKV"
         }
     }
+
+    useEffect(() => {
+        getAccess(0);
+    }, [])
 
     useEffect(() => {
         getData(0);
@@ -278,7 +292,7 @@ const AbsensiWaliKelas = ({idguru}) => {
                     </div>
                 )}
             </>) : (
-                <div className="flex w-full mx-2 h-[90%] rounded-xl bg-[#D9D9D9] border border-1 font-inter">
+                <div className={`flex w-full mx-2 ${WMobile ? 'h-[90%]' : 'h-full'} rounded-xl bg-[#D9D9D9] border border-1 font-inter`}>
                     <div className="flex flex-col w-full">
                         <div className="bg-blue-500 p-4"
                         style={{borderRadius: '10px 10px 0 0'}}>

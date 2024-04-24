@@ -44,7 +44,7 @@ const EditJurusan = () => {
                         style={{borderRadius: '10px 10px 0 0'}}>
                             <BiArrowBack className="w-6 h-6 mt-1 mr-2 text-white" onClick={handleBack} />
                             <GiTrumpetFlag className='text-white text-[24px] rounded-full mx-2' />
-                            <span className="text-white font-semibold text-xl">Edit Murid</span>
+                            <span className="text-white font-semibold text-xl">Edit Jurusan</span>
                         </div>
                         <div className="border border-1 w-full h-full mb-20 overflow-y-auto"
                         style={{borderRadius: '0 0 10px 10px'}}>

@@ -19,7 +19,7 @@ const nodemailer = require('nodemailer');
 const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
-    origin: 'http://localhost:5174',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 });
@@ -723,6 +723,9 @@ fastify.get('/absenguru', async (request, reply) => {
         })
 
         if (id.length > 0) {
+            const date = new Date();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            
             const Exist = await new Promise((resolve, reject) => {
                 db.query('SELECT * FROM absensiguru WHERE idguru = ? ORDER BY tanggal DESC', [id[0].id], (err, result) => {
                     if (err) {
@@ -2531,8 +2534,9 @@ fastify.get('/getDetailKelas/:id', async (request, reply) => {
 fastify.post('/ubahWaliKelas', async (request, reply) => {
     const { id, idguru } = request.body;
     try {
-        const resp = await new Promise((resolve, reject) => {
-            db.query('UPDATE kelas SET idguru = ? WHERE id = ?', [idguru, id], (err, result) => {
+
+        const check = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM kelas WHERE idguru = ?', [idguru], (err, result) => {
                 if (err) {
                     reject(err);
                 }
@@ -2542,11 +2546,26 @@ fastify.post('/ubahWaliKelas', async (request, reply) => {
             })
         })
 
-        if (resp.affectedRows > 0) {
-            return reply.status(200).send({ message: 'Success' });
+        if(check.length > 0){
+            return reply.status(400).send({ message: 'Guru sudah menjadi wali kelas' });
+        }else{
+            const resp = await new Promise((resolve, reject) => {
+                db.query('UPDATE kelas SET idguru = ? WHERE id = ?', [idguru, id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                })
+            })
+
+            if (resp.affectedRows > 0) {
+                return reply.status(200).send({ message: 'Success' });
+            }
         }
     } catch (err) {
-        return reply.status(500).send({ message: err.message });
+        return reply.status(500).send({ message: 'Gagal Merubah Wali Kelas' });
     }
 })
 

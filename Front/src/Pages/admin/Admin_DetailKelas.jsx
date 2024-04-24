@@ -106,7 +106,7 @@ const AdminDetailKelas = () => {
         } catch (err) {
             Swal.fire(
                 'Gagal!',
-                'Wali kelas gagal diubah.',
+                err.response.data.message,
                 'error'
             )
         }
