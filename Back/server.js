@@ -491,7 +491,9 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
         })
 
         if (getImage.length > 0) {
-            fs.unlinkSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil));
+            if(fs.existsSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil))){
+                fs.unlinkSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil));
+            }
             const update = await new Promise((resolve, reject) => {
                 db.query('UPDATE siswa SET gambar_profil = ? WHERE email = ?', [`${timestamp}-${file.filename}`, email], (err, result) => {
                     if (err) {
@@ -992,7 +994,9 @@ fastify.post('/editguruProfileImage/:email', async (request, reply) => {
         })
 
         if (getImage.length > 0) {
-            fs.unlinkSync(path.join(__dirname, `./Gambar/Guru/Profil/${getImage[0].gambar_profil}`));
+            if(fs.existsSync(path.join(__dirname, `Gambar/Guru/Profil/${getImage[0].gambar_profil}`))){
+                fs.unlinkSync(path.join(__dirname, `Gambar/Guru/Profil/${getImage[0].gambar_profil}`));
+            }
             const update = await new Promise((resolve, reject) => {
                 db.query('UPDATE guru SET gambar_profil = ? WHERE email = ?', [filepath, email], (err, result) => {
                     if (err) {
@@ -1004,7 +1008,7 @@ fastify.post('/editguruProfileImage/:email', async (request, reply) => {
             })
 
             if (update.affectedRows > 0) {
-                fs.renameSync(file.filepath, filepath);
+                await pipeline(file.file, fs.createWriteStream(filepath));
                 return reply.status(200).send({ message: 'Success' });
             }
         }

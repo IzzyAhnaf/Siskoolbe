@@ -100,7 +100,7 @@ const ProfSetGr = ({getProfileImage, setSelectedImage}) => {
             reader.onload = async () => {
                 setSelectedImage(reader.result);
                 try{
-                    const image = new Image();
+                    const image = new FormData();
                     image.append('image', file);
                     await api.post(`editguruProfileImage/${formData.email}`, image, {
                         headers: {
