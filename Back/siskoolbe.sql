@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Apr 2024 pada 11.31
+-- Waktu pembuatan: 30 Apr 2024 pada 11.41
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -44,7 +44,16 @@ CREATE TABLE `absensiguru` (
 --
 
 INSERT INTO `absensiguru` (`id`, `idguru`, `tanggal`, `absen_masuk`, `absen_keluar`, `izin`, `detail_izin`, `foto_izin_absensi`, `status`) VALUES
-(1, 1, '2024-04-18', '2024-04-18 14:54:21', NULL, 'sakit', 'Contoh', '1713707621900-image.jpeg', 'closed');
+(1, 1, '2024-04-18', '2024-04-18 14:54:21', NULL, 'sakit', 'Contoh', '1713707621900-image.jpeg', 'closed'),
+(3, 2, '2024-04-23', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(4, 1, '2024-04-23', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(5, 1, '2024-04-24', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(6, 2, '2024-04-24', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(7, 1, '2023-04-12', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(8, 1, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open'),
+(9, 2, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open'),
+(10, 3, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open'),
+(11, 4, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open');
 
 -- --------------------------------------------------------
 
@@ -72,8 +81,16 @@ INSERT INTO `absensisiswa` (`id`, `nis`, `tanggal`, `absen_masuk`, `absen_keluar
 (31, 2012321, '2024-04-04', NULL, NULL, 'tanpa_keterangan', '', '', 'closed'),
 (32, 2012321, '2024-04-05', NULL, NULL, 'keterangan', 'mokel', '1712200071658-ikan-mujair-goreng.jpg', 'closed'),
 (33, 2012321, '2024-04-06', '2024-04-05 06:19:10', NULL, NULL, NULL, NULL, 'closed'),
-(36, 2012321, '2024-04-07', NULL, NULL, NULL, NULL, NULL, 'closed'),
-(38, 2012321, '2024-04-18', '2024-04-18 19:39:13', NULL, '', NULL, NULL, 'open');
+(36, 2012321, '2024-04-07', NULL, NULL, 'tanpa_keterangan', NULL, NULL, 'closed'),
+(38, 2012321, '2024-04-18', NULL, NULL, 'tanpa_keterangan', NULL, NULL, 'closed'),
+(39, 2012321, '2024-04-23', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(40, 21029381, '2024-04-23', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(42, 2012321, '2024-04-24', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(43, 21029381, '2024-04-24', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(44, 22013724, '2024-04-24', NULL, NULL, NULL, NULL, NULL, 'closed'),
+(45, 2012321, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open'),
+(46, 21029381, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open'),
+(47, 22013724, '2024-04-25', NULL, NULL, NULL, NULL, NULL, 'open');
 
 -- --------------------------------------------------------
 
@@ -99,7 +116,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `gambar_profil`, `status`, `created_at`, `updated_at`) VALUES
-(1, '313432323', 'jay', 'jay@g.com', '123', NULL, '', '-', NULL, NULL);
+(1, '321789313241', 'jay', 'jay@g.com', '123', 31287391732, '1714024929165-IR1KcXM8-logo-halal.jpg', '-', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -131,8 +148,10 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`id`, `nik`, `nama`, `email`, `password`, `no_hp`, `jenis_kelamin`, `alamat`, `tempat_lahir`, `tgl_lahir`, `agama`, `jabatan`, `status`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 31287391732, 'L', 'contoh', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL),
-(2, 93127173892163, 'Tono', 'Tono@g.com', '123', NULL, 'P', NULL, NULL, NULL, 'Non-Muslim', NULL, NULL, '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL);
+(1, 3603126191912, 'Budin', 'Budin@gmail.com', '123', 31287391732, 'L', 'contoh', 'Pajajaran', '1889-03-13', 'Muslim', 'Kepala Sekolah', 'PNS', 'C:\\React\\Siskoolbe\\Back\\Gambar\\Guru\\Profil\\1714469925109-logol.jpg', NULL, NULL),
+(2, 93127173892163, 'Tono', 'Tono@g.com', '123', NULL, 'P', NULL, NULL, NULL, 'Non-Muslim', NULL, NULL, '1711618106747-WhatsApp Image 2023-08-11 at 08.18.30.jpg', NULL, NULL),
+(3, 30973816231, 'Anto', 'Anto@g.com', '123', NULL, 'L', NULL, NULL, NULL, 'Muslim', NULL, NULL, NULL, NULL, NULL),
+(4, 30291238231, 'Maul', 'Maul@gmail.com', '123', 84793274231, 'L', 'Contoh', 'Contoh', '1992-01-25', 'Muslim', 'Guru Mata Pelajaran', 'PNS', '1714024521157-WhatsApp Image 2023-08-11 at 06.27.48.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -152,7 +171,7 @@ CREATE TABLE `jurusan` (
 --
 
 INSERT INTO `jurusan` (`id`, `namajurusan`, `sub_jurusan`, `gambar`) VALUES
-(15, 'Pengembangan Perangkat Lunak dan Gim', 1, '1713730636423-1711507382196-1711474149565-logo-rpl.png');
+(15, 'Pengembangan Perangkat Lunak dan Gim', 1, '1713842055453-1713730636423-1711507382196-1711474149565-logo-rpl.png');
 
 -- --------------------------------------------------------
 
@@ -172,8 +191,8 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id`, `jurusanid`, `idguru`, `kelas`) VALUES
-(31, 15, 1, '10'),
-(32, 15, NULL, '11'),
+(31, 15, 3, '10'),
+(32, 15, 2, '11'),
 (33, 15, NULL, '12');
 
 -- --------------------------------------------------------
@@ -207,17 +226,18 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nik`, `nama`, `email`, `password`, `nisn`, `nis`, `idkelas`, `alamat`, `no_hp`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `gambar_profil`, `created_at`, `updated_at`) VALUES
-(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-03-28 09:20:59', '2024-04-21 19:41:51'),
+(16, 321789313241, 'Izzy', 'Didi@gmail.com', '123', 87178116234, 2012321, 31, 'Los Santos', 982731723911, 'Laki-laki', 'Seseupan', '2000-09-05', 'Muslim', '1714024826857-image (3).jpeg', '2024-03-28 09:20:59', '2024-04-25 06:00:26'),
 (17, 32147483647, 'Budi', 'Budi@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:15:54', '2024-04-22 02:25:34'),
 (18, 39721632321, 'Rian', 'Rian@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:16:54', '2024-04-22 02:25:34'),
 (19, 3638912612, 'Rina', 'Rina@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:16:54', '2024-04-22 02:25:34'),
-(20, 3971237312321, 'Yuda', 'Yuda@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Non-Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:17:47', '2024-04-22 02:25:34'),
+(20, 3971237312321, 'Yuda', 'Yuda@g.com', '123', NULL, 21029381, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Non-Muslim', '1714026513051-image (3).jpeg', '2024-04-22 02:17:47', '2024-04-25 06:28:33'),
 (21, 36743123131, 'Juan', 'Juan@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Non-Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:17:47', '2024-04-22 02:25:34'),
 (22, 37653712371, 'Udin', 'Udin@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:20:37', '2024-04-22 02:25:34'),
 (23, 379731837121, 'Dika', 'Dika@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:20:37', '2024-04-22 02:25:34'),
 (24, 386712835621, 'Tina', 'Tina@gmail.com', '123', NULL, NULL, 31, NULL, NULL, 'Perempuan', NULL, NULL, 'Non-Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27'),
 (25, 389987283121, 'Wati', 'Wati@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27'),
-(26, 3987312301291, 'Pou', 'Pou@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27');
+(26, 3987312301291, 'Pou', 'Pou@g.com', '123', NULL, NULL, 31, NULL, NULL, 'Laki-laki', NULL, NULL, 'Muslim', '1713728511621-1712417786093-image (2).jpeg', '2024-04-22 02:29:27', '2024-04-22 02:29:27'),
+(27, 309487354781, 'Yanto', 'Yanto@.com', '123', NULL, 22013724, 32, NULL, NULL, '', NULL, NULL, '', NULL, '2024-04-24 13:25:17', '2024-04-24 13:26:35');
 
 --
 -- Indexes for dumped tables
@@ -279,13 +299,13 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT untuk tabel `absensiguru`
 --
 ALTER TABLE `absensiguru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `absensisiswa`
 --
 ALTER TABLE `absensisiswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT untuk tabel `admin`
@@ -297,7 +317,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurusan`
@@ -315,7 +335,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
