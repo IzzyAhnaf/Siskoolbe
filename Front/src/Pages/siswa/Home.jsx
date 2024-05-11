@@ -18,7 +18,6 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
         }
       })
 
-      
       const newDataAbsen = resp.data.map(entry => {
         const tanggal = new Date(entry.tanggal);
         const tanggallokal = tanggal.toLocaleDateString();
@@ -29,7 +28,6 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
       });
 
       setDataAbsen(newDataAbsen);
-      console.log(newDataAbsen);
     }catch(err){ 
       console.log(err);
     }
@@ -184,7 +182,7 @@ const Homes = ({nama, token, WMobile, DekstopLow}) => {
         </div>
       ) : (
         <>
-            <div className="flex flex-col w-full rounded-2xl bg-[#D9D9D9] h-[85%] pb-4 mt-4">
+            <div className={ `flex flex-col w-full rounded-2xl bg-[#D9D9D9] h-[85%] pb-4 mt-4`}>
               <div className="flex flex-row bg-white mt-4 mx-3 h-32 py-4"
               style={{borderRadius: "10px 10px 0 0"}}>
                 <div className="flex flex-col">

@@ -204,7 +204,7 @@ function App() {
   return (
     <>
       {!loading ? (
-        <div className='flex p-2 h-screen'>
+        <div className={`flex p-2 ${WMobile ? 'h-dvh' : 'h-screen'} `}>
           {decoded.role === 'siswa' ? (
             <>
               {WMobile ? <Mnvbar /> : <Sidebar nama={dataProfilsiswa.nama} gambar_profil={selectedImage}/>}

@@ -183,7 +183,7 @@ const HomesGuru = ({nama, token, WMobile, DekstopLow}) => {
         </div>
       ) : (
         <>
-           <div className="flex flex-col w-full bg-[#D9D9D9] h-[85%] pb-12 rounded-2xl">
+           <div className="flex flex-col w-full bg-[#D9D9D9] h-[85%] pb-4 mt-4 rounded-2xl">
               <div className="flex flex-row bg-white mx-3 mt-4 py-4"
               style={{borderRadius: '10px 10px 0 0'}}>
                 <div className="flex flex-col">

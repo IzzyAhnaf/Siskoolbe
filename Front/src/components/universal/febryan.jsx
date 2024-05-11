@@ -43,7 +43,7 @@ function CardZev() {
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Febryan Triwibowo</p>
                             <p className="text-md my-6  ">"ehhh ha'ah lahhhh"</p>
-                            <p className="text-md">Email: zeverus1234@email.com</p>
+                            <p className="text-md">Email: bryanzeverus@gmail.com</p>
                         </div>
                     </div>
                 </div>

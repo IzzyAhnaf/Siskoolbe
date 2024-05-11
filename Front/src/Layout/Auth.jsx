@@ -76,7 +76,7 @@ const Auth = (props) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col">
+                <div className={`flex flex-col`}>
                     {/* <div className="flex space-x-2 justify-end font-inter p-3">
                         {type === 'login' ? (
                             <>

@@ -43,7 +43,7 @@ function CardIzzy() {
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Izzy Ahnaf</p>
                             <p className="text-md my-5 ">"Jalan yang sulit sering kali mengarah ke tujuan yang indah"</p>
-                            <p className="text-md">Email: gilang@email.com</p>
+                            <p className="text-md">Email: izzyahnaf695@gmail.com</p>
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ const nodemailer = require('nodemailer');
 const pipeline = require('stream/promises').pipeline;
 
 fastify.register(cors, {
-    origin: 'http://localhost:5173',
+    origin: 'http://192.168.0.200:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 });
@@ -491,7 +491,10 @@ fastify.post('/editsiswaProfileImage/:email', async (request, reply) => {
         })
 
         if (getImage.length > 0) {
-            if(fs.existsSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil))){
+            if(
+                // fs.existsSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil))
+                getImage[0].gambar_profil
+            ){
                 fs.unlinkSync(path.join(__dirname, 'Gambar/Siswa/Profil/', getImage[0].gambar_profil));
             }
             const update = await new Promise((resolve, reject) => {
@@ -994,11 +997,14 @@ fastify.post('/editguruProfileImage/:email', async (request, reply) => {
         })
 
         if (getImage.length > 0) {
-            if(fs.existsSync(path.join(__dirname, `Gambar/Guru/Profil/${getImage[0].gambar_profil}`))){
+            if(
+                // fs.existsSync(path.join(__dirname, `Gambar/Guru/Profil/${getImage[0].gambar_profil}`))
+                getImage[0].gambar_profil
+            ){
                 fs.unlinkSync(path.join(__dirname, `Gambar/Guru/Profil/${getImage[0].gambar_profil}`));
             }
             const update = await new Promise((resolve, reject) => {
-                db.query('UPDATE guru SET gambar_profil = ? WHERE email = ?', [filepath, email], (err, result) => {
+                db.query('UPDATE guru SET gambar_profil = ? WHERE email = ?', [`${timestamp}-${file.filename}`, email], (err, result) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -2581,7 +2587,7 @@ const start = async () => {
     try {
         await fastify.listen({
             port: 5000,
-            host: 'localhost'
+            host: '192.168.0.200'
         });
     } catch (err) {
         console.error(err);

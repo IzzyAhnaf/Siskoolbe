@@ -42,7 +42,7 @@ function CardIpul() {
                         <div className="text-center  text-black mt-[40px] ">
                             <p className="text-lg font-semibold">Nama: Syaiful Ilham</p>
                             <p className="text-md my-5">"Live happy if your problem is not defined"</p>
-                            <p className="text-md">Email: @email.com</p>
+                            <p className="text-md">Email: syaifulilham1407@gmail.com</p>
                         </div>
                     </div>
                 </div>
